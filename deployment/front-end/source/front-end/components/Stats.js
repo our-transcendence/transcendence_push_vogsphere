@@ -52,19 +52,14 @@ export default class Settings extends HTMLElement {
 		<div style="height: 50px"></div>
         `;
 
-		let formData = new FormData();
-
-		let img = document.querySelector("#lang");
-
 		if (!getCookie("lang")) document.cookie = "lang=en";
-		let MyId = getCookie("stat");
-		if (!MyId)
-			getCookie('user_id');
-		GetStats(MyId);
-		GetHistory(MyId);
+		GetStats();
+		GetHistory();
 
-		function GetHistory(id) {
-			if (!id) return;
+		function GetHistory() {
+			let	id = getCookie("stat");
+			if (!id)
+				id = getCookie("user_id");
 			const header = {
 				"Content-Type": "application/json; charset=UTF8",
 			};
@@ -100,7 +95,11 @@ export default class Settings extends HTMLElement {
 							json[i].player_2 = save;
 						}
 						if (json[i].player_1.id == getCookie('user_id'))
+						{
 							player1Txt.innerText = getCookie("displayName");
+							if (player1Txt.innerText.length > 7)
+								player1Txt.innerText = player1Txt.innerText.slice(0, 7) + ".";
+						}
 						else
 						{
 							fetch(`https://${location.hostname}:4646/${json[i].player_1.id}/infos/`,
@@ -172,8 +171,10 @@ export default class Settings extends HTMLElement {
 				});
 		}
 
-		function GetStats(id) {
-			if (!id) return;
+		function GetStats() {
+			let	id = getCookie("stat");
+			if (!id)
+				id = getCookie("user_id");
 			const header = {
 				"Content-Type": "application/json; charset=UTF8",
 			};

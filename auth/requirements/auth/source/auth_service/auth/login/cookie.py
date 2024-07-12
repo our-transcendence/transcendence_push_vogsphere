@@ -37,6 +37,7 @@ def return_auth_cookie(user: User, full_response: response.HttpResponse):
                              httponly=True)
     full_response.set_cookie(key="user_id",
                              value=user.id,
+                             max_age=duration,
                              secure=True)
     return full_response
 

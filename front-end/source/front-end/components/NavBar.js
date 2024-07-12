@@ -14,29 +14,30 @@ export default class NavBar extends HTMLElement {
 		let Logout_button = lang.user_menu.Logout_button[getCookie("lang")];
 		let Logout_all_button = lang.user_menu.Logout_all_button[getCookie("lang")];
 		this.innerHTML = `
-        <link rel="stylesheet" href="/styles/navBar.css" >
+		<link rel="stylesheet" href="/styles/navBar.css" >
 			<nav id="navbar-header">
-			        <div id="header-container">
-			            <link-route route="/home" id="title-header">OUR TRANSCENDENCE</link-route>
-			        </div>
-			        <div id="profile">
-			        	<p id="profile-name">
-			        		username
+					<div id="header-container">
+						<link-route route="/home" id="title-header">OUR TRANSCENDENCE</link-route>
+					</div>
+					<div id="profile">
+						<p id="profile-name">
+							username
 						</p>
 						<img id="profile-img" src="" alt="">
 					</div>
-			    </nav>
-			    <div id="menu">
-			    	<p id="header-dasboard">${Dashboard_button}</p>
-			    	<p id="header-settings">${Settings_button}</p>
-			    	<p id="logout_header">${Logout_button}</p>
-			    	<p id="logout_all_devices">${Logout_all_button}</p>
+				</nav>
+				<div id="menu">
+					<p id="header-dasboard">${Dashboard_button}</p>
+					<p id="header-settings">${Settings_button}</p>
+					<p id="logout_header">${Logout_button}</p>
+					<p id="logout_all_devices">${Logout_all_button}</p>
 				</div>
-        `
+		`
 
 		const MyId = getCookie('user_id');
-		if (MyId == null)
+		if (MyId == null){
 			return ;
+		}
 
 		Logout();
 		menu();

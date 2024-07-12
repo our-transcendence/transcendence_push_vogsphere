@@ -114,7 +114,7 @@ export default class RemotePong extends EventTarget {
             this.onEnd(this.name, null);
         });
         this.socket.on("game_end", (data) => {
-            this.winner = data[this.socket.id] > this.scores[this.opponentSid] ? this.playerData : this.opponentData;
+            this.winner = data[this.socket.id] > data[this.opponentSid] ? this.playerData : this.opponentData;
             this.onEnd(this.winner, data);
         });
         const handleInputs = (event) => this.input(event);

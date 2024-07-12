@@ -13,6 +13,11 @@ services:
       - "4443:4443"
     env_file:
       - .env
+    depends_on:
+      user-service:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
 
   history-postgres:
     networks:

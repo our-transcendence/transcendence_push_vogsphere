@@ -41,7 +41,7 @@ SECRET_KEY = os.getenv("SECRET_KEY",'django-insecure-bha_z48$lrtojju%5*y5y399k@f
 urllib3.disable_warnings()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
 '*'

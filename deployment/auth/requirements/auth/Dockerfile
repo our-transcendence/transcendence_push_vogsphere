@@ -19,7 +19,7 @@ ENV BRANCH=${BRANCH}
 RUN apt-get update && \
     apt-get install -y git net-tools
 
-ADD ./auth_service/ /auth_service
+ADD ./source/auth_service/ /auth_service
 COPY start.sh /
 
 WORKDIR /auth_service

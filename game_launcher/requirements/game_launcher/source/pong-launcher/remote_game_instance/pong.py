@@ -53,8 +53,8 @@ class Pong:
             self.rect = Rect(pos_x - size / 2, pos_y - size / 2, size, size)
             self.dir_x = -1
             self.dir_y = 1
-            self.speed_x = 1
-            self.speed_y = 1
+            self.speed_x = 5
+            self.speed_y = 5
             self.size = size
 
         def update(self):

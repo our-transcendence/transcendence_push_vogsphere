@@ -4,7 +4,7 @@ export default class Ball {
         this.rect = rect;
         this.context = context;
         this.dir = {x: -1, y: 1};
-        this.speed = {x: 1, y: 1};
+        this.speed = {x: 3, y: 3};
     }
 
     update() {

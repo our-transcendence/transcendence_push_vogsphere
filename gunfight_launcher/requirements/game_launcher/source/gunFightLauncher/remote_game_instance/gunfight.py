@@ -198,6 +198,12 @@ class Gunfight:
 
     async def send_report(self):
         if self.inter_key:
+            winner: Gunfight.Player
+            looser: Gunfight.Player
+            winner, looser = self.players
+            if winner.life_points < looser.life_points:
+                winner, looser = looser, winner
+
             requests.post(
                 url="https://history-nginx:4343/matches/register",
                 headers={
@@ -205,19 +211,14 @@ class Gunfight:
                     'Content-Type': 'application/json'
                 },
                 json={
-                    "player_1_id": self.players[0].player_id,
-                    "player_2_id": self.players[1].player_id,
-                    "player_1_score": self.players[0].life_points,
-                    "player_2_score": self.players[1].life_points,
+                    "player_1_id": winner.player_id,
+                    "player_2_id": looser.player_id,
+                    "player_1_score": 1,
+                    "player_2_score": 0,
                     "match_type": "gunfight"
                 },
                 verify=False
             )
-            winner: Gunfight.Player
-            looser: Gunfight.Player
-            winner, looser = self.players
-            if winner.life_points < looser.life_points:
-                winner, looser = looser, winner
             requests.post(
                 url="https://stats-nginx:5151/stats/update",
                 headers={

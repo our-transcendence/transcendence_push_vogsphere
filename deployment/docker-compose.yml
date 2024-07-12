@@ -1,0 +1,286 @@
+services:
+
+  front-end:
+    container_name: front-end
+    build:
+      context: ./front-end
+      args:
+        - GITHUB_TOKEN=${GITHUB_TOKEN}
+    networks:
+      - our-net
+    restart: unless-stopped
+    ports:
+      - "4443:4443"
+    env_file:
+      - .env
+
+  history-postgres:
+    networks:
+      history-net:
+        aliases:
+          - postgres
+    extends:
+      file: history/docker-compose.yml
+      service: history-postgres
+    volumes:
+      - history-db:/var/lib/postgresql/data
+  history-service:
+    depends_on:
+      auth-nginx:
+        condition: service_healthy
+    networks:
+      history-net:
+        aliases:
+          - service-history
+      our-net:
+        aliases:
+          - history-service
+    extends:
+      file: history/docker-compose.yml
+      service: history-service
+  history-nginx:
+    networks:
+      history-net:
+        aliases:
+          - nginx
+      our-net:
+        aliases:
+          - history-nginx
+    extends:
+      file: history/docker-compose.yml
+      service: history-nginx
+
+  auth-postgres:
+    networks:
+      auth-net:
+        aliases:
+         - postgres
+    extends:
+      file: auth/docker-compose.yml
+      service: auth-postgres
+    volumes:
+      - auth-db:/var/lib/postgresql/data
+  auth-service:
+    networks:
+      auth-net:
+        aliases:
+          - service-auth
+      our-net:
+        aliases:
+          - auth-service
+    extends:
+      file: auth/docker-compose.yml
+      service: auth-service
+  auth-nginx:
+    networks:
+      auth-net:
+        aliases:
+          - nginx
+      our-net:
+        aliases:
+          - auth-nginx
+    extends:
+      file: auth/docker-compose.yml
+      service: auth-nginx
+
+  user-postgres:
+    networks:
+      user-net:
+        aliases:
+         - postgres
+    extends:
+      file: user/docker-compose.yml
+      service: user-postgres
+    volumes:
+      - user-db:/var/lib/postgresql/data
+  user-redis:
+    networks:
+      user-net:
+        aliases:
+         - redis
+    extends:
+      file: user/docker-compose.yml
+      service: user-redis
+  user-service:
+    depends_on:
+      auth-nginx:
+        condition: service_healthy
+    networks:
+      user-net:
+        aliases:
+          - service-user
+      our-net:
+        aliases:
+          - user-service
+    extends:
+      file: user/docker-compose.yml
+      service: user-service
+    volumes:
+      - profile_pic:/app/public/profile_pic
+  user-nginx:
+    networks:
+      user-net:
+        aliases:
+          - nginx
+      our-net:
+        aliases:
+          - user-nginx
+    extends:
+      file: user/docker-compose.yml
+      service: user-nginx
+
+  stats-postgres:
+    networks:
+      stats-net:
+        aliases:
+         - postgres
+    extends:
+      file: stats/docker-compose.yml
+      service: stats-postgres
+    volumes:
+      - stats-db:/var/lib/postgresql/data
+  stats-redis:
+    networks:
+      stats-net:
+        aliases:
+         - redis
+    extends:
+      file: stats/docker-compose.yml
+      service: stats-redis
+  stats-service:
+    depends_on:
+      auth-nginx:
+        condition: service_healthy
+    networks:
+      stats-net:
+        aliases:
+          - service-stats
+      our-net:
+        aliases:
+          - stats-service
+    extends:
+      file: stats/docker-compose.yml
+      service: stats-service
+  stats-nginx:
+    networks:
+      stats-net:
+        aliases:
+          - nginx
+      our-net:
+        aliases:
+          - stats-nginx
+    extends:
+      file: stats/docker-compose.yml
+      service: stats-nginx
+
+  game-launcher-service:
+    depends_on:
+      auth-nginx:
+        condition: service_healthy
+    networks:
+      game-launcher-net:
+        aliases:
+          - service-game-launcher
+      our-net:
+        aliases:
+          - game-launcher-service
+    extends:
+      file: game_launcher/docker-compose.yml
+      service: game-launcher-service
+  game-launcher-nginx:
+    networks:
+      game-launcher-net:
+        aliases:
+          - nginx
+      our-net:
+        aliases:
+          - game-launcher-nginx
+    extends:
+      file: game_launcher/docker-compose.yml
+      service: game-launcher-nginx
+
+  gunfight-launcher-service:
+    depends_on:
+      auth-nginx:
+        condition: service_healthy
+    networks:
+      gunfight-launcher-net:
+        aliases:
+          - service-gunfight-launcher
+      our-net:
+        aliases:
+          - gunfight-launcher-service
+    extends:
+      file: gunfight_launcher/docker-compose.yml
+      service: gunfight-launcher-service
+  gunfight-launcher-nginx:
+    networks:
+      gunfight-launcher-net:
+        aliases:
+          - nginx
+      our-net:
+        aliases:
+          - gunfight-launcher-nginx
+    extends:
+      file: gunfight_launcher/docker-compose.yml
+      service: gunfight-launcher-nginx
+
+  game-provider-service:
+    depends_on:
+      auth-nginx:
+        condition: service_healthy
+    networks:
+      game-provider-net:
+        aliases:
+          - service-game-provider
+      our-net:
+        aliases:
+          - game-provider-service
+    extends:
+      file: game_provider/docker-compose.yml
+      service: game-provider-service
+  game-provider-nginx:
+    networks:
+      game-provider-net:
+        aliases:
+          - nginx
+      our-net:
+        aliases:
+          - game-provider-nginx
+    extends:
+      file: game_provider/docker-compose.yml
+      service: game-provider-nginx
+
+
+volumes:
+  profile_pic:
+    name: profile_pic
+  history-db:
+    name: history-db
+  auth-db:
+    name: auth-db
+  user-db:
+    name: user-db
+  stats-db:
+    name: stats-db
+
+
+networks:
+  our-net:
+    name: our-net
+  history-net:
+    name: history-net
+  auth-net:
+    name: auth-net
+  user-net:
+    name: user-net
+  chat-net:
+    name: chat-net
+  stats-net:
+    name: stats-net
+  game-launcher-net:
+    name: game-launcher-net
+  gunfight-launcher-net:
+    name: gunfight-launcher-net
+  game-provider-net:
+    name: game-provider-net

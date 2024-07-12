@@ -1,0 +1,94 @@
+@font-face {
+    font-family: 'ComicDaddy';
+    src: url('/fonts/ComicDandy.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Papercut';
+    src: url('/fonts/papercuts-2.ttf') format('truetype');
+}
+
+body {
+    color: white;
+    /*background: blue;*/
+}
+
+html, body {
+    height: 100%;
+}
+
+.background {
+    background: url('/imgs/Noise.png') repeat fixed 0 0;
+}
+
+link-route {
+    cursor: pointer;
+}
+
+#title {
+    font-family: 'ComicDaddy';
+    color: #FCB404;
+    text-align: center;
+    font-size: 107px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+#form-title {
+    font-family: 'Papercut';
+    color: #FFF;
+    text-align: center;
+    font-size: 66px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.form {
+    font-family: 'Papercut';
+    width: 27.98%;
+    height: 33.69%;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-input {
+    border: none;
+    border-radius: 19px;
+    opacity: 0.9;
+    background: #3D8D98;
+    width: 100%;
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.submit-button {
+    display: flex;
+    height: 55px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    border: none;
+    font-family: 'Papercut';
+    color: #000;
+    border-radius: 19px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.form-label {
+    color: #FDB402;
+    text-align: center;
+    font-family: "Papercut";
+    font-size: 29px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+}

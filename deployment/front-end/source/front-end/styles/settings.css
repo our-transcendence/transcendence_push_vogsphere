@@ -1,0 +1,139 @@
+#title-setting
+{
+    color: #FFF;
+    text-align: center;
+    font-family: "Papercut";
+    font-size: 113px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+#all-content
+{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 4px 110px;
+    flex-wrap: wrap;
+    font-family: "Papercut";
+}
+
+.change-input
+{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.text
+{
+    color: #FDB402;
+    font-size: 29px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+    font-family: "Papercut";
+}
+
+#change-display-input, #change-pass-input, #change-pp-input, #qr-input
+{
+    border: none;
+    border-radius: 19px;
+    opacity: 0.9;
+    background: #3D8D98;
+    width: 331px;
+    height: 60px;
+}
+
+.send
+{
+    display: flex;
+    width: 113px;
+    height: 55px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    border-radius: 19px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border: none;
+
+    font-family: Papercut;
+}
+
+#special-login
+{
+    margin-top: 33px;
+    display: flex;
+    gap: 27px;
+}
+
+.buttons-special-login, #qrsend
+{
+    width: 113px;
+    height: 55px;
+
+    border-radius: 19px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border: none;
+
+    font-family: Papercut;
+}
+
+#right-side
+{
+    display: none;
+}
+
+#qr
+{
+    display: flex;
+    gap: 13px;
+    margin-top: 10px;
+}
+
+#delete-account
+{
+    font-family: Papercut;
+    margin-top: 33px;
+    width: 100%;
+    height: 55px;
+    border-radius: 19px;
+    background: #C82611;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border: none;
+    color: #FDB402;
+}
+
+input[type='file'] {
+    color: transparent;
+}
+
+#qr-container {
+    z-index: 2;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 10px;
+    padding: 10px;
+    gap: 50px;
+}
+
+#qr-dst img {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+

@@ -1,0 +1,93 @@
+#title-setting {
+	color: #fff;
+	text-align: center;
+	font-family: "Papercut";
+	font-size: 113px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	text-transform: uppercase;
+}
+
+#all-content {
+	display: flex;
+	justify-content: center;
+	gap: 4px 110px;
+	flex-wrap: wrap;
+	font-family: "Papercut";
+}
+
+.text {
+	color: #fdb402;
+	font-size: 29px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	text-transform: uppercase;
+	font-family: "Papercut";
+}
+
+#stat
+{
+	display: flex;
+	justify-content: center;
+	gap: 100px;
+}
+
+.titleText
+{
+	color: #fff;
+	text-align: center;
+	font-family: "Papercut";
+	font-size: 50px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	text-transform: uppercase;
+}
+
+.microTitle
+{
+	display: flex;
+	justify-content: center;
+	font-size: 75px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	text-transform: uppercase;
+	font-family: "Papercut";
+}
+
+.scrollableContent
+{
+	width: 500px;
+	max-height: 180px;
+	overflow-y: scroll;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(155, 155, 155, 0.7) transparent;
+	color: #fdb402;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	text-transform: uppercase;
+	font-family: "Papercut";
+	text-align: center;
+	border-radius: 50px;
+	box-shadow: 0px 0px 05px rgba(0, 0, 0, 0.3);
+	background-color: rgba(128, 128, 128, 0.3);
+}
+
+.flexDiv
+{
+	display: flex;
+	align-items: center;
+	gap: 100px;
+}
+
+.inScrool
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}

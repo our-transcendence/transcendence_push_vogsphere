@@ -1,0 +1,188 @@
+#Login-Element
+{
+    margin-top: 10vh;
+}
+
+#login-title
+{
+    font-family: 'Papercut';
+    color: #FFF;
+    text-align: center;
+    font-size: 66px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+#img_see
+{
+    display: flex;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+#togglePassword
+{
+    display: flex;
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+
+    border: none;
+    border-radius: 19px;
+    background: #13161B;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    margin-left: 10px;
+}
+
+#red-line
+{
+    margin-top: 37px;
+    width: 343.5px;
+    height: 5px;
+    stroke-width: 7px;
+    background-color: #C82611;
+    border-radius: 10px;
+}
+
+#change-register-login
+{
+    display: flex;
+    width: 341px;
+    height: 67px;
+    align-items: center;
+    flex-shrink: 0;
+    text-align: center;
+
+    border-radius: 19px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    margin-top: 37px;
+    justify-content: center;
+    border: none;
+    color: #FDB402;
+    font-family: "Papercut";
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+#form-password
+{
+    display: flex;
+}
+
+#APILogin
+{
+    display: flex;
+    width: 163px;
+    height: 55px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+
+    font-size: 20px;
+    border: none;
+    font-family: 'Papercut';
+    color: #FFFFFF;
+    border-radius: 19px;
+    background: #13161B;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+#button-div
+{
+    margin-top: 44px;
+    display: flex;
+    gap: 10px;
+}
+
+custom-login {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+custom-register {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#otp-input-container
+{
+    display: none;
+    background-color: darkgrey;
+    border-radius: 50px;
+
+    align-items: center;
+    justify-content: center;
+}
+
+#otp-h1
+{
+    text-align: center;
+    color: #FCB404;
+    font-family: 'ComicDaddy';
+    font-size: 50px;
+}
+
+#otp-container
+{
+    background-color: darkgrey;
+    border-radius: 50px;
+}
+
+#login-form
+{
+   /* font-family: 'Papercut';
+    width: 27.98%;
+    height: 33.69%;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;*/
+
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*flex-direction: column;*/
+    /*text-align: center;*/
+}
+
+#form-title
+{
+    font-family: 'Papercut';
+    color: #FFF;
+    text-align: center;
+    font-size: 66px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+login-page {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,29 @@
+server
+{
+	listen 4443 ssl;
+	listen [::]:4443 ssl;
+	server_name localhost;
+
+
+	ssl_certificate /etc/ssl/cert.pem;
+    ssl_certificate_key /etc/ssl/key.pem;
+    ssl_protocols TLSv1.3;
+
+	root /website;
+	index index.html;
+
+
+	location / {
+        try_files $uri /index.html;
+    }
+
+    location ~* \.(?:css|js|jpg|svg)$ {
+        expires 30d;
+        add_header Cache-Control "public";
+    }
+
+    location ~* \.(?:json)$ {
+        expires 1d;
+        add_header Cache-Control "public";
+    }
+}

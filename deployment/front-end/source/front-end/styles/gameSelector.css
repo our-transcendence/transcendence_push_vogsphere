@@ -1,0 +1,70 @@
+#choice
+{
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	align-content: flex-start;
+	flex-wrap: wrap;
+	font-family: "Papercut";
+	gap: 51px;
+	margin-top: 50px;
+}
+
+#local, #online
+{
+	display: flex;
+	padding: 0px 15px;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+}
+
+h2
+{
+	color: #FFF;
+	text-align: center;
+	font-family: "Papercut";
+	font-size: 113px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	text-transform: uppercase;
+}
+
+h3
+{
+	color: #FFF;
+	text-align: center;
+	font-family: "ComicDaddy";
+	font-size: 90px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 125px;
+	text-transform: uppercase;
+}
+
+.text
+{
+	color: #FDB402;
+	text-align: center;
+	font-family: "Papercut";
+	font-size: 65px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	text-transform: uppercase;
+}
+
+#red-line
+{
+	width: 5px;
+	height: 350px;
+	stroke-width: 7px;
+	background-color: #C82611;
+	border-radius: 10px;
+}
+
+.text:hover
+{
+	cursor: pointer;
+}

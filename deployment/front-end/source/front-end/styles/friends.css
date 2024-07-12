@@ -1,0 +1,133 @@
+h2
+{
+	font-family: 'Papercut';
+	color: #FFFFFF;
+	font-size: 70px;
+}
+
+#search-friend
+{
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	margin-top: 25px;
+	gap: 15px;
+}
+
+#search-display-name
+{
+	border: none;
+	border-radius: 19px;
+	opacity: 0.9;
+	background: #3D8D98;
+	width: 341px;
+	height: 60px;
+}
+
+#search
+{
+	display: flex;
+	width: 163px;
+	height: 55px;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+
+	font-size: 20px;
+	border: none;
+	font-family: 'Papercut';
+	color: #000;
+	border-radius: 19px;
+	background: #FFF;
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+#friend-result, #friend-pending, #friend-request
+{
+	display: flex;
+	justify-content: center;
+	margin-top: 25px;
+	gap: 100px;
+	flex-wrap: wrap;
+}
+
+#result, #pending, #request
+{
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	margin-top: 25px;
+}
+
+.pdp-add-friend
+{
+	height: 100px;
+	width: 100px;
+	border-radius: 50px;
+}
+
+.add-friend, .accept
+{
+	display: flex;
+	width: 163px;
+	height: 55px;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+
+	font-size: 20px;
+	border: none;
+	font-family: 'Papercut';
+	color: #000;
+	border-radius: 19px;
+	background: #FFF;
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.reject
+{
+	display: flex;
+	width: 163px;
+	height: 55px;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+
+	font-size: 20px;
+	border: none;
+	font-family: 'Papercut';
+	color: #FFF;
+	border-radius: 19px;
+	background: #000;
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+p
+{
+	color: #FCB404;
+	text-align: center;
+	font-family: "Papercut";
+	font-size: 40px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	text-transform: uppercase;
+}
+
+button:hover
+{
+	cursor: pointer;
+}
+
+.pending, .result, .request
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	flex-shrink: 0;
+	gap: 15px;
+}

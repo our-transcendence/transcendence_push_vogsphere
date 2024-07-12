@@ -1,0 +1,411 @@
+{
+	"login_page": {
+		"title": {
+			"fr": "Connexion",
+			"en": "Login",
+			"de": "Verbindung"
+		},
+		"login_field": {
+			"fr": "Nom d'utilisateur",
+			"en": "Username",
+			"de": "Benutzername"
+		},
+		"password_field": {
+			"fr": "Mot de passe",
+			"en": "Password",
+			"de": "Passwort"
+		},
+		"login_button": {
+			"fr": "Se connecter",
+			"en": "Login",
+			"de": "Einloggen"
+		},
+		"42_button": {
+			"fr": "Se connecter avec 42",
+			"en": "Login with 42",
+			"de": "Einloggen mit 42"
+		},
+		"Register_instead_button": {
+			"fr": "Je n'ai pas de compte",
+			"en": "I don't have an account",
+			"de": "Ich habe kein Konto"
+		},
+		"invalid_credentials": {
+			"fr": "Nom d'utilisateur ou mot de passe invalide",
+			"en": "Invalid username or password",
+			"de": "Ungültiger Benutzername oder Passwort"
+		},
+		"error_user_service": {
+			"fr": "Impossible de se connecter au service utilisateur.",
+			"en": "Unable to connect to user service.",
+			"de": "Es kann keine Verbindung zum Benutzerdienst hergestellt werden."
+		},
+		"invalid_otp": {
+			"fr": "Code OTP invalide",
+			"en": "Invalid OTP code",
+			"de": "Ungültiger OTP-Code"
+		},
+		"complete_fields": {
+			"fr": "Veuillez remplir tous les champs",
+			"en": "Please fill all fields",
+			"de": "Bitte füllen Sie alle Felder aus"
+		}
+	},
+	"register_page": {
+		"title": {
+			"fr": "Inscription",
+			"en": "Register",
+			"de": "Registrieren"
+		},
+		"login_field": {
+			"fr": "Nom d'utilisateur",
+			"en": "Username",
+			"de": "Benutzername"
+		},
+		"password_field": {
+			"fr": "Mot de passe",
+			"en": "Password",
+			"de": "Passwort"
+		},
+		"register_button": {
+			"fr": "S'inscrire",
+			"en": "Register",
+			"de": "Registrieren"
+		},
+		"Login_instead_button": {
+			"fr": "J'ai déjà un compte",
+			"en": "I have an account",
+			"de": "Ich habe ein Konto"
+		},
+		"error_user_service": {
+			"fr": "Impossible de se connecter au service utilisateur.",
+			"en": "Unable to connect to user service.",
+			"de": "Es kann keine Verbindung zum Benutzerdienst hergestellt werden."
+		},
+		"complete_fields": {
+			"fr": "Veuillez remplir tous les champs",
+			"en": "Please fill all fields",
+			"de": "Bitte füllen Sie alle Felder aus"
+		},
+		"already_exist": {
+			"fr": "Ce nom d'utilisateur existe déjà",
+			"en": "This username already exists",
+			"de": "Dieser Benutzername existiert bereits"
+		},
+		"password_too_short":
+		{
+			"en": "Password too short",
+			"fr": "Mot de passe trop court",
+			"de": "Passwort zu kurz"
+		}
+	},
+	"home_page": {
+		"Game_title": {
+			"fr": "Jouer",
+			"en": "Play",
+			"de": "Spielen"
+		},
+		"Pong_button": {
+			"fr": "Pong",
+			"en": "Pong",
+			"de": "Pong"
+		},
+		"Gunfight_button": {
+			"fr": "Gunfight",
+			"en": "Gunfight",
+			"de": "Gunfight"
+		},
+		"Add_friend_button": {
+			"fr": "Ajouter",
+			"en": "Add",
+			"de": "Hinzufügen"
+		}
+	},
+	"user_menu": {
+		"Dashboard_button": {
+			"fr": "Tableau de bord",
+			"en": "Dashboard",
+			"de": "Dashboard"
+		},
+		"Settings_button": {
+			"fr": "Paramètres",
+			"en": "Settings",
+			"de": "Einstellungen"
+		},
+		"Logout_button": {
+			"fr": "Déconnexion",
+			"en": "Logout",
+			"de": "Ausloggen"
+		},
+		"Logout_all_button": {
+			"fr": "Déconnexion complete",
+			"en": "Logout everywhere",
+			"de": "Überall ausloggen"
+		}
+	},
+	"settings_page": {
+		"title": {
+			"fr": "Paramètres",
+			"en": "Settings",
+			"de": "Einstellungen"
+		},
+		"display_name_field": {
+			"fr": "Modifier le nom d'affichage",
+			"en": "Change display name",
+			"de": "Anzeigenamen ändern"
+		},
+		"password_field": {
+			"fr": "Modifer le mot de passe",
+			"en": "Change password",
+			"de": "Passwort ändern"
+		},
+		"Profile_picture_field": {
+			"fr": "Modifier l'image de profil",
+			"en": "Change profile picture",
+			"de": "Profilbild ändern"
+		},
+		"Delete_account_button": {
+			"fr": "Supprimer le compte",
+			"en": "Delete account",
+			"de": "Konto löschen"
+		},
+		"Send_button": {
+			"fr": "Envoyer",
+			"en": "Send",
+			"de": "Senden"
+		},
+		"2FA_button": {
+			"fr": "Activer 2FA",
+			"en": "Activate 2FA",
+			"de": "2FA aktivieren"
+		},
+		"2FA_disable_button": {
+			"fr": "Désactiver 2FA",
+			"en": "Disable 2FA",
+			"de": "2FA deaktivieren"
+		},
+		"link_42_button": {
+			"fr": "Lier mon compte 42",
+			"en": "Link my 42 account",
+			"de": "Mein 42-Konto verknüpfen"
+		},
+		"unlink_42_button": {
+			"fr": "Délier mon compte 42",
+			"en": "Unlink my 42 account",
+			"de": "Mein 42-Konto trennen"
+		}
+	},
+	"friend_page": {
+		"search_button": {
+			"fr": "Rechercher",
+			"en": "Search",
+			"de": "Suche"
+		},
+		"search_result": {
+			"fr": "Résultat de la recherche",
+			"en": "Search result",
+			"de": "Suchergebnis"
+		},
+		"sent_request": {
+			"fr": "Demande envoyée",
+			"en": "Request sent",
+			"de": "Anfrage gesendet"
+		},
+		"pending_request": {
+			"fr": "Demandes en attente",
+			"en": "Pending requests",
+			"de": "Ausstehende Anfragen"
+		},
+		"send_request_button": {
+			"fr": "Envoyer une demande",
+			"en": "Send request",
+			"de": "Anfrage senden"
+		},
+		"accept_request_button": {
+			"fr": "Accepter",
+			"en": "Accept",
+			"de": "Akzeptieren"
+		},
+		"decline_request_button": {
+			"fr": "Refuser",
+			"en": "Decline",
+			"de": "Ablehnen"
+		},
+		"no_result": {
+			"fr": "Aucun résultat",
+			"en": "No result",
+			"de": "Kein Ergebnis"
+		}
+	},
+	"games_selector":
+	{
+		"local": {
+			"fr": "Local",
+			"en": "Local",
+			"de": "Lokal"
+		},
+		"online": {
+			"fr": "En ligne",
+			"en": "Online",
+			"de": "Online"
+		},
+		"freeplay": {
+			"fr": "Entraînement",
+			"en": "Freeplay",
+			"de": "Freispiel"
+		},
+		"tournament": {
+			"fr": "Tournoi",
+			"en": "Tournament",
+			"de": "Turnier"
+		}
+	},
+	"tournaments":
+	{
+		"players": {
+			"fr": "Joueurs",
+			"en": "Players",
+			"de": "Spieler"
+		},
+		"play": {
+			"fr": "Jouer",
+			"en": "Play",
+			"de": "Spielen"
+		},
+		"player": {
+			"fr": "Joueur",
+			"en": "Player",
+			"de": "Spieler"
+		},
+		"winner_is": {
+			"fr": "Le gagnant est",
+			"en": "The winner is",
+			"de": "Der Gewinner ist"
+		},
+		"go_back_to_dashboard": {
+			"fr": "Retour au tableau de bord",
+			"en": "Go back to dashboard",
+			"de": "Zurück zum Dashboard"
+		},
+		"loosers": {
+			"fr": "Perdants",
+			"en": "Loosers",
+			"de": "Verlierer"
+		},
+		"winners": {
+			"fr": "Gagnants",
+			"en": "Winners",
+			"de": "Gewinner"
+		},
+		"launch_game": {
+			"fr": "Lancer le jeu",
+			"en": "Launch game",
+			"de": "Spiel starten"
+		},
+		"against": {
+			"fr": "contre",
+			"en": "against",
+			"de": "gegen"
+		},
+		"next_game": {
+			"fr": "Prochain match",
+			"en": "Next game",
+			"de": "Nächstes Spiel"
+		}
+	},
+	"local_games":
+	{
+		"local_pong": {
+			"fr": "Pong local",
+			"en": "Local Pong",
+			"de": "Lokales Pong"
+		},
+		"local_gunfight": {
+			"fr": "Gunfight local",
+			"en": "Local Gunfight",
+			"de": "Lokaler Gunfight"
+		},
+		"players_name": {
+			"fr": "Nom des joueurs",
+			"en": "Players name",
+			"de": "Spielernamen"
+		},
+		"player": {
+			"fr": "Joueur",
+			"en": "Player",
+			"de": "Spieler"
+		},
+		"start": {
+			"fr": "Démarrer",
+			"en": "Start",
+			"de": "Start"
+		}
+	},
+	"end_game":
+	{
+		"win": {
+			"fr": "Gagne",
+			"en": "Wins",
+			"de": "Gewinnt"
+		},
+		"replay": {
+			"fr": "Rejouer",
+			"en": "Replay",
+			"de": "Wiederholen"
+		},
+		"home": {
+			"fr": "Retour au menu",
+			"en": "Back to menu",
+			"de": "Zurück zum Menü"
+		}
+	},
+	"otp_input":
+	{
+		"submit": {
+			"fr": "Valider",
+			"en": "Submit",
+			"de": "Bestätigen"
+		}
+	},
+	"stats":
+	{
+		"statistics": {
+			"fr": "Statistiques",
+			"en": "Statistics",
+			"de": "Statistiken"
+		},
+		"history": {
+			"fr": "Historique",
+			"en": "History",
+			"de": "Geschichte"
+		},
+		"winnings": {
+			"fr": "Victoires",
+			"en": "Winnings",
+			"de": "Gewinne"
+		},
+		"looses": {
+			"fr": "Défaites",
+			"en": "Looses",
+			"de": "Verluste"
+		},
+		"game": {
+			"fr": "Jeu",
+			"en": "Game",
+			"de": "Spiel"
+		}
+	},
+	"login_42":
+	{
+		"error": {
+			"fr": "Impossible de se connecter avec 42",
+			"en": "Unable to connect with 42",
+			"de": "Es kann keine Verbindung zu 42 hergestellt werden"
+		},
+		"back_to_login": {
+			"fr": "Retour à la connexion",
+			"en": "Back to login",
+			"de": "Zurück zur Anmeldung"
+		}
+	}
+}

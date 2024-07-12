@@ -1,0 +1,31 @@
+[
+  {
+    "cacti": [],
+    "trailer": false
+  },
+  {
+    "cacti": [
+      [300, 50],
+      [450, 150]
+    ],
+    "trailer": false
+  },
+  {
+    "cacti": [
+      [300, 50]
+    ],
+    "trees": [
+      [450, 150]
+    ],
+    "trailer": false
+  },
+  {
+    "cacti": [
+      [300, 50]
+    ],
+    "trees": [
+      [450, 150]
+    ],
+    "trailer": true
+  }
+]

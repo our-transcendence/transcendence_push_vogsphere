@@ -1,0 +1,6 @@
+export GITHUB_TOKEN=
+export HOST=$(hostname)
+export SECRET_42=
+export UID_42=
+export PONG_HOSTS=$(hostname):9999
+export GF_HOSTS=$(hostname):8989

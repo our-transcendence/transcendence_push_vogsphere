@@ -1,0 +1,24 @@
+#matchmaking-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#matchmaking-container p {
+    font-family: 'Papercut';
+    text-transform: uppercase;
+    font-size: xxx-large;
+    text-shadow: 0 0 15px #fff;
+    animation: rotation 1s infinite alternate ease-in-out;
+}
+
+@keyframes rotation {
+    0% {rotate: -5deg}
+    100% {rotate: 5deg}
+}

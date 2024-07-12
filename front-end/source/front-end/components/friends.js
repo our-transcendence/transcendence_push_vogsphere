@@ -71,11 +71,10 @@ export default class CustomFriends extends HTMLElement
 						return res.json()
 				}).then(json =>
 				{
-					displayResult(json.result);
+					if (json && json.result)
+						displayResult(json.result);
 				}).catch(err =>
-				{
-					console.error(err);
-				});
+				{return ;});
 			});
 		}
 
@@ -92,10 +91,7 @@ export default class CustomFriends extends HTMLElement
 			for (let i = 0; i < result.length; i++)
 			{
 				if (document.querySelector(`#friend${result[i].id}`) || result[i].id == getCookie("user_id"))
-				{
-					console.error("user already see");
 					continue ;
-				}
 				let div = document.createElement("div");
 				div.className = "result";
 				GetPdpFriend(result[i].id).then(res =>
@@ -143,7 +139,7 @@ export default class CustomFriends extends HTMLElement
 					DisplayRequest();
 				}).catch(err =>
 				{
-					console.error(err);
+					return ;
 				});
 			})
 		}
@@ -165,7 +161,6 @@ export default class CustomFriends extends HTMLElement
 			}
 			catch (err)
 			{
-				console.error(err);
 				return (err);
 			}
 		}
@@ -187,6 +182,7 @@ export default class CustomFriends extends HTMLElement
 			{
 				if (json.length != 0)
 				{
+					console.log ("aa");
 					const friendList = document.querySelector("#friend-request");
 
 					const MyId = getCookie("user_id");
@@ -198,6 +194,9 @@ export default class CustomFriends extends HTMLElement
 							const MyDiv = document.createElement("div");
 							MyDiv.className = "friend";
 							let friendId = json[keys[i]].receiver;
+
+							if (document.querySelector(`#friend${friendId}`))
+								continue ;
 
 							GetPdpFriend(friendId).then(res =>
 							{
@@ -234,7 +233,7 @@ export default class CustomFriends extends HTMLElement
 				}
 			}).catch(err =>
 			{
-				console.error(err);
+				return ;
 			})
 		}
 
@@ -318,7 +317,7 @@ export default class CustomFriends extends HTMLElement
 				}
 			}).catch(err =>
 			{
-				console.error(err);
+				return ;
 			})
 		}
 

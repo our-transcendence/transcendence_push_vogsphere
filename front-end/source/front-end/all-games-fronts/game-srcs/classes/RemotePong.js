@@ -28,8 +28,8 @@ export default class RemotePong extends EventTarget {
             new Rect(this.context.canvas.width - 10 - 20, 0, 10, 100),
             this.context
         );
-        this.ball = null;
-        this.interval = null;
+        this.ball = undefined;
+        this.interval = undefined;
     }
 
     run() {
@@ -114,7 +114,7 @@ export default class RemotePong extends EventTarget {
             this.onEnd(this.name, null);
         });
         this.socket.on("game_end", (data) => {
-            this.winner = data[this.socket.id] > this.scores[this.opponentSid] ? this.playerData : this.opponentData;
+            this.winner = data[this.socket.id] > data[this.opponentSid] ? this.playerData : this.opponentData;
             this.onEnd(this.winner, data);
         });
         const handleInputs = (event) => this.input(event);

@@ -49,15 +49,11 @@ export default class RemotePong extends EventTarget {
         });
         this.socket.on("connect_error", (err) => {
             this.socket.disconnect();
-            if (err.type === undefined) {
-                this.dispatchEvent(new Event("authError", {bubbles: true}));
-            }
+            this.dispatchEvent(new Event("authError", {bubbles: true}));
         });
         this.socket.on("connect_failed", (err) => {
             this.socket.disconnect();
-            if (err.type === undefined) {
-                this.dispatchEvent(new Event("authError", {bubbles: true}));
-            }
+            this.dispatchEvent(new Event("authError", {bubbles: true}));
         });
         this.socket.on("in_queue", (data) => {
             console.log(`In queue: ${data['sid']}`);

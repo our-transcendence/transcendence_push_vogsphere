@@ -1,3 +1,5 @@
+import changeRoute from "../utils/changeRoute";
+
 export default class RemotePongGame extends HTMLElement {
     constructor() {
         super();
@@ -20,6 +22,9 @@ export default class RemotePongGame extends HTMLElement {
         const endModal = this.querySelector("end-game-modal");
         game.addEventListener("endGame", (e) => {
             endModal.display("remote pong", e.detail.scores, e.detail.winner.display_name, "/pong/remote/matchmaking");
-        })
+        });
+        game.addEventListener("authError", (e) => {
+            changeRoute("/home");
+        });
     }
 }

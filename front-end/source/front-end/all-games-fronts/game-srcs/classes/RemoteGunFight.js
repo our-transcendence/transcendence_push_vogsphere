@@ -70,15 +70,11 @@ export default class RemoteGunfight extends EventTarget {
             console.log(err.message);
             console.log(err.context);
             this.socket.disconnect();
-            if (err.type === undefined) {
-                this.dispatchEvent(new Event("authError", {bubbles: true}));
-            }
+            this.dispatchEvent(new Event("authError", {bubbles: true}));
         });
         this.socket.on("connect_failed", (err) => {
             this.socket.disconnect();
-            if (err.type === undefined) {
-                this.dispatchEvent(new Event("authError", {bubbles: true}));
-            }
+            this.dispatchEvent(new Event("authError", {bubbles: true}));
         });
         this.socket.on("maps", (data) => {
             console.log("Map data:");

@@ -120,7 +120,7 @@
 			"en": "Add",
 			"de": "Hinzufügen"
 		},
-		"Stats-link": {
+		"Stats_link": {
 			"fr" : "Voire mes statistiques",
 			"en" : "See my statistics",
 			"de" : "Meine Statistiken ansehen"
@@ -359,9 +359,9 @@
 	"end_game":
 	{
 		"win": {
-			"fr": "Gagne ",
-			"en": "Wins ",
-			"de": "Gewinnt "
+			"fr": " Gagne",
+			"en": " Wins",
+			"de": " Gewinnt"
 		},
 		"replay": {
 			"fr": "Rejouer",

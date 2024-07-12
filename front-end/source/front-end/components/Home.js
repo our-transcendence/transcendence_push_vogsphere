@@ -12,7 +12,7 @@ export default class Dashboard extends HTMLElement {
 		let Pong_button = await lang.home_page.Pong_button[getCookie("lang")];
 		let Gunfight_button = await lang.home_page.Gunfight_button[getCookie("lang")];
 		let Add_friend_button = await lang.home_page.Add_friend_button[getCookie("lang")];
-		let Stats_link = await lang.home_page.Stats-link[getCookie("lang")];
+		let Stats_link = await lang.home_page.Stats_link[getCookie("lang")];
 		let delete_friend_button = await lang.home_page.Delete_friend_button[getCookie("lang")];
 		let See_friend_stats_button = await lang.home_page.See_friend_stats_button[getCookie("lang")];
 		this.innerHTML = `

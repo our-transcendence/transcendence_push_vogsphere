@@ -12,6 +12,9 @@ export default class Dashboard extends HTMLElement {
 		let Pong_button = await lang.home_page.Pong_button[getCookie("lang")];
 		let Gunfight_button = await lang.home_page.Gunfight_button[getCookie("lang")];
 		let Add_friend_button = await lang.home_page.Add_friend_button[getCookie("lang")];
+		let Stats_link = await lang.home_page.Stats-link[getCookie("lang")];
+		let delete_friend_button = await lang.home_page.Delete_friend_button[getCookie("lang")];
+		let See_friend_stats_button = await lang.home_page.See_friend_stats_button[getCookie("lang")];
 		this.innerHTML = `
 			<link rel="stylesheet" href="/styles/home.css" >
 			<h2 id="play-text">${Game_title}</h2>
@@ -19,7 +22,7 @@ export default class Dashboard extends HTMLElement {
 				<link-route route="/pong/modeSelector" id="pong">${Pong_button}</link-route>
 				<link-route route="/gunfight/modeSelector" id="gunfight">${Gunfight_button}</link-route>
 			</div>
-			<p id="seeYourStats">see your stat</p>
+			<p id="seeYourStats">${Stats_link}</p>
 			<div id="parent-red-line">
 				<div id="red-line"></div>
 			</div>
@@ -161,7 +164,7 @@ export default class Dashboard extends HTMLElement {
 				{
 					const button = document.createElement("button");
 					button.className = "friendButtons";
-					button.innerText = "See Friends Stats";
+					button.innerText = See_friend_stats_button;
 					button.id = `stat${MyDiv.name}`
 					console.log(buttonDiv);
 					buttonDiv.appendChild(button);
@@ -187,7 +190,7 @@ export default class Dashboard extends HTMLElement {
 				{
 					const button = document.createElement("button");
 					button.className = "friendButtons deleteFriendButton";
-					button.innerText = "delete Friend";
+					button.innerText = delete_friend_button;
 					button.id = `button${MyDiv.name}`
 					buttonDiv.appendChild(button);
 					button.addEventListener("click", e =>

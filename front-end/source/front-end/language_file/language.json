@@ -119,6 +119,21 @@
 			"fr": "Ajouter",
 			"en": "Add",
 			"de": "Hinzufügen"
+		},
+		"Stats-link": {
+			"fr" : "Voire mes statistiques",
+			"en" : "See my statistics",
+			"de" : "Meine Statistiken ansehen"
+		},
+		"Delete_friend_button": {
+			"fr": "Supprimer l'ami",
+			"en": "Delete friend",
+			"de": "Freund löschen"
+		},
+		"See_friend_stats_button": {
+			"fr": "Voir ses statistiques",
+			"en": "See friend stats",
+			"de": "Freundesstatistiken anzeigen"
 		}
 	},
 	"user_menu": {

@@ -40,6 +40,7 @@ def delete_player(request):
     try:
         data: PlayerRegistrationData = parsePlayerRegistrationData(request.body)
     except ParseError as e:
+        print(e.http_response)
         return e.http_response
     try:
         player = Player.objects.get(id=data["player_id"])
@@ -56,6 +57,7 @@ def register_match(request):
     except ParseError as e:
         return e.http_response
     if data["player_1_id"] == data["player_2_id"]:
+        print("same", flush=True)
         return HttpResponse(status=400)
     try:
         Match.register(data)

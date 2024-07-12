@@ -344,9 +344,9 @@
 	"end_game":
 	{
 		"win": {
-			"fr": "Gagne",
-			"en": "Wins",
-			"de": "Gewinnt"
+			"fr": "Gagne ",
+			"en": "Wins ",
+			"de": "Gewinnt "
 		},
 		"replay": {
 			"fr": "Rejouer",

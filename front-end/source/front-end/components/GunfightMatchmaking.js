@@ -10,12 +10,12 @@ export default class GunfightMatchmaking extends Matchmaking {
         super.connectedCallback();
         console.log("Pong Matchmaking");
 
-        const ws = new WebSocket(`wss://${window.location.hostname}:5151/join/`);
-        ws.addEventListener("open", () => {
+        this.ws = new WebSocket(`wss://${window.location.hostname}:5151/join/`);
+        this.ws.addEventListener("open", () => {
             console.info("connection open");
-            ws.send(`{"game": "gunfight"}`);
+            this.ws.send(`{"game": "gunfight"}`);
         });
-        ws.addEventListener("message", (e) => {
+        this.ws.addEventListener("message", (e) => {
             console.info("Received message");
             console.info(e);
             const data = JSON.parse(e.data);

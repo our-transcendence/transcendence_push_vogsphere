@@ -28,8 +28,8 @@ export default class RemotePong extends EventTarget {
             new Rect(this.context.canvas.width - 10 - 20, 0, 10, 100),
             this.context
         );
-        this.ball = null;
-        this.interval = null;
+        this.ball = undefined;
+        this.interval = undefined;
     }
 
     run() {

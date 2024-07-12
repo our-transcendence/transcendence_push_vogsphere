@@ -184,6 +184,7 @@ export default class Login extends HTMLElement {
 					}
 					else
 					{
+						form.style.display = "block";
 						otpInputContainer.style.display = "none";
 						message.innerText = invalid_otp;
 						message.style.color = "#C82611";

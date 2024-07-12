@@ -71,10 +71,11 @@ export default class CustomFriends extends HTMLElement
 						return res.json()
 				}).then(json =>
 				{
-					if (json && json.result)
-						displayResult(json.result);
+					displayResult(json.result);
 				}).catch(err =>
-				{return ;});
+				{
+					console.error(err);
+				});
 			});
 		}
 
@@ -91,7 +92,10 @@ export default class CustomFriends extends HTMLElement
 			for (let i = 0; i < result.length; i++)
 			{
 				if (document.querySelector(`#friend${result[i].id}`) || result[i].id == getCookie("user_id"))
+				{
+					console.error("user already see");
 					continue ;
+				}
 				let div = document.createElement("div");
 				div.className = "result";
 				GetPdpFriend(result[i].id).then(res =>
@@ -139,7 +143,7 @@ export default class CustomFriends extends HTMLElement
 					DisplayRequest();
 				}).catch(err =>
 				{
-					return ;
+					console.error(err);
 				});
 			})
 		}
@@ -161,6 +165,7 @@ export default class CustomFriends extends HTMLElement
 			}
 			catch (err)
 			{
+				console.error(err);
 				return (err);
 			}
 		}
@@ -229,7 +234,7 @@ export default class CustomFriends extends HTMLElement
 				}
 			}).catch(err =>
 			{
-				return ;
+				console.error(err);
 			})
 		}
 
@@ -313,7 +318,7 @@ export default class CustomFriends extends HTMLElement
 				}
 			}).catch(err =>
 			{
-				return ;
+				console.error(err);
 			})
 		}
 

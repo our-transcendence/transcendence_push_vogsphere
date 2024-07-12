@@ -7,6 +7,7 @@ export default class RemotePongGame extends HTMLElement {
         const params = new URLSearchParams(window.location.search);
 
         if (!params.has("gamePort")) {
+            console.error("game address provided");
             return;
         }
 

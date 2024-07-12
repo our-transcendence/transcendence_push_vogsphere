@@ -60,8 +60,10 @@ export default class RemotePong extends EventTarget {
             }
         });
         this.socket.on("in_queue", (data) => {
+            console.log(`In queue: ${data['sid']}`);
         });
         this.socket.on("leave_queue", () => {
+            console.log("Leave queue");
         });
         this.socket.on("in_game", (data) => {
             this.opponentSid = data[0]['sid'];

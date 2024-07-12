@@ -7,11 +7,11 @@ export default class LocalGunFightGame extends HTMLElement {
         const params = new URLSearchParams(window.location.search);
 
         if (!params.has("player1")) {
-            return ;
+            console.error("No player 1 given");
             return;
         }
         if (!params.has("player2")) {
-            return ;
+            console.error("No player 2 given");
             return;
         }
 

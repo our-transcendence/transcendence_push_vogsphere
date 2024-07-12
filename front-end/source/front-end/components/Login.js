@@ -160,6 +160,7 @@ export default class Login extends HTMLElement {
 			})
 				.then(res => res.json())
 				.then(body => {
+					console.log(body.redirect);
 					window.location.replace(body.redirect);
 				});
 		});

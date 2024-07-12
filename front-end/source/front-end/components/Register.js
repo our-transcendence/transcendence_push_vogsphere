@@ -132,10 +132,11 @@ export default class Register extends HTMLElement {
 					message.style.marginLeft = "20px";
 					message.style.maxWidth = "300px";
 				}
+				console.log(res.status);
 				submitButton.disabled = false;
 			}).catch(err => {
+				console.error(err);
 				submitButton.disabled = false;
-				return ;
 			})
 		});
 	}

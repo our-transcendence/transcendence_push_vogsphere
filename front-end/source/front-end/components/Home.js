@@ -118,6 +118,7 @@ export default class Dashboard extends HTMLElement {
 										return (res.json())
 								}).then(json =>
 								{
+									console.log(json);
 									const status = document.createElement("div");
 									status.className = "status";
 									status.style.backgroundColor = "#00CB00";
@@ -146,7 +147,7 @@ export default class Dashboard extends HTMLElement {
 				}
 			}).catch(err =>
 			{
-				return ;
+				console.error(err);
 			})
 		}
 
@@ -162,6 +163,7 @@ export default class Dashboard extends HTMLElement {
 					button.className = "friendButtons";
 					button.innerText = "See Friends Stats";
 					button.id = `stat${MyDiv.name}`
+					console.log(buttonDiv);
 					buttonDiv.appendChild(button);
 					button.addEventListener("click", e =>
 					{
@@ -204,7 +206,7 @@ export default class Dashboard extends HTMLElement {
 								location.reload();
 						}).catch(err =>
 						{
-							return ;
+							console.error(err);
 						});
 					})
 				}
@@ -230,6 +232,7 @@ export default class Dashboard extends HTMLElement {
 			}
 			catch (err)
 			{
+				console.log(err);
 				return (err);
 			}
 		}

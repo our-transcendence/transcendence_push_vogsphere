@@ -8,6 +8,7 @@ export default class PongMatchmaking extends Matchmaking {
 
     connectedCallback() {
         super.connectedCallback();
+        console.log("Pong Matchmaking");
 
         this.ws = new WebSocket(`wss://${window.location.hostname}:5151/join/`);
         this.ws.addEventListener("open", () => {
@@ -19,6 +20,7 @@ export default class PongMatchmaking extends Matchmaking {
             console.info(e);
             const data = JSON.parse(e.data);
             if (!data.hasOwnProperty("gamePort")) {
+                console.error("Invalid game port");
                 return;
             }
             this.joining();

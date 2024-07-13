@@ -1,6 +1,6 @@
 annotated-types==0.7.0
 asgiref==3.8.1
-certifi==2024.2.2
+certifi==2024.07.04
 cffi==1.16.0
 charset-normalizer==3.3.2
 cryptography==42.0.5

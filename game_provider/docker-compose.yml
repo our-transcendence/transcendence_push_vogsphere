@@ -12,6 +12,8 @@ services:
         GITHUB_TOKEN: ${GITHUB_TOKEN}
     expose:
       - 5252
+    container_name: game_provider_service_cont
+
   game-provider-nginx:
     depends_on:
       game-provider-service:
@@ -25,3 +27,4 @@ services:
       timeout: 10s
       retries: 5
       start_period: 10s
+    container_name: game_provider_server_cont

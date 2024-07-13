@@ -80,10 +80,10 @@ export default class RemoteGunfight extends EventTarget {
             this.loadMap();
         });
         this.socket.on("trailer_update", (data) => {
-            if (this.trailer === null)
-                return;
-            this.trailer.rect.posX = data[0];
-            this.trailer.rect.posY = data[1];
+            if (this.trailer) {
+                this.trailer.rect.posX = data[0];
+                this.trailer.rect.posY = data[1];
+            }
         });
         this.socket.on("in_game", (data) => {
             this.opponentSid = data[0]['sid'];

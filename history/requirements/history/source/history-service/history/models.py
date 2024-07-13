@@ -1,6 +1,6 @@
 import typing
 from typing import TypedDict, Optional
-from django.db import models
+from django.db import IntegrityError, OperationalError, models
 from django.db.models import Q, QuerySet
 from django.utils import timezone
 
@@ -63,8 +63,11 @@ class Match(models.Model):
             player_2_score=data["player_2_score"],
             timestamp=timezone.now()
         )
-        match.save()
-
+        try:
+            match.save()
+        except (IntegrityError, OperationalError) as e:
+            print(f"DATABASE FAILURE {e}", flush=True)
+            pass
     @staticmethod
     def retrieve(match_types: set[str], player_1_id: int, player_2_id: Optional[int] = None) -> list[HistoryMatch]:
         matches_list: list[HistoryMatch] = []

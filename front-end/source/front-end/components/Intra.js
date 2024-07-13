@@ -21,8 +21,6 @@ export default class Intra extends HTMLElement {
         const urlParams = new URLSearchParams(window.location.search);
         const ft_code = urlParams.get('code');
 
-        //requete get to /token_42/ avec le code
-        console.log(ft_code);
 
         fetch(`https://${location.hostname}:4444/token_42/`, {
                 method: "POST",
@@ -53,7 +51,6 @@ export default class Intra extends HTMLElement {
                 }
             }
         }).catch(err => {
-            console.log(err)
         });
     }
 
@@ -76,10 +73,9 @@ export default class Intra extends HTMLElement {
                 this.appendChild(p);
                 const button = document.querySelector("#friendButtons");
                 button.style.display = "block";
-                console.log(res.statusText);
             }
         }).catch(err => {
-            console.log(err)
+            return ;
         });
     }
 
@@ -92,14 +88,11 @@ export default class Intra extends HTMLElement {
             body: null
         }).then(res => {
             if (res.status === 204) {
-                console.log(res.statusText)
                 changeRoute("/settings");
             } else {
-                console.log(res.statusText);
                 changeRoute("/settings");
             }
         }).catch(err => {
-            console.log(err);
             changeRoute("/home");
         });
     }
@@ -113,14 +106,11 @@ export default class Intra extends HTMLElement {
             body: null
         }).then(res => {
             if (res.status === 204) {
-                console.log(res.statusText)
                 changeRoute("/settings");
             } else {
-                console.log(res.statusText);
                 changeRoute("/settings");
             }
         }).catch(err => {
-            console.log(err);
             changeRoute("/home");
         });
     }

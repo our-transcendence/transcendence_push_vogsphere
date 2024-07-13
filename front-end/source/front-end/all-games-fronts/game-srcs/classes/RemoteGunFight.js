@@ -54,9 +54,7 @@ export default class RemoteGunfight extends EventTarget {
 
     setEventListeners() {
         this.socket.on("connect", () => {
-            console.log("Connected");
             this.localCowboy.addEventListener("shoot", (e) => {
-                console.log(e);
                 this.socket.emit("shoot", e.detail);
             })
             this.socket.emit("ready");
@@ -65,10 +63,6 @@ export default class RemoteGunfight extends EventTarget {
             clearInterval(this.interval);
         });
         this.socket.on("connect_error", (err) => {
-            console.log("connect_error");
-            console.log(err.code);
-            console.log(err.message);
-            console.log(err.context);
             this.socket.disconnect();
             this.dispatchEvent(new Event("authError", {bubbles: true}));
         });
@@ -77,8 +71,6 @@ export default class RemoteGunfight extends EventTarget {
             this.dispatchEvent(new Event("authError", {bubbles: true}));
         });
         this.socket.on("maps", (data) => {
-            console.log("Map data:");
-            console.log(data);
             this.maps = data;
             this.currentMap = 0;
             this.loadMap();
@@ -97,13 +89,11 @@ export default class RemoteGunfight extends EventTarget {
             this.opponentSid = data[0]['sid'];
             this.playerData = data[1];
             this.opponentData = data[0];
-            console.log("in game");
             if (this.opponentSid === this.socket.id) {
                 this.opponentSid = data[1]['sid'];
                 this.playerData = data[0];
                 this.opponentData = data[1];
             }
-            console.log(this.opponentSid);
             this.interval = setInterval(() => this.update(), 100 / 6);
         });
         this.socket.on("give_up", () => {
@@ -158,13 +148,11 @@ export default class RemoteGunfight extends EventTarget {
         window.addEventListener("keyup", handleInputs);
         window.addEventListener("blur", handleInputs);
         this.localCowboy.addEventListener("hit", () => {
-            console.log("hit local")
             //this.scores.player2++;
             this.localCowboy.dead = false;
             //this.restart();
         });
         this.remoteCowboy.addEventListener("hit", () => {
-            console.log("hit remote")
             //this.scores.player1++;
             this.remoteCowboy.dead = false;
             //this.restart();
@@ -187,9 +175,7 @@ export default class RemoteGunfight extends EventTarget {
     }
 
     loadMap() {
-        console.log("current:");
         this.currentMap %= this.maps.length;
-        console.log(this.maps[this.currentMap])
         this.cacti = [];
         this.trees = [];
         this.trailer = null;

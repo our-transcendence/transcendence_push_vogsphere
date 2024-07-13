@@ -18,6 +18,7 @@ export default class Register extends HTMLElement {
 		let complete_fields = await lang.register_page.complete_fields[getCookie("lang")];
 		let already_exist = await lang.register_page.already_exist[getCookie("lang")];
 		let password_too_short = await lang.register_page.password_too_short[getCookie("lang")];
+		let unexpected_error = await lang.register_page.unexpected_error[getCookie("lang")];
 
 		this.innerHTML = `
         <link rel="stylesheet" href="/styles/register.css">
@@ -132,10 +133,14 @@ export default class Register extends HTMLElement {
 					message.style.marginLeft = "20px";
 					message.style.maxWidth = "300px";
 				}
-				console.log(res.status);
 				submitButton.disabled = false;
 			}).catch(err => {
-				console.error(err);
+				message.innerText = unexpected_error;
+				message.style.color = "#C82611";
+				message.style.fontSize = '24px';
+				message.style.marginTop = "10px";
+				message.style.marginLeft = "20px";
+				message.style.maxWidth = "300px";
 				submitButton.disabled = false;
 			})
 		});

@@ -73,7 +73,6 @@ export default class Settings extends HTMLElement {
 					return res.json();
 				})
 				.then((json) => {
-					console.log(json);
 					if (json.length <= 0)
 						return ;
 					const appendToPong = document.querySelector("#forPongHistory");
@@ -113,7 +112,6 @@ export default class Settings extends HTMLElement {
 								return (res.json());
 							}).then(infos =>
 							{
-								console.log(infos);
 								if (infos.displayName.length > 7)
 									infos.displayName = infos.displayName.slice(0, 7) + ".";
 								player1Txt.innerText = infos.displayName;
@@ -168,7 +166,7 @@ export default class Settings extends HTMLElement {
 								appendToPong.prepend(myDiv);
 							else
 								appendToGunfight.prepend(myDiv);
-						}).catch(err => {console.error(err);});
+						}).catch(err => {return ;});
 					}
 				});
 		}

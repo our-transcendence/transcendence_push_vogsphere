@@ -9,7 +9,7 @@ export default class RemoteGunFightGame extends HTMLElement {
         const params = new URLSearchParams(window.location.search);
 
         if (!params.has("gamePort")) {
-            console.error("game address provided");
+            changeRoute("/home");
             return;
         }
 

@@ -46,6 +46,7 @@ class Gunfight:
 
         def reduce_life_points(self, value):
             self.life_points -= value
+            self.life_points = round(self.life_points, 1)
 
         def update(self):
             if self.life_points <= 0:

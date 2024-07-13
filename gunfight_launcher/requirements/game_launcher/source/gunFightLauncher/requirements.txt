@@ -20,7 +20,7 @@ h11==0.14.0
 idna==3.7
 multidict==6.0.5
 netifaces==0.10.6
-ourJWT==0.1.6
+ourJWT==0.1.8
 packaging==24.0
 pycparser==2.22
 pydantic==2.8.2

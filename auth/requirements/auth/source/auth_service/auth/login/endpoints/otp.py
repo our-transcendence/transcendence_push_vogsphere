@@ -40,7 +40,11 @@ def set_totp_endpoint(request: HttpRequest, **kwargs):
 
     user.totp_key = pyotp.random_base32()
     user.login_attempt = timezone.now()
-    user.save()
+    try :
+        user.save()
+    except (IntegrityError, OperationalError) as e:
+        print(f"DATABASE FAILURE {e}", flush=True)
+        return response.HttpResponse(status=503, reason="Database Failure")
     response_content = {"totp_key": user.totp_key,
                         "uri_key":
                             f"otpauth://totp/OUR_Transcendence:{user.login}"
@@ -68,7 +72,12 @@ def remove_totp_endpoint(request: HttpRequest, **kwargs):
         return response.HttpResponse(*NO_SET_OTP)
 
     user.login_attempt = timezone.now()
-    user.save()  # TODO: protect this in all file
+    try:
+        user.save()
+    except (IntegrityError, OperationalError) as e:
+        print(f"DATABASE FAILURE {e}", flush=True)
+        return response.HttpResponse(status=503, reason="Database Failure")
+
     need_otp_response = response.HttpResponse(*OTP_EXPECTING)
     need_otp_response.set_cookie(key="otp_status",
                                  value="otp_disable",
@@ -104,7 +113,11 @@ def otp_login_backend(request: HttpRequest):
 
     if not request.body:
         user.totp_key = None
-        user.save()
+        try:
+            user.save()
+        except (IntegrityError, OperationalError) as e:
+            print(f"DATABASE FAILURE {e}", flush=True)
+            return response.HttpResponse(status=503, reason="Database Failure")
         return response.HttpResponseBadRequest(reason="empty request")
 
     try:

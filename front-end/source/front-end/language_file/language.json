@@ -97,6 +97,12 @@
 			"en": "Password too short",
 			"fr": "Mot de passe trop court",
 			"de": "Passwort zu kurz"
+		},
+		"unexpected_error":
+		{
+			"en": "Unexpected error",
+			"fr": "Erreur inattendue",
+			"de": "Unerwarteter Fehler"
 		}
 	},
 	"home_page": {

@@ -135,8 +135,7 @@ export default class CustomTournamentGunfight extends HTMLElement {
 				});
 				if (PlayerTab.length != NbPlayers)
 				{
-					console.log(PlayerTab.length);
-					console.log(NbPlayers);
+
 					return ;
 				}
 				Matchmaking(PlayerTab);
@@ -182,7 +181,6 @@ export default class CustomTournamentGunfight extends HTMLElement {
 					await PlayGame(PlayerTab, i);
 				}
 				DisplayLoosersAndWinners(PlayerTab, Matchmaking);
-				console.log ("All Games are played");
 			}
 			let content = document.querySelector("local-gunfight-tournament");
 			content.innerHTML = "<link rel=\"stylesheet\" href=\"/styles/tournament.css\">";

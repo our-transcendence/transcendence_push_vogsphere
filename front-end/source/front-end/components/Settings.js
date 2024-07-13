@@ -131,7 +131,7 @@ export default class Settings extends HTMLElement {
 					}
 				})
 				.catch((err) => {
-					console.error(err);
+					return ;
 				});
 		});
 
@@ -150,12 +150,11 @@ export default class Settings extends HTMLElement {
 					}
 				})
 				.catch((err) => {
-					console.error(err);
+					return ;
 				});
 		});
 
 		link_42.addEventListener("click", (e) => {
-			console.log("link");
 			const headers = {
                 'Content-Type': 'application/json'
             }
@@ -169,13 +168,11 @@ export default class Settings extends HTMLElement {
             })
                 .then(res => res.json())
                 .then(body => {
-                    console.log(body.redirect);
                     window.location.replace(body.redirect);
                 });
         });
 
 		unlink_42.addEventListener("click", (e) => {
-			console.log("unlink");
 			const headers = {
                 'Content-Type': 'application/json'
             }
@@ -189,7 +186,6 @@ export default class Settings extends HTMLElement {
             })
                 .then(res => res.json())
                 .then(body => {
-                    console.log(body.redirect);
                     window.location.replace(body.redirect);
                 });
         });
@@ -224,7 +220,6 @@ export default class Settings extends HTMLElement {
 				{
 					if (data == null)
 						return ;
-					console.log(data);
 					let A2FAqr = document.querySelector("#qr-code");
 					const rightSide = document.querySelector("#right-side");
 					const PhysicKey = document.querySelector("#physic-key");
@@ -244,7 +239,7 @@ export default class Settings extends HTMLElement {
 					confirm(A2FAqr, PhysicKey);
 				}).catch(err =>
 				{
-					console.error(err);
+					return ;
 				})
 			});
 		}
@@ -268,7 +263,6 @@ export default class Settings extends HTMLElement {
 					headers: header,
 				}).then(res =>
 				{
-					console.log(res);
 					if (res.status == 200)
 					{
 						document.querySelector("#right-side").style.display = "none";
@@ -277,7 +271,7 @@ export default class Settings extends HTMLElement {
 					}
 				}).catch(err =>
 				{
-					console.error(err);
+					return ;
 				})
 			});
 

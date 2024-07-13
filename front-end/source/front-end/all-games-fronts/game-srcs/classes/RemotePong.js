@@ -56,10 +56,8 @@ export default class RemotePong extends EventTarget {
             this.dispatchEvent(new Event("authError", {bubbles: true}));
         });
         this.socket.on("in_queue", (data) => {
-            console.log(`In queue: ${data['sid']}`);
         });
         this.socket.on("leave_queue", () => {
-            console.log("Leave queue");
         });
         this.socket.on("in_game", (data) => {
             this.opponentSid = data[0]['sid'];
@@ -70,7 +68,6 @@ export default class RemotePong extends EventTarget {
                 this.playerData = data[0];
                 this.opponentData = data[1];
             }
-            console.log(this.opponentSid);
             if (this.interval)
                 clearInterval(this.interval);
             this.interval = setInterval(() => this.update(), 100/6);

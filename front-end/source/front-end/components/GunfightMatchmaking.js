@@ -8,11 +8,9 @@ export default class GunfightMatchmaking extends Matchmaking {
 
     connectedCallback() {
         super.connectedCallback();
-        console.log("Pong Matchmaking");
 
         this.ws = new WebSocket(`wss://${window.location.hostname}:5151/join/`);
         this.ws.addEventListener("open", () => {
-            console.info("connection open");
             this.ws.send(`{"game": "gunfight"}`);
         });
         this.ws.addEventListener("message", (e) => {
@@ -20,7 +18,6 @@ export default class GunfightMatchmaking extends Matchmaking {
             console.info(e);
             const data = JSON.parse(e.data);
             if (!data.hasOwnProperty("gamePort")) {
-                console.error("Invalid game port");
                 return;
             }
             this.joining();

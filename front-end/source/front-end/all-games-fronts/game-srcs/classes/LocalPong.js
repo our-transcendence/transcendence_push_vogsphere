@@ -53,7 +53,7 @@ export default class LocalPong {
 
             if (this.ball.rect.posX < 0) {
                 this.scores.player2 += 1;
-                if (this.scores.player2 >= 2) {
+                if (this.scores.player2 >= 5) {
                     clearInterval(this.interval);
                     document.removeEventListener("keydown", handleInputs);
                     document.removeEventListener("keyup", handleInputs);
@@ -67,7 +67,7 @@ export default class LocalPong {
             }
             if (this.ball.rect.posX > this.canvas.width) {
                 this.scores.player1 += 1;
-                if (this.scores.player1 >= 2) {
+                if (this.scores.player1 >= 5) {
                     clearInterval(this.interval);
                     document.removeEventListener("keydown", handleInputs);
                     document.removeEventListener("keyup", handleInputs);

@@ -31,7 +31,7 @@ python-socketio==5.11.3
 pytz==2024.1
 requests==2.31.0
 simple-websocket==1.0.0
-sqlparse==0.4.4
+sqlparse==0.5.0
 typing_extensions==4.11.0
 urllib3==2.2.1
 wsproto==1.2.0

@@ -1,5 +1,6 @@
 import json
 
+from django.db import IntegrityError, OperationalError
 from django.forms import model_to_dict
 from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.shortcuts import render
@@ -24,12 +25,16 @@ def register_player(request, player_id: int):
 
     if Player.objects.filter(player_id=player_id).exists():
         return HttpResponse(status=400, reason="Player with this ID already exists")
-    player = Player(player_id=player_id)
-    player.save()
-    pongStats = PongStats(player=player)
-    pongStats.save()
-    gunFightStats = GunFightStats(player=player)
-    gunFightStats.save()
+    try:
+        player = Player(player_id=player_id)
+        player.save()
+        pongStats = PongStats(player=player)
+        pongStats.save()
+        gunFightStats = GunFightStats(player=player)
+        gunFightStats.save()
+    except (IntegrityError, OperationalError) as e:
+        print(f"DATABASE FAILURE {e}", flush=True)
+        return HttpResponse(status=503, reason="Database Failure")
     print(f"Stats Service : Player {player_id} registered", flush=True)
     return HttpResponse(status=201)
 
@@ -94,6 +99,10 @@ def update_players_stats(request):
     looserStats.elo += K * (0 - looserExpected)
     winnerStats.wins += 1
     looserStats.losses += 1
-    winnerStats.save()
-    looserStats.save()
+    try:
+        winnerStats.save()
+        looserStats.save()
+    except (IntegrityError, OperationalError) as e:
+        print(f"DATABASE FAILURE {e}", flush=True)
+        return HttpResponse(status=503, reason="Database Failure")
     return HttpResponse()

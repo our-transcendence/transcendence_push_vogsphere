@@ -182,7 +182,6 @@ export default class CustomFriends extends HTMLElement
 			{
 				if (json.length != 0)
 				{
-					console.log ("aa");
 					const friendList = document.querySelector("#friend-request");
 
 					const MyId = getCookie("user_id");

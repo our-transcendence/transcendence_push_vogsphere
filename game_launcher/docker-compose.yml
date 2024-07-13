@@ -14,6 +14,8 @@ services:
       - 9999
     ports:
       - "20000-20010:20000-20010"
+    container_name: pong_launcher_service_cont
+
   game-launcher-nginx:
     depends_on:
       game-launcher-service:
@@ -27,3 +29,4 @@ services:
       timeout: 10s
       retries: 5
       start_period: 10s
+    container_name: pong_launcher_server_cont

@@ -169,7 +169,7 @@ export default class NavBar extends HTMLElement {
 					document.cookie = `displayName=${json.displayName}`;
 				})
 				.catch((err) => {
-					console.error(err);
+					return ;
 				});
 		}
 
@@ -196,7 +196,7 @@ export default class NavBar extends HTMLElement {
 					const container = document.querySelector("#header-container");
 				})
 				.catch((err) => {
-					console.error(err);
+					return ;
 				});
 		}
 	}

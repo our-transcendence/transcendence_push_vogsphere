@@ -7,7 +7,6 @@ export default class LocalGunFightComponent extends GameElement {
     }
 
     connectedCallback() {
-        console.log("LocalGunFightComponent element added to page.");
 
         this.addCanvas();
 
@@ -40,15 +39,12 @@ export default class LocalGunFightComponent extends GameElement {
     }
 
     disconnectedCallback() {
-        console.log("LocalGunFightComponent element removed from page.");
     }
 
     adoptedCallback() {
-        console.log("LocalGunFightComponent element moved to new page.");
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        console.log(`Attribute ${name} has changed from ${oldValue} to ${newValue} in LocalGunFightComponent.`);
     }
 
 }

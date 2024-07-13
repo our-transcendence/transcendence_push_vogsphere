@@ -5,11 +5,11 @@ asgiref==3.8.1
 async-timeout==4.0.3
 attrs==23.2.0
 bidict==0.23.1
-certifi==2024.2.2
+certifi==2024.07.04
 cffi==1.16.0
 charset-normalizer==3.3.2
 cryptography==42.0.5
-Django==5.0.4
+Django==5.0.7
 django-cors-headers==4.3.1
 dnspython==2.6.1
 eventlet==0.36.1
@@ -20,7 +20,7 @@ h11==0.14.0
 idna==3.7
 multidict==6.0.5
 netifaces==0.10.6
-ourJWT==0.1.6
+ourJWT==0.1.8
 packaging==24.0
 pycparser==2.22
 pydantic==2.8.2
@@ -29,10 +29,10 @@ PyJWT==2.8.0
 python-engineio==4.9.0
 python-socketio==5.11.3
 pytz==2024.1
-requests==2.31.0
+requests==2.32.3
 simple-websocket==1.0.0
-sqlparse==0.4.4
+sqlparse==0.5.0
 typing_extensions==4.11.0
-urllib3==2.2.1
+urllib3==2.2.2
 wsproto==1.2.0
 yarl==1.9.4

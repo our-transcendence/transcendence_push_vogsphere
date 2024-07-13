@@ -9,7 +9,7 @@ charset-normalizer==3.3.2
 click==8.1.7
 colorama==0.4.6
 cryptography==42.0.8
-Django>=5.0.7
+Django==5.0.7
 django-compat==1.0.15
 django-cors-headers==4.3.1
 django-redis==5.4.0

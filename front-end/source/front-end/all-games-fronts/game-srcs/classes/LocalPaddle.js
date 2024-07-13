@@ -22,7 +22,7 @@ export default class LocalPaddle {
             this.rect.posY = this.context.canvas.height - this.rect.height;
         else
             this.rect.posY += this.dir.y * this.speed;
-        if (ball !== undefined) {
+        if (ball) {
             if (this.rect.collide(ball.rect)) {
                 const diff = this.rect.getCenterCoords()["y"] - ball.rect.getCenterCoords()["y"]
 

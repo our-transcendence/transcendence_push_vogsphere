@@ -57,9 +57,7 @@ export default class Settings extends HTMLElement {
 		GetHistory();
 
 		const title = document.querySelector("#title-setting");
-		let id = getCookie("stats");
-		if (!id)
-			id = getCookie("user_id");
+		const id = getCookie("stats");
 		fetch(`https://${location.hostname}:4646/${id}/infos/`, {
 			method: "GET",
 			body: null,

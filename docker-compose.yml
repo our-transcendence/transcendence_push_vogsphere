@@ -14,9 +14,7 @@ services:
     env_file:
       - .env
     depends_on:
-      user-service:
-        condition: service_healthy
-      auth-service:
+      user-nginx:
         condition: service_healthy
 
   history-postgres:

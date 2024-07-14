@@ -1,0 +1,65 @@
+.local-commands {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+#command-carousel {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#commands-container {
+    flex: 1;
+    height: 100%;
+}
+
+commands-page {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.player-commands {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.commands-title {
+    flex: 0;
+}
+
+.commands-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.command {
+    font-family: 'Papercut';
+    font-size: xx-large;
+    margin: 10px;
+}
+
+.commands-title {
+    font-family: 'Papercut';
+    font-size: xxx-large;
+}
+
+.carousel-button {
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

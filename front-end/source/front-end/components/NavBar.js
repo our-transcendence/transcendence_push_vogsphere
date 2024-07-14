@@ -19,11 +19,14 @@ export default class NavBar extends HTMLElement {
 					<div id="header-container">
 						<link-route route="/home" id="title-header">OUR TRANSCENDENCE</link-route>
 					</div>
-					<div id="profile">
-						<p id="profile-name">
-							username
-						</p>
-						<img id="profile-img" src="" alt="">
+					<div class="left-side">
+						<link-route route="/commands" class="controles-link">Controles</link-route>
+						<div id="profile">
+							<p id="profile-name">
+								username
+							</p>
+							<img id="profile-img" src="" alt="">
+						</div>
 					</div>
 				</nav>
 				<div id="menu">

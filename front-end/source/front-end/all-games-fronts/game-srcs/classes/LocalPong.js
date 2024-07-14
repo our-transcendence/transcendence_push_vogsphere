@@ -27,7 +27,7 @@ export default class LocalPong {
             "white",
             new Rect(this.canvas.width - 10 - 20, 0, 10, 100),
             -1,
-            {up: 73, down: 75},
+            {up: 38, down: 40},
             this.context
         );
         this.ball = new Ball(
@@ -63,7 +63,8 @@ export default class LocalPong {
                 this.ball = new Ball(
                     "white",
                     Rect.center(this.canvas.width, this.canvas.height, 15, 15),
-                    this.context);
+                    this.context
+                );
             }
             if (this.ball.rect.posX > this.canvas.width) {
                 this.scores.player1 += 1;
@@ -77,7 +78,8 @@ export default class LocalPong {
                 this.ball = new Ball(
                     "white",
                     Rect.center(this.canvas.width, this.canvas.height, 15, 15),
-                    this.context);
+                    this.context
+                );
             }
         }, 100/6);
     }

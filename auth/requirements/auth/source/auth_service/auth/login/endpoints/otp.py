@@ -171,8 +171,7 @@ def otp_activation_backend(request: HttpRequest, **kwargs):
             user.save()
         except (IntegrityError, OperationalError):
             pass
-        CUS_REASON = b'', None, otp_response.status_code, otp_response.reason_phrase
-        return otp_failure_handling(CUS_REASON)
+        return otp_response
 
     user.totp_enabled = True
     user.login_attempt = None

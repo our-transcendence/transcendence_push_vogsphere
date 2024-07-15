@@ -2,3 +2,4 @@
 .idea
 volumes
 *.pem
+**/env*/*

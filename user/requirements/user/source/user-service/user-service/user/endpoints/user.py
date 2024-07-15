@@ -19,16 +19,18 @@ from user.utils import get_user_from_jwt
 
 from django.db.models import Q
 from json import JSONDecodeError
+from PIL import Image
 
-NO_USER = b'', None, 404, "No user found with given ID"
-JSON_DECODE_ERROR = b'', None, 400, "JSON Decode Error"
-JSON_BAD_KEYS = b'', None, 400, "JSON Bad Keys"
-USER_EXISTS = b'', None, 406, "User with this login already exists"
-BAD_IDS = b'', None, 400, "User id is not equal with connected user id"
-CANT_CONNECT_AUTH = b'', None, 408, "Cant connect to auth-service"
-CANT_CONNECT_STATS = b'', None, 408, "Cant connect to stats-service"
-ONLY_PNG = b'', None, 400, "Only png images are allowed"
-DB_FAILURE = b'', None, 503, "Database Failure"
+NO_USER = (b'', None, 404, "No user found with given ID")
+JSON_DECODE_ERROR = (b'', None, 400, "JSON Decode Error")
+JSON_BAD_KEYS = (b'', None, 400, "JSON Bad Keys")
+USER_EXISTS = (b'', None, 406, "User with this login already exists")
+BAD_IDS = (b'', None, 400, "User id is not equal with connected user id")
+CANT_CONNECT_AUTH = (b'', None, 408, "Cant connect to auth-service")
+CANT_CONNECT_STATS = (b'', None, 408, "Cant connect to stats-service")
+ONLY_PNG = (b'', None, 400, "Only png images are allowed")
+DB_FAILURE = (b'', None, 503, "Database Failure")
+CORRUPTED_IMG = (b'', None, 403, "Corrupted or invalide image sent")
 
 SERVICE_KEY = os.getenv("INTER_SERVICE_KEY")
 
@@ -122,9 +124,18 @@ def update_user(request: HttpRequest, **kwargs):
     if 'picture' in request.FILES.keys():
         if request.FILES['picture'].content_type != 'image/png':
             return HttpResponse(*ONLY_PNG)
-        with open(f"{settings.PICTURES_DST}/{user.id}.png", "wb+") as f:
+        with open(f"{settings.PICTURES_DST}/{user.id}_new.png", "wb+") as f:
             for chunk in request.FILES["picture"]:
                 f.write(chunk)
+        im = Image.open(f"{settings.PICTURES_DST}/{user.id}_new.png")
+        try:
+            im.verify()
+        except:
+            os.remove(f"{settings.PICTURES_DST}/{user.id}_new.png")
+            return HttpResponse(*CORRUPTED_IMG)
+        os.remove(f"{settings.PICTURES_DST}/{user.id}.png")
+        os.rename(f"{settings.PICTURES_DST}/{user.id}_new.png", f"{settings.PICTURES_DST}/{user.id}.png")
+
     if 'display_name' in request.POST.keys():
         user.displayName = request.POST['display_name']
     try:

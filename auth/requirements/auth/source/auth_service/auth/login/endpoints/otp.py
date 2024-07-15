@@ -21,6 +21,8 @@ import ourJWT.OUR_exception
 
 NO_OTP = b'', None, 400, "No otp in request"
 NO_USER = b'', None, 404, "No user found with given ID"
+BAD_OTP = b'', None, 403, "Bad OTP"
+OPT_TO = b'', None, 403, "OTP validation timed out"
 ALREADY_2FA = b'', None, 403, "2FA already enabled for the account"
 NO_SET_OTP = b'', None, 412, "TOTP isn't enabled for given user"
 FAILED_DB = b'', None, 503, "Database service failure"
@@ -146,20 +148,20 @@ def otp_activation_backend(request: HttpRequest, **kwargs):
     try:
         user = get_user_from_jwt(kwargs)
     except Http404:
-        return otp_failure_handling(*NO_USER)
+        return otp_failure_handling(NO_USER)
 
     if user.totp_enabled:
-        return otp_failure_handling(*ALREADY_2FA)
+        return otp_failure_handling(ALREADY_2FA)
 
     if user.totp_key is None:
-        return otp_failure_handling(*NO_SET_OTP)
+        return otp_failure_handling(NO_SET_OTP)
 
     try:
         otp = get_otp_from_body(request.body)
     except ParseError as e:
         return e.http_response
     if otp is None:
-        return otp_failure_handling(*NO_OTP)
+        return otp_failure_handling(NO_OTP)
 
     otp_status, otp_response = check_otp(user, otp)
 
@@ -169,14 +171,15 @@ def otp_activation_backend(request: HttpRequest, **kwargs):
             user.save()
         except (IntegrityError, OperationalError):
             pass
-        return otp_failure_handling(otp_response.status_code, otp_response.reason_phrase)
+        CUS_REASON = b'', None, otp_response.status_code, otp_response.reason_phrase
+        return otp_failure_handling(CUS_REASON)
 
     user.totp_enabled = True
     user.login_attempt = None
     try:
         user.save()
     except (IntegrityError, OperationalError):
-        return otp_failure_handling(*FAILED_DB)
+        return otp_failure_handling(FAILED_DB)
     return response.HttpResponse()
 
 
@@ -185,42 +188,43 @@ def otp_disable_backend(request: HttpRequest, **kwargs):
     try:
         user = get_user_from_jwt(kwargs)
     except Http404:
-        return otp_failure_handling(*NO_USER)
+        return otp_failure_handling(NO_USER)
 
     if user.totp_enabled is False:
-        return otp_failure_handling(*NO_SET_OTP)
+        return otp_failure_handling(NO_SET_OTP)
 
     try:
         otp = get_otp_from_body(request.body)
     except ParseError as e:
         return e.http_response
     if otp is None:
-        return otp_failure_handling(*NO_OTP)
+        return otp_failure_handling(NO_OTP)
 
     otp_status, otp_response = check_otp(user, otp)
 
-    if otp_status is False:
+    if otp_status is False:403, "Bad OTP"
         user.login_attempt = None
         try:
             user.save()
         except (IntegrityError, OperationalError):
             pass
-        return otp_failure_handling(otp_response.status_code, otp_response.reason_phrase)
+        CUS_REASON = b'', None, otp_response.status_code, otp_response.reason_phrase
+        return otp_failure_handling(CUS_REASON)
 
     user.totp_enabled = False
     user.login_attempt = None
     try:
         user.save()
     except (IntegrityError, OperationalError):
-        return otp_failure_handling(*FAILED_DB)
+        return otp_failure_handling(FAILED_DB)
     return response.HttpResponse()
 
 
 def check_otp(user: User, otp: str):
     if (user.login_attempt + timedelta(minutes=1)) < timezone.now():
-        return False, otp_failure_handling(403, "OTP validation timed out")
+        return False, otp_failure_handling(OPT_TO)
     if user.totp_item.verify(otp) is False:
-        return False, otp_failure_handling(403, "Bad OTP")
+        return False, otp_failure_handling(BAD_OTP)
     return True, None
 
 
@@ -229,7 +233,7 @@ def get_otp_from_body(body: HttpRequest.body):
     return data["otp_code"]
 
 
-def otp_failure_handling(code: int, reason: str):
-    response_object = response.HttpResponse(status=code, reason=reason)
+def otp_failure_handling(option: tuple):
+    response_object = response.HttpResponse(*option)
     response_object.delete_cookie("otp_status")
     return response_object

@@ -83,7 +83,7 @@ export default class RemotePong extends EventTarget {
             if (data.sid === this.socket.id)
                 this.localPaddle.rect.posY = data['pos']
             else
-                this.opponentPaddle.rect.posY = data['pos'];
+                this.opponentPaddle.update(data['pos'], this.ball);
         });
         this.socket.on("ball_up", (data) => {
             if (this.ball) {
@@ -120,7 +120,7 @@ export default class RemotePong extends EventTarget {
 
     update() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.localPaddle.update(null);
+        this.localPaddle.update(this.ball);
         if (this.localPaddle.dir.y) {
             this.socket.emit("paddle_up", {"pos": this.localPaddle.rect.posY});
         }

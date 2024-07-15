@@ -121,6 +121,11 @@ export default class Router extends HTMLElement {
 				regex: false,
 				header: false
 			},
+			"/commands": {
+				elem: "commands-page",
+				regex: false,
+				header: true
+			},
     };
     this.refreshInterval = undefined;
   }

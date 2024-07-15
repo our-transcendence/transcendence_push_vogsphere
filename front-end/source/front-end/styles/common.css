@@ -34,6 +34,7 @@ link-route {
     font-weight: 500;
     line-height: normal;
     text-transform: uppercase;
+    padding-top: 20px;
 }
 
 #form-title {
@@ -91,4 +92,32 @@ link-route {
     font-weight: 400;
     line-height: normal;
     text-transform: uppercase;
+}
+
+kbd {
+    background-color: #3D8D98;
+    border-radius: 3px;
+    border: 1px solid #3D8D98;
+    box-shadow:
+            0 1px 1px rgba(0, 0, 0, 0.2),
+            0 2px 0 0 #3D8D98 inset;
+    color: #333;
+    display: inline-block;
+    font-family: 'Papercut';
+    font-size: 1em;
+    font-weight: 700;
+    line-height: 1;
+    padding: 2px 4px;
+    white-space: nowrap;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+router-outlet {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }

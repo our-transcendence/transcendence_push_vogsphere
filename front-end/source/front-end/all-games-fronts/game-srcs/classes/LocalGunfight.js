@@ -45,7 +45,7 @@ export default class LocalGunfight extends EventTarget{
                 down: 40,
                 right: 39,
                 left: 37,
-                shoot: 96
+                shoot: 13
             },
             this.context
         )

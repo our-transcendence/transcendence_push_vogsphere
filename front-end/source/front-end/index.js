@@ -25,6 +25,7 @@ import EndGame from "./components/EndGame";
 import GunfightMatchmaking from "./components/GunfightMatchmaking";
 import CustomTournamentGunfight from "./components/GunfightTournament";
 import CustomErrorPage from "./components/error_404.js";
+import Commands from "./components/Commands";
 
 
 customElements.define("login-page", Login);
@@ -54,3 +55,4 @@ customElements.define("local-pong-tournament", CustomTournamentPong);
 customElements.define('end-game-modal', EndGame);
 customElements.define("local-gunfight-tournament", CustomTournamentGunfight)
 customElements.define("error-page", CustomErrorPage);
+customElements.define("commands-page", Commands);

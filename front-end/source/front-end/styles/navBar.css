@@ -12,6 +12,22 @@
     display: flex;
 }
 
+.controles-link {
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.left-side {
+    gap: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 #header-container
 {
     margin-left: 2%;

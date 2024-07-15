@@ -428,5 +428,69 @@
 			"en": "Back to login",
 			"de": "Zurück zur Anmeldung"
 		}
+	},
+	"matchmaking": {
+		"title": {
+			"fr": "entremise",
+			"en": "matchmaking",
+			"de": "matchmaking"
+		}
+	},
+	"controles": {
+		"title": {
+			"fr": "controles",
+			"en": "controls",
+			"de": "kontrollen"
+		},
+		"localPong": {
+			"fr": "pong local",
+			"en": "local pong",
+			"de": "lokales Pong"
+		},
+		"remotePong": {
+			"fr": "pong à distance",
+			"en": "remote pong",
+			"de": "Remote-Pong"
+		},
+		"localGunfight": {
+			"fr": "fusillade locale",
+			"en": "local gunfight",
+			"de": "lokale Schießerei"
+		},
+		"remoteGunfight": {
+			"fr": "fusillade à distance",
+			"en": "remote gunfight",
+			"de": "Schießerei aus der Ferne"
+		},
+		"up": {
+			"fr": "haut",
+			"en": "up",
+			"de": "oben"
+		},
+		"down": {
+			"fr": "bas",
+			"en": "down",
+			"de": "runter"
+		},
+		"left": {
+			"fr": "gauche",
+			"en": "left",
+			"de": "links"
+		},
+		"right": {
+			"fr": "droite",
+			"en": "right",
+			"de": "rechts"
+		},
+		"shoot": {
+			"fr": "tirer",
+			"en": "shoot",
+			"de": "erlegen"
+		},
+		"player": {
+			"fr": "joueur",
+			"en": "player",
+			"de": "Spieler"
+		}
 	}
 }

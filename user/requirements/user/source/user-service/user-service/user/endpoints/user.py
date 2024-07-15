@@ -124,7 +124,10 @@ def update_user(request: HttpRequest, **kwargs):
     if 'picture' in request.FILES.keys():
         if request.FILES['picture'].content_type != 'image/png':
             return HttpResponse(*ONLY_PNG)
-        os.rename(f"{settings.PICTURES_DST}/{user.id}.png",f"{settings.PICTURES_DST}/{user.id}_old.png")
+        try :
+            os.rename(f"{settings.PICTURES_DST}/{user.id}.png",f"{settings.PICTURES_DST}/{user.id}_old.png")
+        except FileNotFoundError:
+            shutil.copyfile("/data/default.png", f"{settings.PICTURES_DST}/{user.id}.png")
         with open(f"{settings.PICTURES_DST}/{user.id}.png", "wb+") as f:
             for chunk in request.FILES["picture"]:
                 f.write(chunk)

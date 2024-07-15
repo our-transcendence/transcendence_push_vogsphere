@@ -7,7 +7,7 @@ export default class Matchmaking extends HTMLElement {
     }
 
     connectedCallback() {
-        let title = lang.matchmaking.title[getCookie("lang")];
+        const title = lang.matchmaking.title[getCookie("lang")];
         this.innerHTML = `
             <link rel="stylesheet" href="/styles/matchmaking.css">
             <div id="matchmaking-container">

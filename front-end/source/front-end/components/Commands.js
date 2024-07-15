@@ -4,7 +4,7 @@ import getCookie from "../utils/getCookie";
 export default class Commands extends HTMLElement {
     constructor() {
         super();
-        this.title = lang.controles.title[getCookie("lang")];
+
         this.localPong = lang.controles.localPong[getCookie("lang")];
         this.remotePong = lang.controles.remotePong[getCookie("lang")];
         this.localGunfight = lang.controles.localGunfight[getCookie("lang")];
@@ -131,9 +131,10 @@ export default class Commands extends HTMLElement {
     }
 
     rend() {
+        const title = lang.controles.title[getCookie("lang")];
         this.innerHTML = `
             <link rel="stylesheet" href="/styles/commands.css" >
-            <div id="title">${this.title}</div>
+            <div id="title">${title}</div>
             
             <div id="command-carousel">
                 <div id="go-left" class="carousel-button">
@@ -169,6 +170,5 @@ export default class Commands extends HTMLElement {
     connectedCallback() {
         this.currentCommands = 0;
         this.rend();
-
     }
 }

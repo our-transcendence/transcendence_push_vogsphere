@@ -15,43 +15,49 @@ export default class Intra extends HTMLElement {
         this.innerHTML = `
         <link rel="stylesheet" href="/styles/home.css" >
         <h1>42 AUTH</h1>
-       
+
         <button id="friendButtons" style="display: none"><link-route route="/login">${back_to_login}</link-route> </button>
     `;
         const urlParams = new URLSearchParams(window.location.search);
+        const api_response = urlParams.get('error');
         const ft_code = urlParams.get('code');
 
-
-        fetch(`https://${location.hostname}:4444/token_42/`, {
-                method: "POST",
-                credentials: "include",
-                headers: {},
-                body: JSON.stringify({
-                    "code": ft_code
-                })
-        }) .then((res) => {
-            if (res.status === 200)
-            {
-                //check cookie "42_action"
-                const action = getCookie('42_action');
-                document.cookie = "42_action=done";
-                switch (action) {
-                    case "login":
-                        this.intra_login();
-                        createSocket();
-                        break;
-                    case "link":
-                        this.intra_link();
-                        break;
-                    case "unlink":
-                        this.intra_unlink();
-                        break;
-                    default:
-                        break;
+        if (api_response != null) {
+            // TODO: afficher un message d'erreur "autorisation non accorde"
+            changeRoute('/settings')
+        }
+        else {
+            fetch(`https://${location.hostname}:4444/token_42/`, {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {},
+                    body: JSON.stringify({
+                        "code": ft_code
+                    })
+            }) .then((res) => {
+                if (res.status === 200)
+                {
+                    //check cookie "42_action"
+                    const action = getCookie('42_action');
+                    document.cookie = "42_action=done";
+                    switch (action) {
+                        case "login":
+                            this.intra_login();
+                            createSocket();
+                            break;
+                        case "link":
+                            this.intra_link();
+                            break;
+                        case "unlink":
+                            this.intra_unlink();
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
-        }).catch(err => {
-        });
+            }).catch(err => {
+            });
+        }
     }
 
      intra_login() {

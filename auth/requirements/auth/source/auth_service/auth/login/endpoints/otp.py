@@ -99,7 +99,7 @@ def otp_submit_endpoint(request: HttpRequest):
         case "otp_disable":
             return otp_disable_backend(request)
         case _:
-            return response.HttpResponseBadRequest("no reason given for otp")
+            return response.HttpResponseBadRequest(reason="no reason given for otp")
 
 
 def otp_login_backend(request: HttpRequest):
@@ -202,7 +202,7 @@ def otp_disable_backend(request: HttpRequest, **kwargs):
 
     otp_status, otp_response = check_otp(user, otp)
 
-    if otp_status is False:403, "Bad OTP"
+    if otp_status is False:
         user.login_attempt = None
         try:
             user.save()

@@ -32,6 +32,7 @@ OTP_EXPECTING = (b'', None, 202, "Expecting otp")
 @ourJWT.Decoder.check_auth()
 @require_http_methods(["PATCH"])
 def set_totp_endpoint(request: HttpRequest, **kwargs):
+    print("set_otp_reach", flush=True)
     try:
         user = get_user_from_jwt(kwargs)
     except Http404:
@@ -91,6 +92,7 @@ def remove_totp_endpoint(request: HttpRequest, **kwargs):
 @require_POST
 def otp_submit_endpoint(request: HttpRequest):
     reason = request.COOKIES.get("otp_status")
+    print(f'otp_submit reach, reason ; {reason}', flush=True)
     match reason:
         case "otp_login":
             return otp_login_backend(request)
@@ -145,10 +147,12 @@ def otp_login_backend(request: HttpRequest):
 
 @ourJWT.Decoder.check_auth()
 def otp_activation_backend(request: HttpRequest, **kwargs):
+    print("otp activation reach", flush=True)
     try:
         user = get_user_from_jwt(kwargs)
     except Http404:
         return otp_failure_handling(NO_USER)
+    print(user, flush=True)
 
     if user.totp_enabled:
         return otp_failure_handling(ALREADY_2FA)
@@ -171,6 +175,7 @@ def otp_activation_backend(request: HttpRequest, **kwargs):
             user.save()
         except (IntegrityError, OperationalError):
             pass
+        print(f'code : {otp_response.status_code}, reason :{otp_response.reason_phrase}', flush=True)
         return otp_response
 
     user.totp_enabled = True

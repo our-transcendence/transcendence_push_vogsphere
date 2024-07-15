@@ -30,8 +30,8 @@ CANT_CONNECT_AUTH = (b'', None, 408, "Cant connect to auth-service")
 CANT_CONNECT_STATS = (b'', None, 408, "Cant connect to stats-service")
 ONLY_PNG = (b'', None, 400, "Only png images are allowed")
 DB_FAILURE = (b'', None, 503, "Database Failure")
-CORRUPTED_IMG = (b'', None, 403, "Corrupted or invalide image sent")
-
+CORRUPTED_IMG = (b'', None, 400, "Corrupted or invalide image sent")
+NO_IMG_SAVED = (b'', None, 409, "Error in server, no img found")
 SERVICE_KEY = os.getenv("INTER_SERVICE_KEY")
 
 
@@ -127,17 +127,17 @@ def update_user(request: HttpRequest, **kwargs):
         try :
             os.rename(f"{settings.PICTURES_DST}/{user.id}.png",f"{settings.PICTURES_DST}/{user.id}_old.png")
         except FileNotFoundError:
-            shutil.copyfile("/data/default.png", f"{settings.PICTURES_DST}/{user.id}.png")
+            shutil.copyfile("/data/default.png", f"{settings.PICTURES_DST}/{user.id}_old.png")
         with open(f"{settings.PICTURES_DST}/{user.id}.png", "wb+") as f:
             for chunk in request.FILES["picture"]:
                 f.write(chunk)
-        im = Image.open(f"{settings.PICTURES_DST}/{user.id}.png")
         try:
+            im = Image.open(f"{settings.PICTURES_DST}/{user.id}.png")
             im.verify()
         except:
             os.remove(f"{settings.PICTURES_DST}/{user.id}.png")
             os.rename(f"{settings.PICTURES_DST}/{user.id}_old.png",f"{settings.PICTURES_DST}/{user.id}.png")
-            return HttpResponse(*CORRUPTED_IMG)
+            return HttpResponse(status=400, reason="Corrupted or invalide image sent")
         os.remove(f"{settings.PICTURES_DST}/{user.id}_old.png")
 
     if 'display_name' in request.POST.keys():

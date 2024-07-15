@@ -20,5 +20,5 @@ def get_info(request: HttpRequest, **kwargs):
     except Http404:
         return response.HttpResponseNotFound("No user found with given ID")
     if user.login_42 is None:
-        return response.JsonResponse({"totp": user.totp_enabled, "login_42_set": False})
-    return response.JsonResponse({"totp": user.totp_enabled, "login_42_set": True, "login_42": user.login_42})
+        return response.JsonResponse({"totp": f'{user.totp_enabled}', "login_42_set": 'False'})
+    return response.JsonResponse({"totp": f'{user.totp_enabled}', "login_42_set": 'True', "login_42": f'{user.login_42}'})

@@ -1,86 +1,100 @@
+import {lang} from "../utils/getAllLang";
+import getCookie from "../utils/getCookie";
+
 export default class Commands extends HTMLElement {
     constructor() {
         super();
+        this.title = lang.controles.title[getCookie("lang")];
+        this.localPong = lang.controles.localPong[getCookie("lang")];
+        this.remotePong = lang.controles.remotePong[getCookie("lang")];
+        this.localGunfight = lang.controles.localGunfight[getCookie("lang")];
+        this.remoteGunfight = lang.controles.remoteGunfight[getCookie("lang")];
+        this.player = lang.controles.player[getCookie("lang")];
+        this.up = lang.controles.up[getCookie("lang")];
+        this.down = lang.controles.down[getCookie("lang")];
+        this.left = lang.controles.left[getCookie("lang")];
+        this.right = lang.controles.right[getCookie("lang")];
+        this.shoot = lang.controles.shoot[getCookie("lang")];
 
         this.commands = [
-            `<div id="form-title">Local Pong</div>
-                <div class="local-commands">
-                
+            `
+            <div id="form-title">${this.localPong}</div>
+            <div class="local-commands">
                 <div class="player-commands">
-                    <div class="commands-title">Player 1</div>
+                    <div class="commands-title">${this.player} 1</div>
                     <div class="commands-list">
                         <div class="command">
-                            up: <kbd>w</kbd>
+                            ${this.up}: <kbd>w</kbd>
                         </div>
                         <div class="command">
-                            down: <kbd>s</kbd>
+                            ${this.down}: <kbd>s</kbd>
                         </div>
                     </div>
                 </div>
                 <div class="player-commands">
-                        <div class="commands-title">Player 2</div>
-                        <div class="commands-list">
-                            <div class="command">
-                                up: <kbd>↑</kbd>
-                            </div>
-                            <div class="command">
-                                down: <kbd>↓</kbd>
-                            </div>
-                        </div>
-                    </div>
-            </div>`,
-            `<div id="form-title">Remote Pong</div>
-                <div class="local-commands">
-                
-                <div class="player-commands">
-                    <div class="commands-title">Player</div>
+                    <div class="commands-title">${this.player} 2</div>
                     <div class="commands-list">
                         <div class="command">
-                            up: <kbd>w</kbd>
+                            ${this.up}: <kbd>↑</kbd>
                         </div>
                         <div class="command">
-                            down: <kbd>s</kbd>
+                            ${this.down}: <kbd>↓</kbd>
                         </div>
                     </div>
                 </div>
             </div>`,
-            `<div id="form-title">Local Gunfight</div>
+            `<div id="form-title">${this.remotePong}</div>
                 <div class="local-commands">
                 
                 <div class="player-commands">
-                    <div class="commands-title">Player 1</div>
+                    <div class="commands-title">${this.player}</div>
                     <div class="commands-list">
                         <div class="command">
-                            up: <kbd>w</kbd>
+                            ${this.up}: <kbd>w</kbd>
                         </div>
                         <div class="command">
-                            down: <kbd>s</kbd>
+                            ${this.down}: <kbd>s</kbd>
+                        </div>
+                    </div>
+                </div>
+            </div>`,
+            `<div id="form-title">${this.localGunfight}</div>
+                <div class="local-commands">
+                
+                <div class="player-commands">
+                    <div class="commands-title">${this.player} 1</div>
+                    <div class="commands-list">
+                        <div class="command">
+                            ${this.up}: <kbd>w</kbd>
                         </div>
                         <div class="command">
-                            left: <kbd>a</kbd>
+                            ${this.down}: <kbd>s</kbd>
                         </div>
                         <div class="command">
-                            right: <kbd>d</kbd>
+                            ${this.left}: <kbd>a</kbd>
                         </div>
                         <div class="command">
-                            shoot: <kbd>space</kbd>
+                            ${this.right}: <kbd>d</kbd>
+                        </div>
+                        <div class="command">
+                            ${this.shoot}: <kbd>space</kbd>
                         </div>
                     </div>
                 </div>
                 <div class="player-commands">
-                        <div class="commands-title">Player 2</div>
+                        <div class="commands-title">${this.player} 2</div>
                         <div class="commands-list">
                             <div class="command">
-                                up: <kbd>↑</kbd>
+                                ${this.up}: <kbd>↑</kbd>
                             </div>
                             <div class="command">
-                                down: <kbd>↓</kbd>
+                                ${this.down}: <kbd>↓</kbd>
                             </div>
                             <div class="command">
-                                left: <kbd>←</kbd>
+                                ${this.left}: <kbd>←</kbd>
                             </div>
                             <div class="command">
-                                right: <kbd>→</kbd>
+                                ${this.right}: <kbd>→</kbd>
                             </div>
                             <div class="command">
                                 shoot: <kbd>enter</kbd>
@@ -88,26 +102,26 @@ export default class Commands extends HTMLElement {
                         </div>
                     </div>
             </div>`,
-            `<div id="form-title">Remote Gunfight</div>
+            `<div id="form-title">${this.remoteGunfight}</div>
                 <div class="local-commands">
                 
                 <div class="player-commands">
-                    <div class="commands-title">Player</div>
+                    <div class="commands-title">${this.player}</div>
                     <div class="commands-list">
                         <div class="command">
-                            up: <kbd>w</kbd>
+                            ${this.up}: <kbd>w</kbd>
                         </div>
                         <div class="command">
-                            down: <kbd>s</kbd>
+                            ${this.down}: <kbd>s</kbd>
                         </div>
                         <div class="command">
-                            left: <kbd>a</kbd>
+                            ${this.left}: <kbd>a</kbd>
                         </div>
                         <div class="command">
-                            right: <kbd>d</kbd>
+                            ${this.right}: <kbd>d</kbd>
                         </div>
                         <div class="command">
-                            shoot: <kbd>space</kbd>
+                            ${this.shoot}: <kbd>space</kbd>
                         </div>
                     </div>
                 </div>
@@ -119,7 +133,7 @@ export default class Commands extends HTMLElement {
     rend() {
         this.innerHTML = `
             <link rel="stylesheet" href="/styles/commands.css" >
-            <div id="title">Commands</div>
+            <div id="title">${this.title}</div>
             
             <div id="command-carousel">
                 <div id="go-left" class="carousel-button">
@@ -139,18 +153,15 @@ export default class Commands extends HTMLElement {
 
         leftButton.addEventListener('click', e => {
             e.preventDefault();
-            console.log("left clicked");
             this.currentCommands -= 1;
-            this.currentCommands = Math.abs(this.currentCommands);
-            this.currentCommands %= this.commands.length;
+            this.currentCommands = ((this.currentCommands % this.commands.length) + this.commands.length) % this.commands.length;
             this.rend();
         });
 
         rightButton.addEventListener('click', e => {
             e.preventDefault();
-            console.log("right clicked");
             this.currentCommands += 1;
-            this.currentCommands %= this.commands.length;
+            this.currentCommands = ((this.currentCommands % this.commands.length) + this.commands.length) % this.commands.length;
             this.rend();
         });
     }

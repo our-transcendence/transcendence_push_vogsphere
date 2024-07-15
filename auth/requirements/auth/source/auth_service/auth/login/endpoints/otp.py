@@ -19,14 +19,14 @@ from ..utils import get_user_from_jwt
 from ..cookie import return_refresh_token
 import ourJWT.OUR_exception
 
-NO_OTP = b'', None, 400, "No otp in request"
-NO_USER = b'', None, 404, "No user found with given ID"
-BAD_OTP = b'', None, 403, "Bad OTP"
-OPT_TO = b'', None, 403, "OTP validation timed out"
-ALREADY_2FA = b'', None, 403, "2FA already enabled for the account"
-NO_SET_OTP = b'', None, 412, "TOTP isn't enabled for given user"
-FAILED_DB = b'', None, 503, "Database service failure"
-OTP_EXPECTING = b'', None, 202, "Expecting otp"
+NO_OTP = (b'', None, 400, "No otp in request")
+NO_USER = (b'', None, 404, "No user found with given ID")
+BAD_OTP = (b'', None, 403, "Bad OTP")
+OPT_TO = (b'', None, 403, "OTP validation timed out")
+ALREADY_2FA = (b'', None, 403, "2FA already enabled for the account")
+NO_SET_OTP = (b'', None, 412, "TOTP isn't enabled for given user")
+FAILED_DB = (b'', None, 503, "Database service failure")
+OTP_EXPECTING = (b'', None, 202, "Expecting otp")
 
 
 @ourJWT.Decoder.check_auth()

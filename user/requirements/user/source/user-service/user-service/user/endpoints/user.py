@@ -124,17 +124,18 @@ def update_user(request: HttpRequest, **kwargs):
     if 'picture' in request.FILES.keys():
         if request.FILES['picture'].content_type != 'image/png':
             return HttpResponse(*ONLY_PNG)
-        with open(f"{settings.PICTURES_DST}/{user.id}_new.png", "wb+") as f:
+        os.rename(f"{settings.PICTURES_DST}/{user.id}.png",f"{settings.PICTURES_DST}/{user.id}_old.png")
+        with open(f"{settings.PICTURES_DST}/{user.id}.png", "wb+") as f:
             for chunk in request.FILES["picture"]:
                 f.write(chunk)
-        im = Image.open(f"{settings.PICTURES_DST}/{user.id}_new.png")
+        im = Image.open(f"{settings.PICTURES_DST}/{user.id}.png")
         try:
             im.verify()
         except:
-            os.remove(f"{settings.PICTURES_DST}/{user.id}_new.png")
+            os.remove(f"{settings.PICTURES_DST}/{user.id}.png")
+            os.rename(f"{settings.PICTURES_DST}/{user.id}_old.png",f"{settings.PICTURES_DST}/{user.id}.png")
             return HttpResponse(*CORRUPTED_IMG)
-        os.remove(f"{settings.PICTURES_DST}/{user.id}.png")
-        os.rename(f"{settings.PICTURES_DST}/{user.id}_new.png", f"{settings.PICTURES_DST}/{user.id}.png")
+        os.remove(f"{settings.PICTURES_DST}/{user.id}_old.png")
 
     if 'display_name' in request.POST.keys():
         user.displayName = request.POST['display_name']

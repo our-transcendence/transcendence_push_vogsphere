@@ -220,8 +220,6 @@ def otp_disable_backend(request: HttpRequest, **kwargs):
 
 
 def check_otp(user: User, otp: str):
-    if (user.login_attempt + timedelta(minutes=1)) < timezone.now():
-        return False, otp_failure_handling(OPT_TO)
     if user.totp_item.verify(otp) is False:
         return False, otp_failure_handling(BAD_OTP)
     return True, None

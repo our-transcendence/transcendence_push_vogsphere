@@ -125,7 +125,7 @@ export default class Dashboard extends HTMLElement {
 									status.className = "status";
 									status.style.backgroundColor = "#00CB00";
 
-									if (json.status == "disconnected")
+									if (json.status === "disconnected")
 										status.style.backgroundColor = "#C82611";
 									MyDiv.id = "friend" + friendId;
 									MyDiv.name = friendId;

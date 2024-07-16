@@ -9,7 +9,7 @@ export default class RemoteBall {
     }
 
     update() {
-        if (this.rect.posX <= 858 - 10 - 20)
+        if (this.rect.posX <= 858 - 10 - 20 && this.rect.posX >= 20)
             this.trail.push({...this.rect});
         if (Math.sign(this.dir.x) !== Math.sign(this.speed.x)) {
             this.speed.x *= -1;

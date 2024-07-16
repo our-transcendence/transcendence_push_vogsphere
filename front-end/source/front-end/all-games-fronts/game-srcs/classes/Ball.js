@@ -1,16 +1,24 @@
 export default class Ball {
-    constructor(color, rect, context) {
+    constructor(color, rect, context, dir) {
         this.color = color;
         this.rect = rect;
         this.context = context;
-        this.dir = {x: -1, y: 1};
-        this.speed = {x: 3, y: 3};
+        this.dir = {x: dir, y: 1};
+        this.speed = {x: 3, y: Math.random() * (5 + 5) - 5};
         this.trail = [];
     }
 
     update() {
-
+        if (this.speed.x < 0) {
+            this.speed.x *= -1;
+            this.dir.x *= -1;
+        }
+        if (this.speed.y < 0) {
+            this.speed.y *= -1;
+            this.dir.y *= -1;
+        }
         this.rect.posX += this.dir.x * this.speed.x;
+        console.log(this.rect.posY + this.dir.y * this.speed.y);
         if (this.rect.posY + this.dir.y * this.speed.y < 0) {
             this.dir.y = 1;
         }

@@ -18,14 +18,14 @@ export default class LocalPong {
         }
         this.player1Paddle = new LocalPaddle(
             "white",
-            new Rect(20, 0, 10, 100),
+            new Rect(20, 212.5, 10, 100),
             1,
             {up: 87, down: 83},
             this.context
         );
         this.player2Paddle = new LocalPaddle(
             "white",
-            new Rect(this.canvas.width - 10 - 20, 0, 10, 100),
+            new Rect(this.canvas.width - 10 - 20, 212.5, 10, 100),
             -1,
             {up: 38, down: 40},
             this.context
@@ -33,7 +33,8 @@ export default class LocalPong {
         this.ball = new Ball(
             "white",
             Rect.center(this.canvas.width, this.canvas.height, 15, 15),
-            this.context
+            this.context,
+            1
         );
 
         const handleInputs = (event) => this.input(event);
@@ -63,7 +64,8 @@ export default class LocalPong {
                 this.ball = new Ball(
                     "white",
                     Rect.center(this.canvas.width, this.canvas.height, 15, 15),
-                    this.context
+                    this.context,
+                    1
                 );
             }
             if (this.ball.rect.posX > this.canvas.width) {
@@ -78,7 +80,8 @@ export default class LocalPong {
                 this.ball = new Ball(
                     "white",
                     Rect.center(this.canvas.width, this.canvas.height, 15, 15),
-                    this.context
+                    this.context,
+                    -1
                 );
             }
         }, 100/6);

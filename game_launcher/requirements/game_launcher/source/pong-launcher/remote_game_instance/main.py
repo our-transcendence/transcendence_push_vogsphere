@@ -31,6 +31,8 @@ def filterPlayerDatas(item):
 
 @sio.event
 async def connect(sid, environ):
+    if game.ended:
+        return False
     if 'HTTP_COOKIE' not in environ:
         return False
     cookies = SimpleCookie()
@@ -42,15 +44,11 @@ async def connect(sid, environ):
         token_content = jwt.decode(token.value, pub_key, algorithms=["RS256"], issuer="OUR_Transcendence")
     except Exception as _:
         return False
-    print(token_content, flush=True)
     if 'id' not in token_content.keys():
-        print("id not in token", flush=True)
         return False
     if token_content['id'] not in ids.values():
-        print("bad id", flush=True)
         return False
     if await game.playerInGame(token_content['id']):
-        print("player already in game", flush=True)
         return False
     await sio.save_session(sid, dict(filter(filterPlayerDatas, token_content.items())))
     return "OK"
@@ -58,23 +56,18 @@ async def connect(sid, environ):
 
 @sio.on("ready")
 async def on_ready(sid):
-    print(f"Client {sid} ready")
     player_session = await sio.get_session(sid)
     await game.addPlayer(Pong.Player(sid, player_session["id"]))
-    print("", flush=True, end="")
 
 
 @sio.event
 async def disconnect(sid):
-    print(f"Client {sid} disconnected")
     await game.disconnect(sid)
-    print("", flush=True, end="")
 
 
 @sio.on("paddle_up")
 async def paddle_up(sid, data):
     await game.update_player(sid, data)
-    print("", flush=True, end="")
 
 
 if __name__ == "__main__":
@@ -82,12 +75,12 @@ if __name__ == "__main__":
         exit(1)
     with open(os.environ.get("JWT_PUBLIC_KEY_FILE"), "r") as pub_key_file:
         pub_key = pub_key_file.read()
-        print(pub_key, flush=True)
     ids = json.loads(sys.argv[2])
     ids["player_1"] = int(ids["player_1"])
     ids["player_2"] = int(ids["player_2"])
-    print(ids, flush=True)
-    print(ids.values(), flush=True)
     ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     ssl_context.load_cert_chain("/etc/ssl/cert.pem", "/etc/ssl/key.pem")
-    web.run_app(app, host='0.0.0.0', port=int(sys.argv[1]), ssl_context=ssl_context)
+    try:
+        web.run_app(app, host='0.0.0.0', port=int(sys.argv[1]), ssl_context=ssl_context)
+    except SystemExit:
+        pass

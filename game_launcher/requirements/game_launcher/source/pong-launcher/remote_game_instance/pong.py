@@ -1,6 +1,7 @@
 import os
-import sys
 import time
+from random import random
+import signal
 
 import requests
 import socketio
@@ -17,7 +18,6 @@ class Pong:
         player_id: int
 
         def __init__(self, sid, player_id):
-            print(f"new Player {sid}")
             self.sid = sid
             self.nickname = None
             self.ball_dir = 0
@@ -45,25 +45,32 @@ class Pong:
         rect: Rect
         dir_x: int
         dir_y: int
-        speed_x: int
-        speed_y: int
+        speed_x: float
+        speed_y: float
         size: int
 
-        def __init__(self, pos_x, pos_y, size):
+        def __init__(self, pos_x, pos_y, size, dir):
             self.rect = Rect(pos_x - size / 2, pos_y - size / 2, size, size)
-            self.dir_x = -1
+            self.dir_x = dir
             self.dir_y = 1
             self.speed_x = 5
-            self.speed_y = 5
+            self.speed_y = random() * 10 - 5
             self.size = size
 
         def update(self):
+            if self.speed_x < 0:
+                self.speed_x *= -1
+                self.dir_x *= -1
+            if self.speed_y < 0:
+                self.speed_y *= -1
+                self.dir_y *= -1
+
             self.rect.x += self.dir_x * self.speed_x
-            self.rect.y += self.dir_y * self.speed_y
             if self.rect.y + self.size > 525:
                 self.dir_y = -1
             if self.rect.y < 0:
                 self.dir_y = 1
+            self.rect.y += self.dir_y * self.speed_y
 
         def get_dir(self):
             return self.dir_x, self.dir_y
@@ -83,15 +90,16 @@ class Pong:
         self.started = False
         self.inter_key = os.getenv("INTER_SERVICE_KEY", None)
 
-    async def spawn_ball(self):
-        self.ball = Pong.Ball(858 / 2 - 15 / 2, 525 / 2 - 15 / 2, 15)
+    async def spawn_ball(self, start_dir):
+        self.ball = Pong.Ball(858 / 2 - 15 / 2, 525 / 2 - 15 / 2, 15, start_dir)
         await self.send(
             "spawn_ball",
             {'x': self.ball.rect.x, 'y': self.ball.rect.y, 'size': 15}
         )
 
     async def addPlayer(self, player):
-        print("add player")
+        if self.ended:
+            return
         if player not in self.players:
             self.players.append(player)
         else:
@@ -117,9 +125,7 @@ class Pong:
                     await self.send("pos_up", {"pos": source.rect.y, "sid": source.sid}, player.sid)
         if len(self.players) == 2 and not self.started:
             self.started = True
-            await self.run()
-            print("end")
-            sys.exit()
+            self.sio.start_background_task(self.run)
 
     async def get_sids(self):
         return [(await self.sio.get_session(player.sid)) | {'sid': player.sid} for player in self.players if
@@ -142,7 +148,6 @@ class Pong:
         self.players[idx].sid = None
 
     async def send(self, event, data=None, to=None):
-        # print(f"send {event} to players")
         await self.sio.emit(event, data=data, to=to)
 
     async def run(self):
@@ -153,7 +158,7 @@ class Pong:
             "in_game",
             [(await self.sio.get_session(player.sid)) | {'sid': player.sid} for player in self.players]
         )
-        await self.spawn_ball()
+        await self.spawn_ball(1)
 
         while not self.ended:
             await self.update()
@@ -208,6 +213,9 @@ class Pong:
     async def stop(self):
         for player in self.players:
             await self.sio.disconnect(player.sid)
+        await self.sio.shutdown()
+        os.kill(os.getpid(), signal.SIGKILL)
+
 
     async def update(self):
         for player in self.players:
@@ -221,7 +229,7 @@ class Pong:
                 self.ended = True
                 await self.stop()
             await self.sio.emit("score_up", {player.sid: player.score for player in self.players})
-            await self.spawn_ball()
+            await self.spawn_ball(1)
         if self.ball.rect.x > 858:
             self.players[0].score += 1
             if self.players[0].score >= 5:
@@ -230,7 +238,7 @@ class Pong:
                 self.ended = True
                 await self.stop()
             await self.sio.emit("score_up", {player.sid: player.score for player in self.players})
-            await self.spawn_ball()
+            await self.spawn_ball(-1)
         if self.players[0].sid:
             await self.send(
                 "ball_up",

@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 # Django imports
 from django.db import models
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, RegexValidator
 
 # Third-party imports
 import pyotp
@@ -14,14 +14,16 @@ from .crypto import encoder
 # Create your models here.
 
 
+class loginValidator(RegexValidator):
+    message="no Space allowed"
+    regex='\s'
+
+
 class User(models.Model):
     id = models.BigAutoField(primary_key=True)
-    login = models.CharField(max_length=15, unique=True)
-    # displayName = models.CharField(
-    #     max_length=25,
-    #     validators=[MinLengthValidator(5, "Must contains at least 5 char")],
-    #     null=True
-    # )
+    login = models.CharField(max_length=15,
+                            unique=True,
+                            validators=[loginValidator()])
     password = models.CharField(
         max_length=256,
         validators=[MinLengthValidator(5, "Must contains at least 5 char")]
@@ -49,3 +51,4 @@ class User(models.Model):
             "exp": expdate
         }
         return encoder.encode(payload, "refresh")
+

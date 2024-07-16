@@ -56,17 +56,19 @@ def register_endpoint(request: HttpRequest):
 
     # new_user = User(login=user_data["login"], password=user_data["password"], displayName=user_data["display_name"])
     new_user = User(login=user_data["login"], password=user_data["password"])
+
+    try:
+        new_user.full_clean()
+    except (exceptions.ValidationError, DataError) as e:
+        print(e, flush=True)
+        return response.HttpResponseBadRequest(reason="Invalid credential")
+
     try:
         new_user.save()
     except (IntegrityError, OperationalError) as e:
         print(e, flush=True)
         return response.HttpResponse(status=503, reason="Database Failure")
 
-    try:
-        new_user.clean_fields()
-    except (exceptions.ValidationError, DataError) as e:
-        print(e, flush=True)
-        return response.HttpResponseBadRequest(reason="Invalid credential")
 
     send: response.HttpResponse = send_new_user(new_user, user_data)
     if send.status_code != 200:

@@ -16,7 +16,7 @@ from .crypto import encoder
 
 class loginValidator(RegexValidator):
     message="no Space allowed"
-    regex='\s'
+    regex='^\S*$'
 
 
 class User(models.Model):

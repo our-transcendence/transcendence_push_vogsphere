@@ -112,10 +112,10 @@ export default class RemotePong extends EventTarget {
                 this.winner = this.playerData;
             this.onEnd(this.winner, data);
         });
-        const handleInputs = (event) => this.input(event);
-        window.addEventListener("keydown", handleInputs);
-        window.addEventListener("keyup", handleInputs);
-        window.addEventListener("blur", handleInputs);
+        this.handleInputs = (event) => this.input(event);
+        window.addEventListener("keydown", this.handleInputs);
+        window.addEventListener("keyup", this.handleInputs);
+        window.addEventListener("blur", this.handleInputs);
     }
 
     update() {
@@ -160,5 +160,12 @@ export default class RemotePong extends EventTarget {
         if (!event.repeat) {
             this.localPaddle.input(event);
         }
+    }
+
+    stop() {
+        clearInterval(this.interval);
+        window.removeEventListener("keydown", this.handleInputs);
+        window.removeEventListener("keyup", this.handleInputs);
+        window.removeEventListener("blur", this.handleInputs);
     }
 }

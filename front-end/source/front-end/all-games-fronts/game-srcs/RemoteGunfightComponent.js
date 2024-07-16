@@ -26,6 +26,7 @@ export default class RemoteGunfightComponent extends GameElement {
     }
 
     disconnectedCallback() {
+        this.game.stop();
     }
 
     adoptedCallback() {

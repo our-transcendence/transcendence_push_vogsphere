@@ -26,6 +26,7 @@ export default class RemotePongComponent extends GameElement {
     }
 
     disconnectedCallback() {
+        this.game.stop();
     }
 
     adoptedCallback() {

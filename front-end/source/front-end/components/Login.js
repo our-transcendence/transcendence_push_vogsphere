@@ -9,6 +9,9 @@ export default class Login extends HTMLElement {
 
 	async connectedCallback() {
 
+		if (!getCookie("lang"))
+			document.cookie = "lang=en";
+
 		let title = await lang.login_page.title[getCookie("lang")];
 		let login_field = await lang.login_page.login_field[getCookie("lang")];
 		let password_field = await lang.login_page.password_field[getCookie("lang")];
@@ -19,6 +22,7 @@ export default class Login extends HTMLElement {
 		let error_user_service = await lang.login_page.error_user_service[getCookie("lang")];
 		let invalid_otp = await lang.login_page.invalid_otp[getCookie("lang")];
 		let complete_fields = await lang.login_page.complete_fields[getCookie("lang")];
+		let fail_link = await lang.login_page.fail_link[getCookie("lang")];
 
 		this.innerHTML = `
         <link rel="stylesheet" href="/styles/login.css">
@@ -83,6 +87,17 @@ export default class Login extends HTMLElement {
 			else
 				pass.type = "password";
 		});
+
+		if (getCookie("intra") && getCookie("intra") === "fail_login_not_link")
+		{
+			document.cookie = "intra" + "=;expires=" + new Date(0).toUTCString();
+			message.innerText = fail_link;
+			message.style.color = "#C82611";
+			message.style.fontSize = '24px';
+			message.style.marginTop = "10px";
+			message.style.marginLeft = "20px";
+			message.style.maxWidth = "300px";
+		}
 
 		form.addEventListener("submit", (e) => {
 			e.preventDefault();

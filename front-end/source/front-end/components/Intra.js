@@ -12,6 +12,7 @@ export default class Intra extends HTMLElement {
     async connectedCallback() {
 
         let back_to_login = await lang.login_42.back_to_login[getCookie("lang")];
+        let error = await lang.login_42.error[getCookie("lang")];
         this.innerHTML = `
         <link rel="stylesheet" href="/styles/home.css" >
         <h1>42 AUTH</h1>
@@ -23,8 +24,12 @@ export default class Intra extends HTMLElement {
         const ft_code = urlParams.get('code');
 
         if (api_response != null) {
-            // TODO: afficher un message d'erreur "autorisation non accorde"
-            changeRoute('/settings')
+            const err = document.createElement("h1");
+            err.innerHTML = error;
+            this.appendChild(err);
+            setTimeout(function() {
+                changeRoute('/settings');
+            }, 5000);
         }
         else {
             fetch(`https://${location.hostname}:4444/token_42/`, {
@@ -71,16 +76,9 @@ export default class Intra extends HTMLElement {
             if (res.status === 200) {
                 this.dispatchEvent(new CustomEvent("update-infos", {bubbles: true}));
                 changeRoute("/home");
-            } else {
-                let error = lang.login_42.error[getCookie("lang")];
-                const p = document.createElement("p");
-                p.innerText = `${error}`;
-                p.id = "back_to_login";
-                this.appendChild(p);
-                const button = document.querySelector("#friendButtons");
-                button.style.display = "block";
             }
         }).catch(err => {
+            document.cookie="intra=fail_login_not_link";
             return ;
         });
     }

@@ -10,6 +10,9 @@ export default class Settings extends HTMLElement {
 
 	async connectedCallback()
 	{
+		if (!getCookie("lang"))
+			document.cookie = "lang=en";
+
 		let title = await lang.settings_page.title[getCookie("lang")];
 		let display_name_field = await lang.settings_page.display_name_field[getCookie("lang")];
 		let Profile_picture_field = await lang.settings_page.Profile_picture_field[getCookie("lang")];
@@ -20,6 +23,8 @@ export default class Settings extends HTMLElement {
 		let disable_button_2FA = await lang.settings_page["2FA_disable_button"][getCookie("lang")];
 		let link_42_button = await lang.settings_page.link_42_button[getCookie("lang")];
 		let unlink_42_button = await lang.settings_page.unlink_42_button[getCookie("lang")];
+		let incorrect_OTP = await lang.settings_page.incorrect_OTP[getCookie("lang")];
+		let timeout = await lang.settings_page.timeout[getCookie("lang")];
 
 		this.innerHTML = `
         <link rel="stylesheet" href="/styles/settings.css">
@@ -57,6 +62,7 @@ export default class Settings extends HTMLElement {
 					</div>
 				</div>
 			</div>
+			<p style="text-align: center;color: red;font-family: 'Papercut';font-size: large;font-size: 29px;", id="error"></p>
         `
 
 		const displayName = this.querySelector("#change-display-input");
@@ -76,8 +82,32 @@ export default class Settings extends HTMLElement {
 
 		let img = document.querySelector("#lang");
 
-		if (!getCookie("lang"))
-			document.cookie = "lang=en";
+		fetch(`https://${location.hostname}:4444/infos/`,
+			{
+				method: 'GET',
+				credentials: 'include',
+				headers: {'Content-Type': 'application/json'},
+				body: null
+			}).then(res =>
+		{
+			if (res.ok)
+				return (res.json());
+		}).then(json =>
+		{
+			if (json.totp !== "False")
+				use2FAButton.style.display = "none";
+			if (json.login_42_set !== "False")
+			{
+				link_42.style.display = "none";
+				unlink_42.style.display = "block";
+			}
+			else
+			{
+				link_42.style.display = "block";
+				unlink_42.style.display = "none";
+			}
+		})
+
 		img.addEventListener("click", e =>
 		{
 			const ActualLang = getCookie("lang");
@@ -145,12 +175,15 @@ export default class Settings extends HTMLElement {
 				body: formData,
 			})
 				.then((res) => {
+
+					if (res.status)
+
 					if (res.ok) {
 						window.dispatchEvent(new Event('storage'));
 					}
 				})
 				.catch((err) => {
-					return ;
+					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
 				});
 		});
 
@@ -239,7 +272,7 @@ export default class Settings extends HTMLElement {
 					confirm(A2FAqr, PhysicKey);
 				}).catch(err =>
 				{
-					return ;
+					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
 				})
 			});
 		}
@@ -247,7 +280,15 @@ export default class Settings extends HTMLElement {
 		function confirm(A2FAqr ,PhysicKey)
 		{
 			const TakeCode = document.querySelector("#qr-input");
-			const apply = document.querySelector("#qrsend");
+			const isButton = document.querySelector("#qrsend");
+			if (isButton)
+				isButton.remove();
+			const apply = document.createElement("button");
+			apply.innerText = Send_button;
+			apply.id = "qrsend";
+			const qr = document.querySelector("#qr");
+			qr.appendChild(apply);
+
 			apply.addEventListener("click", () =>
 			{
 				const code = TakeCode.value;
@@ -269,9 +310,20 @@ export default class Settings extends HTMLElement {
 						A2FAqr.remove();
 						PhysicKey.remove();
 					}
+					if (res.status == 403)
+					{
+						const error = document.querySelector("#error");
+						error.innerText = incorrect_OTP;
+					}
+					if (res.status == 400)
+					{
+						const error = document.querySelector("#error");
+						error.innerText = timeout;
+						document.querySelector("#right-side").style.display = "none";
+					}
 				}).catch(err =>
 				{
-					return ;
+					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
 				})
 			});
 

@@ -49,6 +49,12 @@
 			"fr": "Veuillez remplir tous les champs",
 			"en": "Please fill all fields",
 			"de": "Bitte füllen Sie alle Felder aus"
+		},
+		"fail_link":
+		{
+			"fr": "échec de la connexion avec 42",
+			"en": "fail to login with 42",
+			"de": "Fehler beim Anmelden mit 42"
 		}
 	},
 	"register_page": {
@@ -103,6 +109,12 @@
 			"en": "Unexpected error",
 			"fr": "Erreur inattendue",
 			"de": "Unerwarteter Fehler"
+		},
+		"no_space":
+		{
+			"en": "No spaces in the login",
+			"fr": "Pas d'éspaces dans le login",
+			"de": "Keine Leerzeichen im Login"
 		}
 	},
 	"home_page": {
@@ -214,6 +226,23 @@
 			"fr": "Délier mon compte 42",
 			"en": "Unlink my 42 account",
 			"de": "Mein 42-Konto trennen"
+		},
+		"unexpected_error": {
+			"fr": "Erreur inattendue",
+			"en": "Unexpected error",
+			"de": "Unerwarteter Fehler"
+		},
+		"incorrect_OTP":
+		{
+			"fr": "OTP incorrect",
+			"en": "incorrect OTP",
+			"de": "falsches OTP"
+		},
+		"timeout":
+		{
+			"fr": "processus expiré, veuillez redémarrer",
+			"en": "process timed out, please restart",
+			"de": "Zeitüberschreitung des Prozesses, bitte neu starten"
 		}
 	},
 	"friend_page": {

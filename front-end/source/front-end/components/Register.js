@@ -9,6 +9,9 @@ export default class Register extends HTMLElement {
 
 	async connectedCallback() {
 
+		if (!getCookie("lang"))
+			document.cookie = "lang=en";
+
 		let title = await lang.register_page.title[getCookie("lang")];
 		let login_field = await lang.register_page.login_field[getCookie("lang")];
 		let password_field = await lang.register_page.password_field[getCookie("lang")];
@@ -19,6 +22,7 @@ export default class Register extends HTMLElement {
 		let already_exist = await lang.register_page.already_exist[getCookie("lang")];
 		let password_too_short = await lang.register_page.password_too_short[getCookie("lang")];
 		let unexpected_error = await lang.register_page.unexpected_error[getCookie("lang")];
+		let no_space = await lang.register_page.no_space[getCookie("lang")];
 
 		this.innerHTML = `
         <link rel="stylesheet" href="/styles/register.css">
@@ -71,6 +75,10 @@ export default class Register extends HTMLElement {
 				pass.type = "password";
 		});
 
+		function onlyAlphanumeric(str) {
+			return /^[A-Za-z0-9]*$/.test(str);
+		}
+
 		form.addEventListener("submit", (e) => {
 			e.preventDefault();
 			const login_value = login.value;
@@ -78,6 +86,16 @@ export default class Register extends HTMLElement {
 
 			if (login_value.trim() === '' || pass_value.trim() === '') {
 				message.innerText = complete_fields;
+				message.style.color = "#C82611";
+				message.style.fontSize = '24px';
+				message.style.marginTop = "10px";
+				message.style.marginLeft = "20px";
+				message.style.maxWidth = "300px";
+				return ;
+			}
+			if (!onlyAlphanumeric(login_value) || !onlyAlphanumeric(pass_value))
+			{
+				message.innerText = no_space;
 				message.style.color = "#C82611";
 				message.style.fontSize = '24px';
 				message.style.marginTop = "10px";

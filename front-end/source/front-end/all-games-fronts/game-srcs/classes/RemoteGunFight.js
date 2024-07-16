@@ -143,10 +143,10 @@ export default class RemoteGunfight extends EventTarget {
             this.winner = data['winner'];
             this.onEnd(this.winner);
         })
-        const handleInputs = (event) => this.input(event);
-        window.addEventListener("keydown", handleInputs);
-        window.addEventListener("keyup", handleInputs);
-        window.addEventListener("blur", handleInputs);
+        this.handleInputs = (event) => this.input(event);
+        window.addEventListener("keydown", this.handleInputs);
+        window.addEventListener("keyup", this.handleInputs);
+        window.addEventListener("blur", this.handleInputs);
         this.localCowboy.addEventListener("hit", () => {
             //this.scores.player2++;
             this.localCowboy.dead = false;
@@ -209,5 +209,12 @@ export default class RemoteGunfight extends EventTarget {
         }
         if (this.trailer)
             this.trailer.draw();
+    }
+
+    stop() {
+        clearInterval(this.interval);
+        window.removeEventListener("keydown", this.handleInputs);
+        window.removeEventListener("keyup", this.handleInputs);
+        window.removeEventListener("blur", this.handleInputs);
     }
 }

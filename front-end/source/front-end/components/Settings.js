@@ -47,10 +47,10 @@ export default class Settings extends HTMLElement {
 					</div>
 					<div id="special-login">
 						<button type="submit" id="useA2FA" class="buttons-special-login">${button_2FA}</button>
+						<button type="submit" id="removeA2FA" class="buttons-special-login">${disable_button_2FA}</button>
 						<button type="submit" id="Link42" class="buttons-special-login">${link_42_button}</button>
 						<button type="submit" id="Unlink42" class="buttons-special-login">${unlink_42_button}</button>
 						<img src="${location.origin}/imgs/${getCookie('lang')}.svg" alt="" id="lang">
-					</div>
 				</div>
 				<div id="right-side">
 					<div id="qr-code"></div>
@@ -69,6 +69,7 @@ export default class Settings extends HTMLElement {
 		const picture = this.querySelector("#change-pp-input");
 		const pictureButton = this.querySelector("#change-pp-button");
 		const use2FAButton = this.querySelector("#useA2FA");
+		const remove2FAButton = this.querySelector("#removeA2FA");
 		const qrContainer = this.querySelector("#qr-container");
 		const raw2FA = this.querySelector("#authenticator-raw");
 		const otpInput = this.querySelector("otp-input");
@@ -93,8 +94,16 @@ export default class Settings extends HTMLElement {
 				return (res.json());
 		}).then(json =>
 		{
-			if (json.totp == "True")
+
+			if (json.totp == "True"){
 				use2FAButton.style.display = "none";
+				remove2FAButton.style.display = "block";
+			}
+			else
+			{
+				use2FAButton.style.display = "block";
+				remove2FAButton.style.display = "none";
+			}
 			if (json.login_42_set == "True")
 			{
 				link_42.style.display = "none";
@@ -163,6 +172,34 @@ export default class Settings extends HTMLElement {
 					return ;
 				});
 		});
+
+		remove2FAButton.addEventListener("click", e =>
+		{
+			const header = {
+                'Content-Type': 'application/json'
+            }
+			fetch(`https://${location.hostname}:4444/disable_totp/`, 
+			{
+				method: "PATCH",
+				credentials: "include",
+				body: null,
+				headers: header,
+			}).then(res =>
+			{
+				if (res.status == 202)
+				{
+					const rightSide = document.querySelector("#right-side");
+					document.querySelector("#qr-code").style.display = "none";
+					rightSide.style.display = "ruby-text";
+
+					const	input = document.querySelector("#qr-input");
+					const	button = document.querySelector("qrsend");
+
+					confirm(null, null, 0);
+
+				}
+			})
+		})
 
 		pictureButton.addEventListener("click", (e) => {
 			e.preventDefault();
@@ -268,7 +305,7 @@ export default class Settings extends HTMLElement {
 					PhysicKey.style.marginTop = "10px";
 					PhysicKey.innerText = `if you cannot scan use this code: ${data.totp_key}`;
 					rightSide.prepend(A2FAqr);
-					confirm(A2FAqr, PhysicKey);
+					confirm(A2FAqr, PhysicKey, 1);
 				}).catch(err =>
 				{
 					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
@@ -276,7 +313,7 @@ export default class Settings extends HTMLElement {
 			});
 		}
 
-		function confirm(A2FAqr ,PhysicKey)
+		function confirm(A2FAqr ,PhysicKey, append)
 		{
 			const TakeCode = document.querySelector("#qr-input");
 			const isButton = document.querySelector("#qrsend");
@@ -286,7 +323,8 @@ export default class Settings extends HTMLElement {
 			apply.innerText = Send_button;
 			apply.id = "qrsend";
 			const qr = document.querySelector("#qr");
-			qr.appendChild(apply);
+			if (append = 1)
+				qr.appendChild(apply);
 
 			apply.addEventListener("click", () =>
 			{
@@ -306,8 +344,11 @@ export default class Settings extends HTMLElement {
 					if (res.status == 200)
 					{
 						document.querySelector("#right-side").style.display = "none";
-						A2FAqr.remove();
-						PhysicKey.remove();
+						if (A2FAqr)
+							A2FAqr.remove();
+						if (PhysicKey)
+							PhysicKey.remove();
+						location.reload();
 					}
 					if (res.status == 403)
 					{

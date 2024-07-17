@@ -127,6 +127,7 @@ class Gunfight:
         self.current_map = 0
         self.trailerRect = Rect(417, 50, 24 * 1.4, 28 * 1.4)
         self.trailerDir = -1
+        self.sio.start_background_task(self.auto_start)
 
     async def addPlayer(self, player):
         if player.player_id == self.ids["player_2"]:
@@ -170,20 +171,20 @@ class Gunfight:
                             await self.send("pos_up",
                                             {"pos": [source.rect.x, source.rect.y], "sid": source.sid},
                                             player.sid)
-        if len(self.players) == 1:
-            self.sio.start_background_task(self.auto_start)
         if len(self.players) == 2 and not self.started:
             self.started = True
-            await self.run()
-            sys.exit()
+            self.sio.start_background_task(self.run)
 
     async def auto_start(self):
         await self.sio.sleep(10)
+        if len(self.players) == 0:
+            self.players.append(Gunfight.Player(None, self.ids["player_1"]))
         if not self.started:
             other_id = self.ids["player_1"]
             if self.players[0].player_id == other_id:
                 other_id = self.ids["player_2"]
-            self.players.append(Gunfight.Player(None, other_id))
+            if len(self.players) == 1:
+                self.players.append(Gunfight.Player(None, other_id))
             self.started = True
             self.sio.start_background_task(self.run)
 
@@ -264,7 +265,7 @@ class Gunfight:
             self.players[1].ball_dir = -1
         await self.send(
             "in_game",
-            [(await self.sio.get_session(player.sid)) | {'sid': player.sid} for player in self.players]
+            await self.get_sids()
         )
 
         self.sio.start_background_task(self.lifeInterval)
@@ -315,6 +316,8 @@ class Gunfight:
                 await self.send("pos_up", {"pos": [target.rect.x, target.rect.y], "sid": target.sid}, target.sid)
 
     async def shoot(self, sid, data):
+        if not self.started:
+            return
         target = self.players[0]
         other = self.players[1]
         if target.sid != sid:
@@ -360,8 +363,11 @@ class Gunfight:
                 target = self.players[0]
                 if target.sid == player.sid:
                     target = self.players[1]
-                target_session = await self.sio.get_session(target.sid)
-                await self.send("end", {"winner": target_session["display_name"]})
+                if target.sid:
+                    target_session = await self.sio.get_session(target.sid)
+                    await self.send("end", {"winner": target_session["display_name"]})
+                else:
+                    await self.send("end", {"winner": "other"})
                 for source in self.players:
                     await self.sio.disconnect(source.sid)
                 await self.send_report()

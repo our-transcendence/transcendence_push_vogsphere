@@ -132,11 +132,14 @@ class Pong:
 
     async def auto_start(self):
         await self.sio.sleep(10)
+        if len(self.players) == 0:
+            self.players.append(Pong.Player(None, self.ids["player_1"]))
         if not self.started:
             other_id = self.ids["player_1"]
             if self.players[0].player_id == other_id:
                 other_id = self.ids["player_2"]
-            self.players.append(Pong.Player(None, other_id))
+            if len(self.players) == 1:
+                self.players.append(Pong.Player(None, other_id))
             self.started = True
             self.sio.start_background_task(self.run)
 

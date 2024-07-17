@@ -110,11 +110,11 @@
 			"fr": "Erreur inattendue",
 			"de": "Unerwarteter Fehler"
 		},
-		"no_space":
+		"invalid_char":
 		{
-			"en": "No spaces in the login",
-			"fr": "Pas d'éspaces dans le login",
-			"de": "Keine Leerzeichen im Login"
+			"en": "Between 5 and 15 character, a-z, 0-9 and - _",
+			"fr": "Entre 5 et 15 charactere, a-z, 0-9 et - _",
+			"de": "Zwischen 5 und 15 Zeichen, a-z, 0-9 und - _"
 		}
 	},
 	"home_page": {

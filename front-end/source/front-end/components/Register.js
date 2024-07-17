@@ -22,7 +22,7 @@ export default class Register extends HTMLElement {
 		let already_exist = await lang.register_page.already_exist[getCookie("lang")];
 		let password_too_short = await lang.register_page.password_too_short[getCookie("lang")];
 		let unexpected_error = await lang.register_page.unexpected_error[getCookie("lang")];
-		let no_space = await lang.register_page.no_space[getCookie("lang")];
+		let invalid_char = await lang.register_page.invalid_char[getCookie("lang")];
 
 		this.innerHTML = `
         <link rel="stylesheet" href="/styles/register.css">
@@ -95,7 +95,7 @@ export default class Register extends HTMLElement {
 			}
 			if (!onlyAlphanumeric(login_value) || !onlyAlphanumeric(pass_value))
 			{
-				message.innerText = no_space;
+				message.innerText = invalid_char;
 				message.style.color = "#C82611";
 				message.style.fontSize = '24px';
 				message.style.marginTop = "10px";

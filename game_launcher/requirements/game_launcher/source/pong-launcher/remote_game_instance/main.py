@@ -19,9 +19,9 @@ sio = socketio.AsyncServer(
 )
 app = web.Application()
 sio.attach(app)
-game = Pong(sio)
 pub_key: str | None = None
 ids: dict | None = None
+game: Pong
 
 
 def filterPlayerDatas(item):
@@ -80,6 +80,7 @@ if __name__ == "__main__":
     ids["player_2"] = int(ids["player_2"])
     ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     ssl_context.load_cert_chain("/etc/ssl/cert.pem", "/etc/ssl/key.pem")
+    game = Pong(sio, ids)
     try:
         web.run_app(app, host='0.0.0.0', port=int(sys.argv[1]), ssl_context=ssl_context)
     except SystemExit:

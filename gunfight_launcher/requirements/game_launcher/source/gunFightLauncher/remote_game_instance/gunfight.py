@@ -170,10 +170,22 @@ class Gunfight:
                             await self.send("pos_up",
                                             {"pos": [source.rect.x, source.rect.y], "sid": source.sid},
                                             player.sid)
+        if len(self.players) == 1:
+            self.sio.start_background_task(self.auto_start)
         if len(self.players) == 2 and not self.started:
             self.started = True
             await self.run()
             sys.exit()
+
+    async def auto_start(self):
+        await self.sio.sleep(10)
+        if not self.started:
+            other_id = self.ids["player_1"]
+            if self.players[0].player_id == other_id:
+                other_id = self.ids["player_2"]
+            self.players.append(Gunfight.Player(None, other_id))
+            self.started = True
+            self.sio.start_background_task(self.run)
 
     async def get_sids(self):
         return [(await self.sio.get_session(player.sid)) | {'sid': player.sid} for player in self.players if

@@ -82,13 +82,14 @@ class Pong:
     started: bool
     inter_key: str | None
 
-    def __init__(self, sio):
+    def __init__(self, sio, ids):
         self.players = []
         self.ended = False
         self.sio: socketio.AsyncServer = sio
         self.ball = None
         self.started = False
         self.inter_key = os.getenv("INTER_SERVICE_KEY", None)
+        self.ids = ids
 
     async def spawn_ball(self, start_dir):
         self.ball = Pong.Ball(858 / 2 - 15 / 2, 525 / 2 - 15 / 2, 15, start_dir)
@@ -123,7 +124,19 @@ class Pong:
                 )
                 for source in self.players:
                     await self.send("pos_up", {"pos": source.rect.y, "sid": source.sid}, player.sid)
+        if len(self.players) == 1:
+            self.sio.start_background_task(self.auto_start)
         if len(self.players) == 2 and not self.started:
+            self.started = True
+            self.sio.start_background_task(self.run)
+
+    async def auto_start(self):
+        await self.sio.sleep(10)
+        if not self.started:
+            other_id = self.ids["player_1"]
+            if self.players[0].player_id == other_id:
+                other_id = self.ids["player_2"]
+            self.players.append(Pong.Player(None, other_id))
             self.started = True
             self.sio.start_background_task(self.run)
 
@@ -151,12 +164,13 @@ class Pong:
         await self.sio.emit(event, data=data, to=to)
 
     async def run(self):
+        self.started = True
         self.players[0].ball_dir = 1
         self.players[1].ball_dir = -1
         self.players[1].rect.x = 858 - 10 - 20
         await self.send(
             "in_game",
-            [(await self.sio.get_session(player.sid)) | {'sid': player.sid} for player in self.players]
+            await self.get_sids()
         )
         await self.spawn_ball(1)
 

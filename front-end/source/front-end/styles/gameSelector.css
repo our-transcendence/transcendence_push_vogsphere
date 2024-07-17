@@ -43,6 +43,18 @@ h3
 	text-transform: uppercase;
 }
 
+h4
+{
+	color: #FFF;
+	text-align: center;
+	font-family: "ComicDaddy";
+	font-size: 45px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 125px;
+	text-transform: uppercase;
+}
+
 .text
 {
 	color: #FDB402;
@@ -67,4 +79,10 @@ h3
 .text:hover
 {
 	cursor: pointer;
+}
+
+.selector-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }

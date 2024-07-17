@@ -121,8 +121,13 @@ export default class Router extends HTMLElement {
 				regex: false,
 				header: false
 			},
-			"/commands": {
-				elem: "commands-page",
+			"/pong/commands": {
+				elem: "pong-commands",
+				regex: false,
+				header: true
+			},
+			"/gunfight/commands": {
+				elem: "gunfight-commands",
 				regex: false,
 				header: true
 			},

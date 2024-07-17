@@ -1,7 +1,7 @@
 import {lang} from "../utils/getAllLang";
 import getCookie from "../utils/getCookie";
 
-export default class Commands extends HTMLElement {
+export default class GunfightCommands extends HTMLElement {
     constructor() {
         super();
 
@@ -17,47 +17,6 @@ export default class Commands extends HTMLElement {
         this.shoot = lang.controles.shoot[getCookie("lang")];
 
         this.commands = [
-            `
-            <div id="form-title">${this.localPong}</div>
-            <div class="local-commands">
-                <div class="player-commands">
-                    <div class="commands-title">${this.player} 1</div>
-                    <div class="commands-list">
-                        <div class="command">
-                            ${this.up}: <kbd>w</kbd>
-                        </div>
-                        <div class="command">
-                            ${this.down}: <kbd>s</kbd>
-                        </div>
-                    </div>
-                </div>
-                <div class="player-commands">
-                    <div class="commands-title">${this.player} 2</div>
-                    <div class="commands-list">
-                        <div class="command">
-                            ${this.up}: <kbd>↑</kbd>
-                        </div>
-                        <div class="command">
-                            ${this.down}: <kbd>↓</kbd>
-                        </div>
-                    </div>
-                </div>
-            </div>`,
-            `<div id="form-title">${this.remotePong}</div>
-                <div class="local-commands">
-                
-                <div class="player-commands">
-                    <div class="commands-title">${this.player}</div>
-                    <div class="commands-list">
-                        <div class="command">
-                            ${this.up}: <kbd>w</kbd>
-                        </div>
-                        <div class="command">
-                            ${this.down}: <kbd>s</kbd>
-                        </div>
-                    </div>
-                </div>
-            </div>`,
             `<div id="form-title">${this.localGunfight}</div>
                 <div class="local-commands">
                 

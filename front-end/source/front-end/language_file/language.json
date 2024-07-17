@@ -308,6 +308,11 @@
 			"fr": "Tournoi",
 			"en": "Tournament",
 			"de": "Turnier"
+		},
+		"howToPlay": {
+			"fr": "Comment jouer",
+			"en": "How to play",
+			"de": "Spielanleitung"
 		}
 	},
 	"tournaments":

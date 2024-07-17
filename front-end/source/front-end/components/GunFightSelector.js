@@ -19,16 +19,21 @@ export default class CustomGunFightSelector extends HTMLElement
 			`
 			<link rel="stylesheet" href="/styles/gameSelector.css" >
 			<h2 id="title-text">GunFight</h2>
-			<div id="choice">
-				<div id="local">
-					<h3 class="mode-title">${local}</h3>
-					<link-route route="/gunfight/local/form" id="freeplay-local" class="text">${freeplay}</link-route>
-					<link-route route="/gunfight/local/tournament" id="tournament-local" class="text">${tournament}</link-route>
+			<div class="selector-container">
+				<div id="choice">
+					<div id="local">
+						<h3 class="mode-title">${local}</h3>
+						<link-route route="/gunfight/local/form" id="freeplay-local" class="text">${freeplay}</link-route>
+						<link-route route="/gunfight/local/tournament" id="tournament-local" class="text">${tournament}</link-route>
+					</div>
+					<div id="red-line"></div>
+					<div id="online">
+						<h3>${online}</h3>
+						<link-route route="/gunfight/remote/matchmaking" id="freeplay-online" class="text">${freeplay}</link-route>
+					</div>
 				</div>
-				<div id="red-line"></div>
-				<div id="online">
-					<h3>${online}</h3>
-					<link-route route="/gunfight/remote/matchmaking" id="freeplay-online" class="text">${freeplay}</link-route>
+				<div class="commands-container">
+					<link-route class="mode-title" route="/gunfight/commands"><h4>How to play</h4></link-route>
 				</div>
 			</div>
 			`

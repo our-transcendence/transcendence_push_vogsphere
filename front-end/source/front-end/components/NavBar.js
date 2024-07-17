@@ -20,7 +20,6 @@ export default class NavBar extends HTMLElement {
 						<link-route route="/home" id="title-header">OUR TRANSCENDENCE</link-route>
 					</div>
 					<div class="left-side">
-						<link-route route="/commands" class="controles-link">Controles</link-route>
 						<div id="profile">
 							<p id="profile-name">
 								username

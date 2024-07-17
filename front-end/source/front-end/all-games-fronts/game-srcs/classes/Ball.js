@@ -4,7 +4,7 @@ export default class Ball {
         this.rect = rect;
         this.context = context;
         this.dir = {x: dir, y: 1};
-        this.speed = {x: 3, y: Math.random() * (5 + 5) - 5};
+        this.speed = {x: 3, y: Math.random() * 10 - 5};
         this.trail = [];
     }
 

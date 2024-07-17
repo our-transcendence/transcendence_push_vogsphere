@@ -1,7 +1,7 @@
 import os
+import sys
 import time
 from random import random
-import signal
 
 import requests
 import socketio
@@ -214,7 +214,7 @@ class Pong:
         for player in self.players:
             await self.sio.disconnect(player.sid)
         await self.sio.shutdown()
-        os.kill(os.getpid(), signal.SIGKILL)
+        sys.exit()
 
 
     async def update(self):

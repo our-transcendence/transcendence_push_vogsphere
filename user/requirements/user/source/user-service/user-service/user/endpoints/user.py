@@ -120,6 +120,14 @@ def update_user(request: HttpRequest, **kwargs):
     except Http404:
         return response.HttpResponse(*NO_USER)
 
+    if 'display_name' in request.POST.keys():
+        user.displayName = request.POST['display_name']
+    try:
+        user.save()
+    except OperationalError as e:
+        print(f"DATABASE FAILURE {e}", flush=True)
+        return response.HttpResponse(*DB_FAILURE)
+
     if 'picture' in request.FILES.keys():
         if request.FILES['picture'].content_type != 'image/png':
             return HttpResponse(*ONLY_PNG)
@@ -139,8 +147,6 @@ def update_user(request: HttpRequest, **kwargs):
             return HttpResponse(status=400, reason="Corrupted or invalide image sent")
         os.remove(f"{settings.PICTURES_DST}/{user.id}_old.png")
 
-    if 'display_name' in request.POST.keys():
-        user.displayName = request.POST['display_name']
     try:
         user.save()
     except OperationalError as e:

@@ -26,8 +26,11 @@ export default class Dashboard extends HTMLElement {
 			<div id="parent-red-line">
 				<div id="red-line"></div>
 			</div>
-			<div id="friend-list">
-				<div id="add-friend"><img src="https://${location.hostname}:4443/imgs/addFriend.svg" alt=""><p class="friend-text">${Add_friend_button}</p></div>
+			<div class="friends-container">
+				<div class="friends-title">Friends</div>
+				<div id="friend-list">
+					<div id="add-friend"><img src="https://${location.hostname}:4443/imgs/addFriend.svg" alt=""><p class="friend-text">${Add_friend_button}</p></div>
+				</div>
 			</div>
 		`;
 

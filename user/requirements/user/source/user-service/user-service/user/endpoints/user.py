@@ -79,11 +79,10 @@ def get_user(request, user_id):
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:
         return response.HttpResponse(*NO_USER)
-    status = cache.get(user.id)
-    if status is None or status == 0:
+    status_value = cache.get(user.id, 0)
+    status = "connected"
+    if status_value <= 0:
         status = "disconnected"
-    else:
-        status = "connected"
     return response.JsonResponse({
         "id": user.id,
         "login": user.login,

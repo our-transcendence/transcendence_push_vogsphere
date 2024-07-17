@@ -26,9 +26,37 @@ export default class Intra extends HTMLElement {
         if (api_response != null) {
             const err = document.createElement("h1");
             err.innerHTML = error;
+            document.cookie="intra=fail_login_not_link";
             this.appendChild(err);
             setTimeout(function() {
-                changeRoute('/settings');
+                const headers = {
+                    'Content-Type': 'application/json; charset=UTF-8'
+                };
+                fetch(`https://${location.hostname}:4444/refresh/`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: headers,
+                    body: null
+                })
+                    .then(async res => {
+                        if (!res.ok)
+                            changeRoute("/login");
+                        else
+                        {
+                            if (this.isSock === 0)
+                            {
+                                this.socket = await createSocket()
+                                this.isSock = 1;
+                            }
+                            changeRoute('/settings');
+                        }
+                    })
+                    .catch(err => {
+                        this.isSock = 0;
+                        if (this.refreshInterval)
+                            clearInterval(this.refreshInterval);
+                        changeRoute("/login");
+                    });
             }, 5000);
         }
         else {
@@ -73,12 +101,15 @@ export default class Intra extends HTMLElement {
             headers: {},
             body: null
         }).then(res => {
+            if (res.status !== 200)
+            {
+                
+            }
             if (res.status === 200) {
                 this.dispatchEvent(new CustomEvent("update-infos", {bubbles: true}));
                 changeRoute("/home");
             }
         }).catch(err => {
-            document.cookie="intra=fail_login_not_link";
             return ;
         });
     }

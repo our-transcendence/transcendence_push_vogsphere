@@ -81,7 +81,7 @@ export default class Dashboard extends HTMLElement {
 				{
 					const friendList = document.querySelector("#friend-list");
 
-					const MyId = getCookie("user_id");
+					const MyId = parseInt(getCookie("user_id"));
 					const keys = Object.keys(json);
 					for (let i = 0; i < keys.length; i++)
 					{

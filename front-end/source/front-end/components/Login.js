@@ -98,6 +98,15 @@ export default class Login extends HTMLElement {
 			message.style.marginLeft = "20px";
 			message.style.maxWidth = "300px";
 		}
+		else if (localStorage.getItem("intra") && localStorage.getItem("intra") == fail_login_not_link)
+		{
+			message.innerText = fail_link;
+			message.style.color = "#C82611";
+			message.style.fontSize = '24px';
+			message.style.marginTop = "10px";
+			message.style.marginLeft = "20px";
+			message.style.maxWidth = "300px";
+		}
 
 		form.addEventListener("submit", (e) => {
 			e.preventDefault();

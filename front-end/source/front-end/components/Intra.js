@@ -9,15 +9,15 @@ export default class Intra extends HTMLElement {
         super();
     }
 
+    error_message = lang.login_page.no_account_42[getCookie("lang")];
     async connectedCallback() {
 
         let time_on_page = 5;
         let back_to_login = await lang.login_42.back_to_login[getCookie("lang")];
-        let error = await lang.login_42.error[getCookie("lang")];
         this.innerHTML = `
         <link rel="stylesheet" href="/styles/intra.css" >
         <h1 id="title-intra">42 AUTH</h1>
-        <div id="countdown-container"><p id="countdown-text">${time_on_page}</p></div>
+        <div id="countdown-container"><p id="countdown-text"></p></div>
         <button id="friendButtons" style="display: none"><link-route route="/login">${back_to_login}</link-route> </button>
     `;
         const urlParams = new URLSearchParams(window.location.search);
@@ -61,18 +61,19 @@ export default class Intra extends HTMLElement {
                     });
             }, time_on_page * 1000);
 
-            
-        let countDown = time_on_page - 1;
+
+        let countDown = time_on_page;
+        document.getElementById("countdown-text").innerHTML = countDown;
         let countdownFunction = setInterval(function()
         {
+            countDown -= 1;
             document.getElementById("countdown-text").innerHTML = countDown;
             if (countDown < 0) {
                 clearInterval(countdownFunction);
                 document.getElementById("countdown-text").innerHTML = "0";
             }
-            countDown -= 1;
         }, 1000);
-       
+
         }
         else {
             fetch(`https://${location.hostname}:4444/token_42/`, {
@@ -109,6 +110,7 @@ export default class Intra extends HTMLElement {
     }
 
      intra_login() {
+        let time_on_page = 5;
         document.cookie = "42_action=done";
         fetch(`https://${location.hostname}:4444/login_42/`, {
             method: "GET",
@@ -116,15 +118,17 @@ export default class Intra extends HTMLElement {
             headers: {},
             body: null
         }).then(res => {
-            if (res.status !== 200)
+            if (res.status === 404)
             {
-                
+                alert(this.error_message);
             }
             if (res.status === 200) {
                 this.dispatchEvent(new CustomEvent("update-infos", {bubbles: true}));
                 changeRoute("/home");
             }
         }).catch(err => {
+            console.log("catch error ?");
+            console.log(err);
             return ;
         });
     }

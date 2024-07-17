@@ -55,6 +55,11 @@
 			"fr": "échec de la connexion avec 42",
 			"en": "fail to login with 42",
 			"de": "Fehler beim Anmelden mit 42"
+		},
+		"no_account_42": {
+			"fr": "Veuillez d'abord vous inscrire sur le site",
+			"en": "Please register first",
+			"de": "Bitte Registrieren zuerst"
 		}
 	},
 	"register_page": {

@@ -16,7 +16,7 @@ export default class Intra extends HTMLElement {
         this.innerHTML = `
         <link rel="stylesheet" href="/styles/home.css" >
         <h1>42 AUTH</h1>
-
+        <div id="countdown-container"><p id="countdown-text">5</p></div>
         <button id="friendButtons" style="display: none"><link-route route="/login">${back_to_login}</link-route> </button>
     `;
         const urlParams = new URLSearchParams(window.location.search);
@@ -58,6 +58,19 @@ export default class Intra extends HTMLElement {
                         changeRoute("/login");
                     });
             }, 5000);
+
+            
+        let countDown = 4;
+        let countdownFunction = setInterval(function()
+        {
+            document.getElementById("countdown-text").innerHTML = countDown;
+            if (countDown < 0) {
+                clearInterval(countdownFunction);
+                document.getElementById("countdown-text").innerHTML = "0";
+            }
+            countDown -= 1;
+        }, 1000);
+       
         }
         else {
             fetch(`https://${location.hostname}:4444/token_42/`, {

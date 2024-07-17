@@ -46,10 +46,9 @@ export default class Settings extends HTMLElement {
 						<button id="change-pp-button" class="send">${Send_button}</button>
 					</div>
 					<div id="special-login">
-
-						<button type="submit" id="Unlink42" class="buttons-special-login">${unlink_42_button}</button>
 						<button type="submit" id="useA2FA" class="buttons-special-login">${button_2FA}</button>
 						<button type="submit" id="Link42" class="buttons-special-login">${link_42_button}</button>
+						<button type="submit" id="Unlink42" class="buttons-special-login">${unlink_42_button}</button>
 						<img src="${location.origin}/imgs/${getCookie('lang')}.svg" alt="" id="lang">
 					</div>
 				</div>
@@ -94,9 +93,9 @@ export default class Settings extends HTMLElement {
 				return (res.json());
 		}).then(json =>
 		{
-			if (json.totp !== "False")
+			if (json.totp == "True")
 				use2FAButton.style.display = "none";
-			if (json.login_42_set !== "False")
+			if (json.login_42_set == "True")
 			{
 				link_42.style.display = "none";
 				unlink_42.style.display = "block";

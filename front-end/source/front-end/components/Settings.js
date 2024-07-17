@@ -31,17 +31,18 @@ export default class Settings extends HTMLElement {
         <h2 id="title-setting">${title}</h2>
 			<div id="all-content">
 				<div id="left-side">
-					<div class="change-input" id="change-display">
-						<div class="input">
-							<p class="text">${display_name_field}</p>
-							<input type="text" id="change-display-input">
+					<div id="all-left">
+						<div class="change-input" id="change-display">
+							<div class="input">
+								<p class="text">${display_name_field}</p>
+								<input type="text" id="change-display-input">
+							</div>
 						</div>
-						<button id="change-display-button" class="send">${Send_button}</button>
-					</div>
-					<div class="change-input" id="change-pp">
-						<div class="input">
-							<p class="text">${Profile_picture_field}</p>
-							<input type="file" id="change-pp-input"  accept=".png">
+						<div class="change-input" id="change-pp">
+							<div class="input">
+								<p class="text">${Profile_picture_field}</p>
+								<input type="file" id="change-pp-input"  accept=".png">
+							</div>	
 						</div>
 						<button id="change-pp-button" class="send">${Send_button}</button>
 					</div>
@@ -51,6 +52,7 @@ export default class Settings extends HTMLElement {
 						<button type="submit" id="Link42" class="buttons-special-login">${link_42_button}</button>
 						<button type="submit" id="Unlink42" class="buttons-special-login">${unlink_42_button}</button>
 						<img src="${location.origin}/imgs/${getCookie('lang')}.svg" alt="" id="lang">
+					</div>
 				</div>
 				<div id="right-side">
 					<div id="qr-code"></div>
@@ -65,7 +67,6 @@ export default class Settings extends HTMLElement {
         `
 
 		const displayName = this.querySelector("#change-display-input");
-		const displayNameButton = this.querySelector("#change-display-button");
 		const picture = this.querySelector("#change-pp-input");
 		const pictureButton = this.querySelector("#change-pp-button");
 		const use2FAButton = this.querySelector("#useA2FA");
@@ -146,32 +147,32 @@ export default class Settings extends HTMLElement {
 		})
 
 
-		displayNameButton.addEventListener("click", (e) => {
-			e.preventDefault();
+		// displayNameButton.addEventListener("click", (e) => {
+		// 	e.preventDefault();
 
-			formData.set("display_name", displayName.value);
-			fetch(`https://${location.hostname}:4646/update/`, {
-				credentials: "include",
-				method: "POST",
-				body: formData,
-			})
-				.then((res) => {
-					if (res.ok) {
-						let infos = window.sessionStorage.getItem("user_infos");
-						if (!infos) {
-							updateInfos();
-							return;
-						}
-						infos = JSON.parse(infos);
-						infos.displayName = displayName.value;
-						window.sessionStorage.setItem("user_infos", JSON.stringify(infos));
-						window.dispatchEvent(new Event('storage'));
-					}
-				})
-				.catch((err) => {
-					return ;
-				});
-		});
+		// 	formData.set("display_name", displayName.value);
+		// 	fetch(`https://${location.hostname}:4646/update/`, {
+		// 		credentials: "include",
+		// 		method: "POST",
+		// 		body: formData,
+		// 	})
+		// 		.then((res) => {
+		// 			if (res.ok) {
+		// 				let infos = window.sessionStorage.getItem("user_infos");
+		// 				if (!infos) {
+		// 					updateInfos();
+		// 					return;
+		// 				}
+		// 				infos = JSON.parse(infos);
+		// 				infos.displayName = displayName.value;
+		// 				window.sessionStorage.setItem("user_infos", JSON.stringify(infos));
+		// 				window.dispatchEvent(new Event('storage'));
+		// 			}
+		// 		})
+		// 		.catch((err) => {
+		// 			return ;
+		// 		});
+		// });
 
 		remove2FAButton.addEventListener("click", e =>
 		{
@@ -204,6 +205,9 @@ export default class Settings extends HTMLElement {
 		pictureButton.addEventListener("click", (e) => {
 			e.preventDefault();
 
+			console.log(displayName.value);
+			if (displayName.value != "" && displayName.value != " ")
+				formData.set("display_name", displayName.value);
 			formData.set("picture", picture.files[0]);
 			fetch(`https://${location.hostname}:4646/update/`, {
 				credentials: "include",
@@ -211,15 +215,34 @@ export default class Settings extends HTMLElement {
 				body: formData,
 			})
 				.then((res) => {
+					if (res.ok)
+					{
+						let infos = window.sessionStorage.getItem("user_infos");
+						if (!infos)
+						{
+							updateInfos();
+							return;
+						}
 
-					if (res.status)
-
-					if (res.ok) {
+						infos = JSON.parse(infos);
+						if (displayName.value != "" && displayName.value != " ")
+							infos.displayName = displayName.value;
+						window.sessionStorage.setItem("user_infos", JSON.stringify(infos));
 						window.dispatchEvent(new Event('storage'));
+					}
+					else
+					{
+						document.querySelector("#error").innerText = lang.settings_page.invalid_image[getCookie("lang")];
+						const header = document.querySelector("#header");
+						const	navBar = document.querySelector("nav-bar");
+						navBar.remove();
+						const newNavBar = document.createElement("nav-bar");
+						header.appendChild(newNavBar);
 					}
 				})
 				.catch((err) => {
 					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
+					
 				});
 		});
 

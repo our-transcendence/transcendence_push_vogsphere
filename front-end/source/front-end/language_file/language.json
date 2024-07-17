@@ -237,6 +237,11 @@
 			"en": "Unexpected error",
 			"de": "Unerwarteter Fehler"
 		},
+		"invalid_image": {
+			"fr": "Image Invalide",
+			"en": "Invalid Image",
+			"de": "Ungültiges Bild"
+		},
 		"incorrect_OTP":
 		{
 			"fr": "OTP incorrect",

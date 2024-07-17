@@ -86,13 +86,21 @@ export default class RemoteGunfight extends EventTarget {
             }
         });
         this.socket.on("in_game", (data) => {
-            this.opponentSid = data[0]['sid'];
-            this.playerData = data[1];
-            this.opponentData = data[0];
-            if (this.opponentSid === this.socket.id) {
-                this.opponentSid = data[1]['sid'];
+            if (data.length === 0)
+                return;
+            if (data.length === 1) {
                 this.playerData = data[0];
-                this.opponentData = data[1];
+            } else {
+                this.opponentSid = data[0]['sid'];
+                this.playerData = data[1];
+                this.opponentData = data[0];
+                if (this.opponentSid === this.socket.id) {
+                    this.opponentSid = data[1]['sid'];
+                    this.playerData = data[0];
+                    this.opponentData = data[1];
+                }
+                if (this.interval)
+                    clearInterval(this.interval);
             }
             this.interval = setInterval(() => this.update(), 100 / 6);
         });
@@ -102,7 +110,15 @@ export default class RemoteGunfight extends EventTarget {
             this.onEnd(this.name, null);
         });
         this.socket.on("game_end", (data) => {
-            this.winner = data[this.socket.id] > this.scores[this.opponentSid] ? this.playerData : this.opponentData;
+            this.winner = this.opponentData;
+            console.log(this.opponentSid);
+            if (this.opponentSid === "") {
+                if (data[this.socket.id] > data["null"])
+                    this.winner = this.playerData;
+            } else {
+                if (data[this.socket.id] > data[this.opponentSid])
+                    this.winner = this.playerData;
+            }
             this.onEnd(this.winner, data);
         });
         this.socket.on("pos_up", (data) => {

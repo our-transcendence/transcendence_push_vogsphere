@@ -21,7 +21,11 @@ export default class RemotePongGame extends HTMLElement {
         const game = this.querySelector("remote-pong");
         const endModal = this.querySelector("end-game-modal");
         game.addEventListener("endGame", (e) => {
-            endModal.display("remote pong", e.detail.scores, e.detail.winner.display_name, "/pong/remote/matchmaking");
+            if (e.detail.winner === null) {
+                endModal.display("remote pong", e.detail.scores, "other", "/pong/remote/matchmaking");
+            } else {
+                endModal.display("remote pong", e.detail.scores, e.detail.winner.display_name, "/pong/remote/matchmaking");
+            }
         });
         game.addEventListener("authError", (e) => {
             changeRoute("/home");

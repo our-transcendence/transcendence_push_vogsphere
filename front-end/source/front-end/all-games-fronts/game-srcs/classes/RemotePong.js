@@ -60,17 +60,23 @@ export default class RemotePong extends EventTarget {
         this.socket.on("leave_queue", () => {
         });
         this.socket.on("in_game", (data) => {
-            this.opponentSid = data[0]['sid'];
-            this.playerData = data[1];
-            this.opponentData = data[0];
-            if (this.opponentSid === this.socket.id) {
-                this.opponentSid = data[1]['sid'];
+            if (data.length === 0)
+                return;
+            if (data.length === 1) {
                 this.playerData = data[0];
-                this.opponentData = data[1];
+            } else {
+                this.opponentSid = data[0]['sid'];
+                this.playerData = data[1];
+                this.opponentData = data[0];
+                if (this.opponentSid === this.socket.id) {
+                    this.opponentSid = data[1]['sid'];
+                    this.playerData = data[0];
+                    this.opponentData = data[1];
+                }
+                if (this.interval)
+                    clearInterval(this.interval);
             }
-            if (this.interval)
-                clearInterval(this.interval);
-            this.interval = setInterval(() => this.update(), 100/6);
+            this.interval = setInterval(() => this.update(), 100 / 6);
         });
         this.socket.on("spawn_ball", (data) => {
             this.ball = new RemoteBall(
@@ -100,6 +106,8 @@ export default class RemotePong extends EventTarget {
         this.socket.on("score_up", (data) => {
             this.scores[0] = data[this.socket.id];
             this.scores[1] = data[this.opponentSid];
+            if (this.scores[1] === undefined)
+                this.scores[1] = data["null"];
         });
         this.socket.on("give_up", () => {
             alert("opponent gave up");
@@ -108,8 +116,14 @@ export default class RemotePong extends EventTarget {
         });
         this.socket.on("game_end", (data) => {
             this.winner = this.opponentData;
-            if (data[this.socket.id] > data[this.opponentSid])
-                this.winner = this.playerData;
+            console.log(this.opponentSid);
+            if (this.opponentSid === "") {
+                if (data[this.socket.id] > data["null"])
+                    this.winner = this.playerData;
+            } else {
+                if (data[this.socket.id] > data[this.opponentSid])
+                    this.winner = this.playerData;
+            }
             this.onEnd(this.winner, data);
         });
         this.handleInputs = (event) => this.input(event);
@@ -145,15 +159,19 @@ export default class RemotePong extends EventTarget {
         this.context.textAlign = "left";
         this.context.fillText(this.playerData['display_name'], 0, 0);
 
-        this.context.textAlign = "right";
-        this.context.fillText(this.opponentData['display_name'], this.canvas.width, 0);
+        if (this.opponentData) {
+            this.context.textAlign = "right";
+            this.context.fillText(this.opponentData['display_name'], this.canvas.width, 0);
+        }
 
         this.context.font = "bold 20px sans-serif";
         this.context.textAlign = "left";
         this.context.fillText(this.playerData['login'], 0, 40);
 
-        this.context.textAlign = "right";
-        this.context.fillText(this.opponentData['login'], this.canvas.width, 40);
+        if (this.opponentData) {
+            this.context.textAlign = "right";
+            this.context.fillText(this.opponentData['login'], this.canvas.width, 40);
+        }
     }
 
     input(event) {

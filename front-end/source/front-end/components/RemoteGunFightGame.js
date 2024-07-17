@@ -21,7 +21,11 @@ export default class RemoteGunFightGame extends HTMLElement {
         const game = this.querySelector("remote-gunfight");
         const endModal = this.querySelector("end-game-modal");
         game.addEventListener("endGame", (e) => {
-            endModal.display("remote gunfight", null, e.detail.winner, "/gunfight/remote/matchmaking");
+            if (e.detail.winner === null) {
+                endModal.display("remote gunfight", null, "other", "/gunfight/remote/matchmaking");
+            } else {
+                endModal.display("remote gunfight", null, e.detail.winner, "/gunfight/remote/matchmaking");
+            }
         });
         game.addEventListener("authError", (e) => {
             changeRoute("/home");

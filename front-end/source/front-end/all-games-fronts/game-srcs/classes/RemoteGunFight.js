@@ -20,10 +20,10 @@ export default class RemoteGunfight extends EventTarget {
         this.localCowboy = new LocalCowboy(
             1,
             {
-                up: 38,
-                down: 40,
-                right: 39,
-                left: 37,
+                up: 87,
+                down: 83,
+                right: 68,
+                left: 65,
                 shoot: 32
             },
             this.context

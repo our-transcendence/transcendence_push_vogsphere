@@ -131,7 +131,7 @@ export default class NavBar extends HTMLElement {
 
 			profile.addEventListener("click", (e) => {
 				e.preventDefault();
-				if (menuELM.style.display == "none")
+				if (menuELM.style.display === "none" || !menuELM.style.display)
 					menuELM.style.display = "block";
 				else
 					menuELM.style.display = "none";

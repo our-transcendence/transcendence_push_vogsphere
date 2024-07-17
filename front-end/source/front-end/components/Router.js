@@ -41,11 +41,6 @@ export default class Router extends HTMLElement {
 				regex: false,
 				header: true,
 			},
-			"/games": {
-				elem: "choose-page",
-				regex: false,
-				header: true
-			},
 			"/friends": {
 				elem: "friends-page",
 				regex: false,
@@ -53,7 +48,8 @@ export default class Router extends HTMLElement {
 			},
 			"\\/\\d+\\/infos": {
 				elem: "infos-page",
-				regex: true
+				regex: true,
+				header: true
 			},
 			"/intra": {
 				elem: "intra-page",

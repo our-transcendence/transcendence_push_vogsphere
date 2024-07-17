@@ -14,16 +14,14 @@ from .crypto import encoder
 # Create your models here.
 
 
-class loginValidator(RegexValidator):
-    message="no Space allowed"
-    regex='^\S*$'
-
 
 class User(models.Model):
     id = models.BigAutoField(primary_key=True)
-    login = models.CharField(max_length=15,
-                            unique=True,
-                            validators=[loginValidator()])
+    login = models.CharField(unique=True,
+                            validators=[RegexValidator(
+                                regex='^[a-zA-Z0-9_-]{1,15}$',
+                                message="Forbiden character detected",
+                            )])
     password = models.CharField(
         max_length=256,
         validators=[MinLengthValidator(5, "Must contains at least 5 char")]

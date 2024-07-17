@@ -317,6 +317,7 @@ export default class Settings extends HTMLElement {
 						document.querySelector("#right-side").style.display = "none";
 						A2FAqr.remove();
 						PhysicKey.remove();
+						location.reload();
 					}
 					if (res.status == 403)
 					{

@@ -76,7 +76,7 @@ export default class Register extends HTMLElement {
 		});
 
 		function onlyAlphanumeric(str) {
-			return /^[A-Za-z0-9]*$/.test(str);
+			return /^[a-zA-Z0-9_-]{5,15}$/.test(str);
 		}
 
 		form.addEventListener("submit", (e) => {

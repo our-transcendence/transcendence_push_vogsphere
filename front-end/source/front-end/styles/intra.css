@@ -1,3 +1,23 @@
+h1
+{
+    color: #F00;
+    text-align: center;
+    font-family: "Papercut";
+    text-transform: uppercase;
+}
+
+#title-intra
+{
+    color: #FFF;
+    text-align: center;
+    font-family: "Papercut";
+    font-size: 113px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
 #countdown-container {
     position: fixed;
     top: 0;

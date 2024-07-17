@@ -11,21 +11,23 @@ export default class Intra extends HTMLElement {
 
     async connectedCallback() {
 
+        let time_on_page = 5;
         let back_to_login = await lang.login_42.back_to_login[getCookie("lang")];
         let error = await lang.login_42.error[getCookie("lang")];
         this.innerHTML = `
-        <link rel="stylesheet" href="/styles/home.css" >
-        <h1>42 AUTH</h1>
-        <div id="countdown-container"><p id="countdown-text">5</p></div>
+        <link rel="stylesheet" href="/styles/intra.css" >
+        <h1 id="title-intra">42 AUTH</h1>
+        <div id="countdown-container"><p id="countdown-text">${time_on_page}</p></div>
         <button id="friendButtons" style="display: none"><link-route route="/login">${back_to_login}</link-route> </button>
     `;
         const urlParams = new URLSearchParams(window.location.search);
         const api_response = urlParams.get('error');
         const ft_code = urlParams.get('code');
+        const api_error_description = urlParams.get('error_description')
 
         if (api_response != null) {
             const err = document.createElement("h1");
-            err.innerHTML = error;
+            err.innerHTML = api_error_description;
             document.cookie="intra=fail_login_not_link";
             this.appendChild(err);
             setTimeout(function() {
@@ -57,10 +59,10 @@ export default class Intra extends HTMLElement {
                             clearInterval(this.refreshInterval);
                         changeRoute("/login");
                     });
-            }, 5000);
+            }, time_on_page * 1000);
 
             
-        let countDown = 4;
+        let countDown = time_on_page - 1;
         let countdownFunction = setInterval(function()
         {
             document.getElementById("countdown-text").innerHTML = countDown;

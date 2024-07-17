@@ -1,5 +1,3 @@
-import updateInfos from "/utils/updateInfos.js";
-import changeRoute from "/utils/changeRoute.js";
 import getCookie from "../utils/getCookie";
 import { lang } from "../utils/getAllLang";
 
@@ -68,8 +66,6 @@ export default class Settings extends HTMLElement {
 	{
 		title.innerText = json.displayName;
 	})
-
-
 		function GetHistory() {
 			let	id = getCookie("stat");
 			if (!id)

@@ -22,7 +22,7 @@ export default class Dashboard extends HTMLElement {
 				<link-route route="/pong/modeSelector" id="pong">${Pong_button}</link-route>
 				<link-route route="/gunfight/modeSelector" id="gunfight">${Gunfight_button}</link-route>
 			</div>
-			<p id="seeYourStats">${Stats_link}</p>
+			<link-route route="/${getCookie('user_id')}/infos" id="seeYourStats">${Stats_link}</link-route>
 			<div id="parent-red-line">
 				<div id="red-line"></div>
 			</div>
@@ -53,14 +53,6 @@ export default class Dashboard extends HTMLElement {
 			const infos = JSON.parse(sessionStorage.getItem('user_infos'));
 		});
 
-		const see_stat = document.querySelector("#seeYourStats")
-		see_stat.addEventListener("click", e =>
-		{
-			e.preventDefault();
-			document.cookie=`stat=${getCookie('user_id')}`;
-			changeRoute("/stats");
-		})
-
 		await DisplayFriends();
 
 		const add_friends = document.querySelector("#add-friend");
@@ -81,11 +73,11 @@ export default class Dashboard extends HTMLElement {
 					credentials: "include"
 				}).then(res =>
 			{
-				if (res.status == 200)
+				if (res.status === 200)
 						return res.json()
 			}).then(json =>
 			{
-				if (json && json.length != 0)
+				if (json && json.length !== 0)
 				{
 					const friendList = document.querySelector("#friend-list");
 
@@ -93,12 +85,12 @@ export default class Dashboard extends HTMLElement {
 					const keys = Object.keys(json);
 					for (let i = 0; i < keys.length; i++)
 					{
-						if (json[keys[i]].accepted == true)
+						if (json[keys[i]].accepted === true)
 						{
 							const MyDiv = document.createElement("div");
 							MyDiv.className = "friend";
 							let friendId = json[keys[i]].receiver;
-							if (json[keys[i]].receiver == MyId)
+							if (json[keys[i]].receiver === MyId)
 								friendId = json[keys[i]].sender;
 
 							GetPdpFriend(friendId).then(res =>
@@ -172,8 +164,7 @@ export default class Dashboard extends HTMLElement {
 					button.addEventListener("click", e =>
 					{
 						e.preventDefault();
-						document.cookie=`stat=${MyDiv.name}`;
-						changeRoute("/stats");
+						changeRoute(`/${MyDiv.name}/infos`);
 					})
 				}
 				else

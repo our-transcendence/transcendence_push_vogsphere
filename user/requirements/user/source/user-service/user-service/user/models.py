@@ -1,7 +1,7 @@
 import uuid
 
 from django.db import models
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, RegexValidator
 from django.db.models import Q
 from django.forms import model_to_dict
 from django.http import Http404
@@ -12,8 +12,9 @@ class User(models.Model):
     id = models.BigIntegerField(primary_key=True, unique=True)
     login = models.CharField(max_length=15, unique=True)
     displayName = models.CharField(
-        max_length=25,
-        validators=[MinLengthValidator(5, "Must contains at least 5 char")],
+        validators=[RegexValidator(
+            regex='^[a-zA-Z0-9_-]{5,25}$',
+            message="Forbiden character detected")],
         null=True
     )
 

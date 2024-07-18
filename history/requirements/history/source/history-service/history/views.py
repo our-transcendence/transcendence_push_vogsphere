@@ -7,7 +7,7 @@ from pydantic_core._pydantic_core import ValidationError
 
 from history.models import Player, Match, HistoryMatch
 from history.parsers import PlayerRegistrationData, parsePlayerRegistrationData, ParseError, MatchRegistrationData, \
-    parseMatchRegistrationData, MatchQueryData, MatchQueryValidator
+parseMatchRegistrationData, MatchQueryData, MatchQueryValidator, parseMatchQueryData
 from historyService import settings
 
 
@@ -69,17 +69,14 @@ def register_match(request):
 @require_http_methods(["GET"])
 def get_matches(request):
     try:
-        query: MatchQueryData = {
-            "player_id": request.GET["player_id"],
-            "opponent_id": request.GET["opponent_id"] if "opponent_id" in request.GET else None,
-            "match_types": set(request.GET["match_types"].split(",")) if "match_types" in request.GET else {"pong",
-                                                                                                            "gunfight"}
-        }
-        MatchQueryValidator.validate_python(query)
-    except ValidationError as e:
-        first_error = e.errors()[0]
-        error_reason = f"{first_error['loc']}: {first_error['type']}"
-        return ParseError(HttpResponse(status=400, reason=error_reason))
+        query: MatchQueryData = parseMatchQueryData(json.dumps(request.GET.dict()))
+        print(query, flush=True)
+    except ParseError as e:
+        return e.http_response
+    if "opponent_id" not in query:
+        query["opponent_id"] = None
+    if "match_types" not in query:
+        query["match_types"] = {"pong", "gunfight"}
     if not all(x in ["gunfight", "pong"] for x in query["match_types"]):
         return HttpResponse(status=400, reason="invalid match_types")
     try:

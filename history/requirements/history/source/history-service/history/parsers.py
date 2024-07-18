@@ -1,14 +1,14 @@
 import json
 from json import JSONDecodeError
 from django.http import HttpResponse
-from typing_extensions import TypedDict, Required, Optional
+from typing_extensions import TypedDict, Required, Optional, NotRequired
 from pydantic import TypeAdapter, ValidationError
 
 
 class MatchQueryData(TypedDict):
     player_id: Required[int]
-    opponent_id: Optional[int]
-    match_types: Optional[set[str]]
+    opponent_id: NotRequired[int]
+    match_types: NotRequired[set[str]]
 
 
 class MatchRegistrationData(TypedDict):

@@ -1,9 +1,10 @@
 import os
 import shutil
 import json
+from django.core.exceptions import ValidationError
 import requests
 
-from django.db import OperationalError
+from django.db import DataError, OperationalError
 from django.http import response, HttpRequest, HttpResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.forms.models import model_to_dict
@@ -54,6 +55,13 @@ def create_user(request):
         return response.HttpResponse(*USER_EXISTS)
 
     new_user = User(id=user_id, login=login, displayName=display_name)
+
+    try:
+        new_user.full_clean()
+    except (ValidationError, DataError) as e:
+        print(e, flush=True)
+        return response.HttpResponseBadRequest(reason="Invalid credential")
+
     try:
         new_user.save()
     except OperationalError as e:
@@ -122,6 +130,13 @@ def update_user(request: HttpRequest, **kwargs):
 
     if 'display_name' in request.POST.keys():
         user.displayName = request.POST['display_name']
+
+    try:
+        user.full_clean()
+    except (ValidationError, DataError) as e:
+        print(e, flush=True)
+        return response.HttpResponseBadRequest(reason="Invalid credential")
+
     try:
         user.save()
     except OperationalError as e:

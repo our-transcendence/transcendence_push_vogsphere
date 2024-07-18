@@ -122,7 +122,7 @@ def search_user(request, **kwargs):
 
 @ourJWT.Decoder.check_auth()
 @require_http_methods(["POST"])
-def update_user(request: HttpRequest, **kwargs):
+def update_display(request: HttpRequest, **kwargs):
     try:
         user = get_user_from_jwt(kwargs)
     except Http404:
@@ -142,6 +142,17 @@ def update_user(request: HttpRequest, **kwargs):
     except OperationalError as e:
         print(f"DATABASE FAILURE {e}", flush=True)
         return response.HttpResponse(*DB_FAILURE)
+
+    return response.HttpResponse()
+
+
+@ourJWT.Decoder.check_auth()
+@require_http_methods(["POST"])
+def update_picture(request: HttpRequest, **kwargs):
+    try:
+        user = get_user_from_jwt(kwargs)
+    except Http404:
+        return response.HttpResponse(*NO_USER)
 
     if 'picture' in request.FILES.keys():
         if request.FILES['picture'].content_type != 'image/png':

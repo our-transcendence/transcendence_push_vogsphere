@@ -31,26 +31,25 @@ export default class Settings extends HTMLElement {
         <h2 id="title-setting">${title}</h2>
 			<div id="all-content">
 				<div id="left-side">
-					<div id="all-left">
-						<div class="change-input" id="change-display">
-							<div class="input">
-								<p class="text">${display_name_field}</p>
-								<input type="text" id="change-display-input">
-							</div>
+					<div class="change-input" id="change-display">
+						<div class="input">
+							<p class="text">${display_name_field}</p>
+							<input type="text" id="change-display-input">
 						</div>
-						<div class="change-input" id="change-pp">
-							<div class="input">
-								<p class="text">${Profile_picture_field}</p>
-								<input type="file" id="change-pp-input"  accept=".png">
-							</div>	
+						<button id="change-display-button" class="send">${Send_button}</button>
+					</div>
+					<div class="change-input" id="change-pp">
+						<div class="input">
+							<p class="text">${Profile_picture_field}</p>
+							<input type="file" id="change-pp-input"  accept=".png">
 						</div>
 						<button id="change-pp-button" class="send">${Send_button}</button>
 					</div>
 					<div id="special-login">
-						<button type="submit" id="useA2FA" class="buttons-special-login">${button_2FA}</button>
-						<button type="submit" id="removeA2FA" class="buttons-special-login">${disable_button_2FA}</button>
-						<button type="submit" id="Link42" class="buttons-special-login">${link_42_button}</button>
+
 						<button type="submit" id="Unlink42" class="buttons-special-login">${unlink_42_button}</button>
+						<button type="submit" id="useA2FA" class="buttons-special-login">${button_2FA}</button>
+						<button type="submit" id="Link42" class="buttons-special-login">${link_42_button}</button>
 						<img src="${location.origin}/imgs/${getCookie('lang')}.svg" alt="" id="lang">
 					</div>
 				</div>
@@ -67,6 +66,7 @@ export default class Settings extends HTMLElement {
         `
 
 		const displayName = this.querySelector("#change-display-input");
+		const displayNameButton = this.querySelector("#change-display-button");
 		const picture = this.querySelector("#change-pp-input");
 		const pictureButton = this.querySelector("#change-pp-button");
 		const use2FAButton = this.querySelector("#useA2FA");
@@ -98,12 +98,12 @@ export default class Settings extends HTMLElement {
 
 			if (json.totp == "True"){
 				use2FAButton.style.display = "none";
-				remove2FAButton.style.display = "block";
+				// remove2FAButton.style.display = "block";
 			}
 			else
 			{
 				use2FAButton.style.display = "block";
-				remove2FAButton.style.display = "none";
+				// remove2FAButton.style.display = "none";
 			}
 			if (json.login_42_set == "True")
 			{
@@ -147,69 +147,39 @@ export default class Settings extends HTMLElement {
 		})
 
 
-		// displayNameButton.addEventListener("click", (e) => {
-		// 	e.preventDefault();
+		displayNameButton.addEventListener("click", (e) => {
+			e.preventDefault();
 
-		// 	formData.set("display_name", displayName.value);
-		// 	fetch(`https://${location.hostname}:4646/update/`, {
-		// 		credentials: "include",
-		// 		method: "POST",
-		// 		body: formData,
-		// 	})
-		// 		.then((res) => {
-		// 			if (res.ok) {
-		// 				let infos = window.sessionStorage.getItem("user_infos");
-		// 				if (!infos) {
-		// 					updateInfos();
-		// 					return;
-		// 				}
-		// 				infos = JSON.parse(infos);
-		// 				infos.displayName = displayName.value;
-		// 				window.sessionStorage.setItem("user_infos", JSON.stringify(infos));
-		// 				window.dispatchEvent(new Event('storage'));
-		// 			}
-		// 		})
-		// 		.catch((err) => {
-		// 			return ;
-		// 		});
-		// });
-
-		remove2FAButton.addEventListener("click", e =>
-		{
-			const header = {
-                'Content-Type': 'application/json'
-            }
-			fetch(`https://${location.hostname}:4444/disable_totp/`, 
-			{
-				method: "PATCH",
+			formData.set("display_name", displayName.value);
+			fetch(`https://${location.hostname}:4646/update_name/`, {
 				credentials: "include",
-				body: null,
-				headers: header,
-			}).then(res =>
-			{
-				if (res.status == 202)
-				{
-					const rightSide = document.querySelector("#right-side");
-					document.querySelector("#qr-code").style.display = "none";
-					rightSide.style.display = "ruby-text";
-
-					const	input = document.querySelector("#qr-input");
-					const	button = document.querySelector("qrsend");
-
-					confirm(null, null, 0);
-
-				}
+				method: "POST",
+				body: JSON.stringify({"display_name": displayName.value}),
 			})
-		})
+				.then((res) => {
+					if (res.ok) {
+						let infos = window.sessionStorage.getItem("user_infos");
+						if (!infos) {
+							updateInfos();
+							return;
+						}
+						infos = JSON.parse(infos);
+						infos.displayName = displayName.value;
+						window.sessionStorage.setItem("user_infos", JSON.stringify(infos));
+						window.dispatchEvent(new Event('storage'));
+					}
+				})
+				.catch((err) => {
+					return ;
+				});
+		});
+
 
 		pictureButton.addEventListener("click", (e) => {
 			e.preventDefault();
 
-			console.log(displayName.value);
-			if (displayName.value != "" && displayName.value != " ")
-				formData.set("display_name", displayName.value);
 			formData.set("picture", picture.files[0]);
-			fetch(`https://${location.hostname}:4646/update/`, {
+			fetch(`https://${location.hostname}:4646/update_picture/`, {
 				credentials: "include",
 				method: "POST",
 				body: formData,
@@ -245,6 +215,34 @@ export default class Settings extends HTMLElement {
 					
 				});
 		});
+
+		// remove2FAButton.addEventListener("click", e =>
+		// 	{
+		// 		const header = {
+		// 			'Content-Type': 'application/json'
+		// 		}
+		// 		fetch(`https://${location.hostname}:4444/disable_totp/`, 
+		// 		{
+		// 			method: "PATCH",
+		// 			credentials: "include",
+		// 			body: null,
+		// 			headers: header,
+		// 		}).then(res =>
+		// 		{
+		// 			if (res.status == 202)
+		// 			{
+		// 				const rightSide = document.querySelector("#right-side");
+		// 				document.querySelector("#qr-code").style.display = "none";
+		// 				rightSide.style.display = "ruby-text";
+	
+		// 				const	input = document.querySelector("#qr-input");
+		// 				const	button = document.querySelector("qrsend");
+	
+		// 				confirm(null, null, 0);
+	
+		// 			}
+		// 		})
+		// 	});
 
 		link_42.addEventListener("click", (e) => {
 			const headers = {

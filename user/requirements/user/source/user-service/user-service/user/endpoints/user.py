@@ -32,6 +32,8 @@ CANT_CONNECT_STATS = (b'', None, 408, "Cant connect to stats-service")
 ONLY_PNG = (b'', None, 400, "Only png images are allowed")
 DB_FAILURE = (b'', None, 503, "Database Failure")
 CORRUPTED_IMG = (b'', None, 400, "Corrupted or invalide image sent")
+NO_IMG_SENT = (b'', None, 400, "No image sent")
+NO_DISPLAY_NAME = (b'', None, 400, "No display_name provided")
 NO_IMG_SAVED = (b'', None, 409, "Error in server, no img found")
 SERVICE_KEY = os.getenv("INTER_SERVICE_KEY")
 
@@ -128,8 +130,11 @@ def update_display(request: HttpRequest, **kwargs):
     except Http404:
         return response.HttpResponse(*NO_USER)
 
-    if 'display_name' in request.POST.keys():
-        user.displayName = request.POST['display_name']
+
+    if not 'display_name' in request.POST.keys():
+        return response.HttpResponse(*NO_DISPLAY_NAME)
+
+    user.displayName = request.POST['display_name']
 
     try:
         user.full_clean()
@@ -154,24 +159,26 @@ def update_picture(request: HttpRequest, **kwargs):
     except Http404:
         return response.HttpResponse(*NO_USER)
 
-    if 'picture' in request.FILES.keys():
-        if request.FILES['picture'].content_type != 'image/png':
-            return HttpResponse(*ONLY_PNG)
-        try :
-            os.rename(f"{settings.PICTURES_DST}/{user.id}.png",f"{settings.PICTURES_DST}/{user.id}_old.png")
-        except FileNotFoundError:
-            shutil.copyfile("/data/default.png", f"{settings.PICTURES_DST}/{user.id}_old.png")
-        with open(f"{settings.PICTURES_DST}/{user.id}.png", "wb+") as f:
-            for chunk in request.FILES["picture"]:
-                f.write(chunk)
-        try:
-            im = Image.open(f"{settings.PICTURES_DST}/{user.id}.png")
-            im.verify()
-        except:
-            os.remove(f"{settings.PICTURES_DST}/{user.id}.png")
-            os.rename(f"{settings.PICTURES_DST}/{user.id}_old.png",f"{settings.PICTURES_DST}/{user.id}.png")
-            return HttpResponse(status=400, reason="Corrupted or invalide image sent")
-        os.remove(f"{settings.PICTURES_DST}/{user.id}_old.png")
+    if not 'picture' in request.FILES.keys():
+        return HttpResponse(*NO_IMG_SENT)
+
+    if request.FILES['picture'].content_type != 'image/png':
+        return HttpResponse(*ONLY_PNG)
+    try :
+        os.rename(f"{settings.PICTURES_DST}/{user.id}.png",f"{settings.PICTURES_DST}/{user.id}_old.png")
+    except FileNotFoundError:
+        shutil.copyfile("/data/default.png", f"{settings.PICTURES_DST}/{user.id}_old.png")
+    with open(f"{settings.PICTURES_DST}/{user.id}.png", "wb+") as f:
+        for chunk in request.FILES["picture"]:
+            f.write(chunk)
+    try:
+        im = Image.open(f"{settings.PICTURES_DST}/{user.id}.png")
+        im.verify()
+    except:
+        os.remove(f"{settings.PICTURES_DST}/{user.id}.png")
+        os.rename(f"{settings.PICTURES_DST}/{user.id}_old.png",f"{settings.PICTURES_DST}/{user.id}.png")
+        return HttpResponse(status=400, reason="Corrupted or invalide image sent")
+    os.remove(f"{settings.PICTURES_DST}/{user.id}_old.png")
 
     try:
         user.save()

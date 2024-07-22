@@ -9,6 +9,10 @@ export default class Ball {
     }
 
     update() {
+        if (this.rect.posX <= 858 - 10 - 20 && this.rect.posX >= 20)
+            this.trail.push({...this.rect});
+        if (this.trail.length > 10)
+            this.trail.shift();
         if (this.speed.x < 0) {
             this.speed.x *= -1;
             this.dir.x *= -1;
@@ -26,18 +30,13 @@ export default class Ball {
             this.dir.y = -1;
         }
         this.rect.posY += this.dir.y * this.speed.y;
-        this.trail.push(this.rect);
     }
 
     draw() {
         this.context.fillStyle = this.color;
-        this.context.fillRect(
-            this.rect.posX,
-            this.rect.posY,
-            this.rect.width,
-            this.rect.height
-        );
-        for (var i = 0; i < this.trail.length; i++) {
+        for (let i = 0; i < this.trail.length; i++) {
+            this.trail[i].width -= 0.5;
+            this.trail[i].height -= 0.5;
             this.context.fillRect(
                 this.trail[i].posX,
                 this.trail[i].posY,
@@ -45,7 +44,12 @@ export default class Ball {
                 this.trail[i].height
             );
         }
-
+        this.context.fillRect(
+            this.rect.posX,
+            this.rect.posY,
+            this.rect.width,
+            this.rect.height
+        );
         this.context.save();
     }
 }

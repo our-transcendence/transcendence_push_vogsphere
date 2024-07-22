@@ -15,7 +15,10 @@ export default class Settings extends HTMLElement {
         let winnings = lang.stats.winnings[getCookie("lang")];
         let looses = lang.stats.looses[getCookie("lang")];
         let game = lang.stats.game[getCookie("lang")];
-        this.user_id = parseInt(location.pathname.substring(1));
+        if (Number(location.pathname.substring(1)) > 0) {
+            changeRoute("/home");
+        } 
+        this.user_id = location.pathname.match("\\d+")[0];
 
         this.innerHTML = `
         <link rel="stylesheet" href="/styles/stats.css">

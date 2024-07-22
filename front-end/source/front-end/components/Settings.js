@@ -25,6 +25,7 @@ export default class Settings extends HTMLElement {
 		let unlink_42_button = await lang.settings_page.unlink_42_button[getCookie("lang")];
 		let incorrect_OTP = await lang.settings_page.incorrect_OTP[getCookie("lang")];
 		let timeout = await lang.settings_page.timeout[getCookie("lang")];
+		let display_name_error = await lang.settings_page.display_name_error[getCookie("lang")];
 
 		this.innerHTML = `
         <link rel="stylesheet" href="/styles/settings.css">
@@ -77,9 +78,6 @@ export default class Settings extends HTMLElement {
 		const link_42 = this.querySelector("#Link42");
 		const unlink_42 = this.querySelector("#Unlink42");
 		enableA2FA();
-
-		let formData = new FormData();
-
 
 		let img = document.querySelector("#lang");
 
@@ -150,11 +148,27 @@ export default class Settings extends HTMLElement {
 		displayNameButton.addEventListener("click", (e) => {
 			e.preventDefault();
 
+			document.querySelector("#error").innerText = "";
+			
+			let formData = new FormData();
+
+
 			formData.set("display_name", displayName.value);
+
+			function onlyAlphanumeric(str) {
+				return /^[a-zA-Z0-9_-]{5,25}$/.test(str);
+			}
+
+			if (!onlyAlphanumeric(displayName.value))
+			{
+				document.querySelector("#error").innerText = display_name_error;
+				return ;
+			}
+
 			fetch(`https://${location.hostname}:4646/update_name/`, {
 				credentials: "include",
 				method: "POST",
-				body: JSON.stringify({"display_name": displayName.value}),
+				body: formData,
 			})
 				.then((res) => {
 					if (res.ok) {
@@ -177,6 +191,11 @@ export default class Settings extends HTMLElement {
 
 		pictureButton.addEventListener("click", (e) => {
 			e.preventDefault();
+
+			document.querySelector("#error").innerText = "";
+
+			let formData = new FormData();
+
 
 			formData.set("picture", picture.files[0]);
 			fetch(`https://${location.hostname}:4646/update_picture/`, {
@@ -212,7 +231,6 @@ export default class Settings extends HTMLElement {
 				})
 				.catch((err) => {
 					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
-					
 				});
 		});
 
@@ -282,6 +300,9 @@ export default class Settings extends HTMLElement {
 
 		function enableA2FA()
 		{
+
+			document.querySelector("#error").innerText = "";
+
 			const A2FaButoon = document.querySelector("#useA2FA");
 			if (A2FaButoon == null)
 				return ;

@@ -112,9 +112,9 @@
     color: #FDB402;
 }
 
-input[type='file'] {
+/* input[type='file'] {
     color: transparent;
-}
+} */
 
 #qr-container {
     z-index: 2;

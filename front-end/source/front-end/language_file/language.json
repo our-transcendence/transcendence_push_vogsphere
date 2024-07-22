@@ -253,6 +253,12 @@
 			"fr": "processus expiré, veuillez redémarrer",
 			"en": "process timed out, please restart",
 			"de": "Zeitüberschreitung des Prozesses, bitte neu starten"
+		},
+		"display_name_error":
+		{
+			"fr": "Entre 5 et 25 charactere, a-z, 0-9 et - _",
+			"en": "Between 5 and 25 character, a-z, 0-9 and - _",
+			"de": "Zwischen 5 und 25 Zeichen, a-z, 0-9 und - _"
 		}
 	},
 	"friend_page": {

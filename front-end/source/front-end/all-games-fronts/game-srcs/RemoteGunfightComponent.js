@@ -11,7 +11,7 @@ export default class RemoteGunfightComponent extends GameElement {
         if (this.attributes.getNamedItem("gameAddr") === null) {
             throw new Error("No gameAddr given to remote pong element");
         }
-        console.info("Remote gunfight component connected");
+        // console.info("Remote gunfight component connected");
         const gameAddr = this.attributes.getNamedItem("gameAddr").value;
         this.winner = null;
         this.scores = null;

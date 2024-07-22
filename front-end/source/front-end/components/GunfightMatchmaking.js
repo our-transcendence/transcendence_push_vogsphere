@@ -14,8 +14,8 @@ export default class GunfightMatchmaking extends Matchmaking {
             this.ws.send(`{"game": "gunfight"}`);
         });
         this.ws.addEventListener("message", (e) => {
-            console.info("Received message");
-            console.info(e);
+            // console.info("Received message");
+            // console.info(e);
             const data = JSON.parse(e.data);
             if (!data.hasOwnProperty("gamePort")) {
                 return;

@@ -28,7 +28,7 @@ APPEND_SLASH = False
 SECRET_KEY = 'password'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
 '*'

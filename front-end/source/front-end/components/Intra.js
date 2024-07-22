@@ -128,8 +128,8 @@ export default class Intra extends HTMLElement {
                 changeRoute("/home");
             }
         }).catch(err => {
-            console.log("catch error ?");
-            console.log(err);
+            // console.log("catch error ?");
+            // console.log(err);
             return ;
         });
     }

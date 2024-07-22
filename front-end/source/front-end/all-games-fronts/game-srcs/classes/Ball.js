@@ -22,7 +22,7 @@ export default class Ball {
             this.dir.y *= -1;
         }
         this.rect.posX += this.dir.x * this.speed.x;
-        console.log(this.rect.posY + this.dir.y * this.speed.y);
+        // console.log(this.rect.posY + this.dir.y * this.speed.y);
         if (this.rect.posY + this.dir.y * this.speed.y < 0) {
             this.dir.y = 1;
         }

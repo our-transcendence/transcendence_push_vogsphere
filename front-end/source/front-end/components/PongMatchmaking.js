@@ -14,7 +14,7 @@ export default class PongMatchmaking extends Matchmaking {
             this.ws.send(`{"game": "pong"}`);
         });
         this.ws.addEventListener("message", (e) => {
-            console.info(e);
+            // console.info(e);
             const data = JSON.parse(e.data);
             if (!data.hasOwnProperty("gamePort")) {
                 return;

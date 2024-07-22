@@ -111,7 +111,7 @@ export default class RemoteGunfight extends EventTarget {
         });
         this.socket.on("game_end", (data) => {
             this.winner = this.opponentData;
-            console.log(this.opponentSid);
+            // console.log(this.opponentSid);
             if (this.opponentSid === "") {
                 if (data[this.socket.id] > data["null"])
                     this.winner = this.playerData;

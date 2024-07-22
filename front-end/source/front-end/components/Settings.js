@@ -228,8 +228,10 @@ export default class Settings extends HTMLElement {
 						const newNavBar = document.createElement("nav-bar");
 						header.appendChild(newNavBar);
 					}
+					console.log("caca");
 				})
 				.catch((err) => {
+					console.log(err);
 					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
 				});
 		});

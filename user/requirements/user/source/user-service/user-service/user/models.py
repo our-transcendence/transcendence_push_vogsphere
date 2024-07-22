@@ -13,7 +13,7 @@ class User(models.Model):
     login = models.CharField(max_length=15, unique=True)
     displayName = models.CharField(
         validators=[RegexValidator(
-            regex='^[a-zA-Z_-]{5,25}$',
+            regex='^[a-zA-Z_]{5,25}$',
             message="Forbiden character detected")],
         null=True
     )

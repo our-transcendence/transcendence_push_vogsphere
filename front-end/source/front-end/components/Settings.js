@@ -156,7 +156,7 @@ export default class Settings extends HTMLElement {
 			formData.set("display_name", displayName.value);
 
 			function onlyAlphanumeric(str) {
-				return /^[a-zA-Z_-]{5,25}$/.test(str);
+				return /^[a-zA-Z_]{5,25}$/.test(str);
 			}
 
 			if (!onlyAlphanumeric(displayName.value))

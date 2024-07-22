@@ -149,7 +149,7 @@ export default class Settings extends HTMLElement {
 			e.preventDefault();
 
 			document.querySelector("#error").innerText = "";
-			
+
 			let formData = new FormData();
 
 
@@ -196,7 +196,11 @@ export default class Settings extends HTMLElement {
 
 			let formData = new FormData();
 
-
+			if (!picture.files[0])
+			{
+				document.querySelector("#error").innerText = lang.settings_page.invalid_image[getCookie("lang")];
+				return;
+			}
 			formData.set("picture", picture.files[0]);
 			fetch(`https://${location.hostname}:4646/update_picture/`, {
 				credentials: "include",
@@ -218,6 +222,7 @@ export default class Settings extends HTMLElement {
 							infos.displayName = displayName.value;
 						window.sessionStorage.setItem("user_infos", JSON.stringify(infos));
 						window.dispatchEvent(new Event('storage'));
+						formData.delete(picture);
 					}
 					else
 					{
@@ -227,6 +232,7 @@ export default class Settings extends HTMLElement {
 						navBar.remove();
 						const newNavBar = document.createElement("nav-bar");
 						header.appendChild(newNavBar);
+						formData.delete(picture);
 					}
 					console.log("caca");
 				})
@@ -241,7 +247,7 @@ export default class Settings extends HTMLElement {
 		// 		const header = {
 		// 			'Content-Type': 'application/json'
 		// 		}
-		// 		fetch(`https://${location.hostname}:4444/disable_totp/`, 
+		// 		fetch(`https://${location.hostname}:4444/disable_totp/`,
 		// 		{
 		// 			method: "PATCH",
 		// 			credentials: "include",
@@ -254,12 +260,12 @@ export default class Settings extends HTMLElement {
 		// 				const rightSide = document.querySelector("#right-side");
 		// 				document.querySelector("#qr-code").style.display = "none";
 		// 				rightSide.style.display = "ruby-text";
-	
+
 		// 				const	input = document.querySelector("#qr-input");
 		// 				const	button = document.querySelector("qrsend");
-	
+
 		// 				confirm(null, null, 0);
-	
+
 		// 			}
 		// 		})
 		// 	});

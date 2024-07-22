@@ -21,7 +21,8 @@ from user.endpoints import user, friend
 urlpatterns = [
     path('register/', user.create_user),
     path('<int:user_id>/infos/', user.get_user),
-    path('update/', user.update_user),
+    path('update_name/', user.update_display),
+	path('update_picture/', user.update_picture),
     path('<int:user_id>/picture/', user.get_picture),
     path('search/', user.search_user),
     path('delete/', user.delete_user),

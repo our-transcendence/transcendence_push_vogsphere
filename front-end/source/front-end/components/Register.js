@@ -1,13 +1,17 @@
 import changeRoute from "../utils/changeRoute.js";
 import {lang} from "../utils/getAllLang";
 import getCookie from "../utils/getCookie";
+
 export default class Register extends HTMLElement {
 	constructor() {
 		super();
 	}
+
 	async connectedCallback() {
+
 		if (!getCookie("lang"))
 			document.cookie = "lang=en";
+
 		let title = await lang.register_page.title[getCookie("lang")];
 		let login_field = await lang.register_page.login_field[getCookie("lang")];
 		let password_field = await lang.register_page.password_field[getCookie("lang")];
@@ -19,11 +23,15 @@ export default class Register extends HTMLElement {
 		let password_too_short = await lang.register_page.password_too_short[getCookie("lang")];
 		let unexpected_error = await lang.register_page.unexpected_error[getCookie("lang")];
 		let invalid_char = await lang.register_page.invalid_char[getCookie("lang")];
+
 		this.innerHTML = `
         <link rel="stylesheet" href="/styles/register.css">
+
         <div id="Register-Element">
+
         <h1 id="title">OUR TRANSCENDENCE</h1>
         <h2 id="form-title">${title}</h2>
+
             <div>
                 <form id="register-form" class="form">
                     <div class="">
@@ -40,9 +48,11 @@ export default class Register extends HTMLElement {
                             <img src="/imgs/viewOff.svg" alt="" id="img_see" height="24px" width="24px">
                             </button>
                         </div>
+
                     <div id="button-div">
                         <button type="submit" id="submit-register" class="submit-button">${register_button}</button>
 						<img src="/imgs/loading.gif" style="width:48px;height:48px;" id="loading">
+
                     </div>
             		<p id="message"></p>
                     <div id="red-line"></div>
@@ -63,14 +73,17 @@ export default class Register extends HTMLElement {
 
 		pass_toggle.addEventListener("click", (e) => {
 			e.preventDefault();
+
 			if (pass.type === "password")
 				pass.type = "text";
 			else
 				pass.type = "password";
 		});
+
 		function onlyAlphanumeric(str) {
-			return /^[a-zA-Z0-9_-]{5,15}$/.test(str);
+			return /^[a-zA-Z_-]{5,15}$/.test(str);
 		}
+
 		form.addEventListener("submit", (e) => {
 			e.preventDefault();
 			const login_value = login.value;
@@ -111,6 +124,7 @@ export default class Register extends HTMLElement {
 				password: pass_value,
 				display_name: login_value,
 			});
+
 			submitButton.disabled = true;
 			fetch(`https://${location.hostname}:4444/register/`, {
 				method: 'POST',

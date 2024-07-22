@@ -156,7 +156,7 @@ export default class Settings extends HTMLElement {
 			formData.set("display_name", displayName.value);
 
 			function onlyAlphanumeric(str) {
-				return /^[a-zA-Z0-9_-]{5,25}$/.test(str);
+				return /^[a-zA-Z_-]{5,25}$/.test(str);
 			}
 
 			if (!onlyAlphanumeric(displayName.value))
@@ -182,9 +182,11 @@ export default class Settings extends HTMLElement {
 						window.sessionStorage.setItem("user_infos", JSON.stringify(infos));
 						window.dispatchEvent(new Event('storage'));
 					}
+					else
+						document.querySelector("#error").innerText = display_name_error;
 				})
 				.catch((err) => {
-					return ;
+					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
 				});
 		});
 
@@ -196,8 +198,10 @@ export default class Settings extends HTMLElement {
 
 			let formData = new FormData();
 
-
-			formData.set("picture", picture.files[0]);
+			if (picture.files[0])
+				formData.set("picture", picture.files[0]);
+			else
+				return;
 			fetch(`https://${location.hostname}:4646/update_picture/`, {
 				credentials: "include",
 				method: "POST",
@@ -228,10 +232,8 @@ export default class Settings extends HTMLElement {
 						const newNavBar = document.createElement("nav-bar");
 						header.appendChild(newNavBar);
 					}
-					console.log("caca");
 				})
 				.catch((err) => {
-					console.log(err);
 					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
 				});
 		});

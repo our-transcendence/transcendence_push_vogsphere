@@ -19,7 +19,7 @@ class User(models.Model):
     id = models.BigAutoField(primary_key=True)
     login = models.CharField(unique=True,
                             validators=[RegexValidator(
-                                regex='^[a-zA-Z_-]{1,15}$',
+                                regex='^[a-zA-Z0-9_-]{1,15}$',
                                 message="Forbiden character detected",
                             )])
     password = models.CharField(

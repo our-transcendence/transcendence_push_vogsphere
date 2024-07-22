@@ -149,14 +149,14 @@ export default class Settings extends HTMLElement {
 			e.preventDefault();
 
 			document.querySelector("#error").innerText = "";
-
+			
 			let formData = new FormData();
 
 
 			formData.set("display_name", displayName.value);
 
 			function onlyAlphanumeric(str) {
-				return /^[a-zA-Z_-]{5,25}$/.test(str);
+				return /^[a-zA-Z0-9_-]{5,25}$/.test(str);
 			}
 
 			if (!onlyAlphanumeric(displayName.value))
@@ -182,11 +182,9 @@ export default class Settings extends HTMLElement {
 						window.sessionStorage.setItem("user_infos", JSON.stringify(infos));
 						window.dispatchEvent(new Event('storage'));
 					}
-					else
-						document.querySelector("#error").innerText = display_name_error;
 				})
 				.catch((err) => {
-					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
+					return ;
 				});
 		});
 
@@ -198,11 +196,7 @@ export default class Settings extends HTMLElement {
 
 			let formData = new FormData();
 
-			if (!picture.files[0])
-			{
-				document.querySelector("#error").innerText = lang.settings_page.invalid_image[getCookie("lang")];
-				return;
-			}
+
 			formData.set("picture", picture.files[0]);
 			fetch(`https://${location.hostname}:4646/update_picture/`, {
 				credentials: "include",
@@ -224,7 +218,6 @@ export default class Settings extends HTMLElement {
 							infos.displayName = displayName.value;
 						window.sessionStorage.setItem("user_infos", JSON.stringify(infos));
 						window.dispatchEvent(new Event('storage'));
-						formData.delete(picture);
 					}
 					else
 					{
@@ -234,7 +227,6 @@ export default class Settings extends HTMLElement {
 						navBar.remove();
 						const newNavBar = document.createElement("nav-bar");
 						header.appendChild(newNavBar);
-						formData.delete(picture);
 					}
 				})
 				.catch((err) => {
@@ -247,7 +239,7 @@ export default class Settings extends HTMLElement {
 		// 		const header = {
 		// 			'Content-Type': 'application/json'
 		// 		}
-		// 		fetch(`https://${location.hostname}:4444/disable_totp/`,
+		// 		fetch(`https://${location.hostname}:4444/disable_totp/`, 
 		// 		{
 		// 			method: "PATCH",
 		// 			credentials: "include",
@@ -260,12 +252,12 @@ export default class Settings extends HTMLElement {
 		// 				const rightSide = document.querySelector("#right-side");
 		// 				document.querySelector("#qr-code").style.display = "none";
 		// 				rightSide.style.display = "ruby-text";
-
+	
 		// 				const	input = document.querySelector("#qr-input");
 		// 				const	button = document.querySelector("qrsend");
-
+	
 		// 				confirm(null, null, 0);
-
+	
 		// 			}
 		// 		})
 		// 	});

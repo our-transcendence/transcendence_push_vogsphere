@@ -90,6 +90,7 @@ export default class Register extends HTMLElement {
 			const pass_value = pass.value;
 			submitButton.style.display = "none";
 			loading.style.display = "block";
+			message.innerText = "";
 
 
 			if (login_value.trim() === '' || pass_value.trim() === '') {

@@ -234,7 +234,7 @@ export default class Settings extends HTMLElement {
 					}
 				})
 				.catch((err) => {
-					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
+					document.querySelector("#error").innerText = lang.settings_page.invalid_image[getCookie("lang")];
 				});
 		});
 

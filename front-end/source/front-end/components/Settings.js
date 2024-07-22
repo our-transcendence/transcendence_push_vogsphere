@@ -156,7 +156,7 @@ export default class Settings extends HTMLElement {
 			formData.set("display_name", displayName.value);
 
 			function onlyAlphanumeric(str) {
-				return /^[a-zA-Z0-9_-]{5,25}$/.test(str);
+				return /^[a-zA-Z_-]{5,25}$/.test(str);
 			}
 
 			if (!onlyAlphanumeric(displayName.value))
@@ -182,9 +182,11 @@ export default class Settings extends HTMLElement {
 						window.sessionStorage.setItem("user_infos", JSON.stringify(infos));
 						window.dispatchEvent(new Event('storage'));
 					}
+					else
+						document.querySelector("#error").innerText = display_name_error;
 				})
 				.catch((err) => {
-					return ;
+					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
 				});
 		});
 
@@ -234,10 +236,8 @@ export default class Settings extends HTMLElement {
 						header.appendChild(newNavBar);
 						formData.delete(picture);
 					}
-					console.log("caca");
 				})
 				.catch((err) => {
-					console.log(err);
 					document.querySelector("#error").innerText = lang.settings_page.unexpected_error[getCookie("lang")];
 				});
 		});

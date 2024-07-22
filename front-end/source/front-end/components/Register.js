@@ -51,6 +51,8 @@ export default class Register extends HTMLElement {
 
                     <div id="button-div">
                         <button type="submit" id="submit-register" class="submit-button">${register_button}</button>
+						<img src="/imgs/loading.gif" style="width:48px;height:48px;" id="loading">
+
                     </div>
             		<p id="message"></p>
                     <div id="red-line"></div>
@@ -65,6 +67,9 @@ export default class Register extends HTMLElement {
 		const pass_toggle = this.querySelector("#togglePassword");
 		const submitButton = this.querySelector("#submit-register");
 		const message = document.getElementById('message');
+		const loading = document.querySelector("#loading");
+
+		loading.style.display = "none";
 
 		pass_toggle.addEventListener("click", (e) => {
 			e.preventDefault();
@@ -76,13 +81,16 @@ export default class Register extends HTMLElement {
 		});
 
 		function onlyAlphanumeric(str) {
-			return /^[a-zA-Z0-9_-]{5,15}$/.test(str);
+			return /^[a-zA-Z_]{5,15}$/.test(str);
 		}
 
 		form.addEventListener("submit", (e) => {
 			e.preventDefault();
 			const login_value = login.value;
 			const pass_value = pass.value;
+			submitButton.style.display = "none";
+			loading.style.display = "block";
+
 
 			if (login_value.trim() === '' || pass_value.trim() === '') {
 				message.innerText = complete_fields;
@@ -91,6 +99,8 @@ export default class Register extends HTMLElement {
 				message.style.marginTop = "10px";
 				message.style.marginLeft = "20px";
 				message.style.maxWidth = "300px";
+				submitButton.style.display = "block";
+				loading.style.display = "none";
 				return ;
 			}
 			if (!onlyAlphanumeric(login_value) || !onlyAlphanumeric(pass_value))
@@ -101,6 +111,8 @@ export default class Register extends HTMLElement {
 				message.style.marginTop = "10px";
 				message.style.marginLeft = "20px";
 				message.style.maxWidth = "300px";
+				submitButton.style.display = "block";
+				loading.style.display = "none";
 				return ;
 			}
 
@@ -151,6 +163,8 @@ export default class Register extends HTMLElement {
 					message.style.marginLeft = "20px";
 					message.style.maxWidth = "300px";
 				}
+				loading.style.display = "none";
+				submitButton.style.display = "block";
 				submitButton.disabled = false;
 			}).catch(err => {
 				message.innerText = unexpected_error;
@@ -159,6 +173,8 @@ export default class Register extends HTMLElement {
 				message.style.marginTop = "10px";
 				message.style.marginLeft = "20px";
 				message.style.maxWidth = "300px";
+				loading.style.display = "none";
+				submitButton.style.display = "block";
 				submitButton.disabled = false;
 			})
 		});

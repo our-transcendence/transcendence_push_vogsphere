@@ -6,10 +6,20 @@
     border-radius: 0px 0px 19px 19px;
     opacity: 0.71;
     color: #FCB404;
-    font-family: "ComicDaddy";
+    /* font-family: "ComicDaddy"; */
     justify-content: space-between;
     align-items: center;
     display: flex;
+}
+
+#title-header
+{
+    font-family: "ComicDaddy";
+}
+
+#profile-name
+{
+    font-family: "papercut";
 }
 
 .controles-link {

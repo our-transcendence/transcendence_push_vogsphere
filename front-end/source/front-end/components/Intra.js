@@ -120,6 +120,7 @@ export default class Intra extends HTMLElement {
         }).then(res => {
             if (res.status === 404)
             {
+                changeRoute("/register");
                 alert(this.error_message);
             }
             if (res.status === 200) {

@@ -238,9 +238,9 @@
 			"de": "Unerwarteter Fehler"
 		},
 		"invalid_image": {
-			"fr": "Image Invalide",
-			"en": "Invalid Image",
-			"de": "Ungültiges Bild"
+			"fr": "les immages doivent etre au format png et en dessous de 5MB",
+			"en": "Images must be in PNG format and under 5MB",
+			"de": "Bilder müssen im PNG-Format und unter 5 MB vorliegen"
 		},
 		"incorrect_OTP":
 		{
